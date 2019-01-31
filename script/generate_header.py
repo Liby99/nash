@@ -5,7 +5,7 @@ root_dir = sys.argv[2]
 header_dir = os.path.join(root_dir, name)
 
 # Make directory if not exist
-if not os.path.exists(header.dir):
+if not os.path.exists(header_dir):
     os.makedirs(header_dir)
 
 # Get all files to be imported
