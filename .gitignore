@@ -1,1 +1,8 @@
 build/
+pdf/
+
+# Latex related files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log

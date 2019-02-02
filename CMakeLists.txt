@@ -27,7 +27,7 @@ add_library(nash ${nash})
 target_link_libraries(nash nanogui ${NANOGUI_EXTRA_LIBS})
 
 # Compile all the executable files
-file(GLOB exec_sources prog/**/*.cpp)
+file(GLOB exec_sources prog/*.cpp prog/**/*.cpp)
 foreach(exec_source ${exec_sources})
   string(REPLACE ".cpp" "" temp_path ${exec_source})
   string(REPLACE "${CMAKE_CURRENT_LIST_DIR}/" "" temp_path ${temp_path})

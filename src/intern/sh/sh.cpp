@@ -1,4 +1,3 @@
-#import <cmath>
 #import "sh/sh.h"
 
 using namespace nash;
@@ -12,7 +11,7 @@ using namespace nash;
  */
 float SH::y(int l, int m, float theta, float phi) {
   const double sqrt2 = sqrt(2.0);
-  if (m > 0) { 
+  if (m > 0) {
     return sqrt2 * SH::k(l, m) * cos(m * phi) * SH::p(l, m, cos(theta));
   } else if (m == 0) {
     return SH::k(l, 0) * SH::p(l, m, cos(theta));
