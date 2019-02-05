@@ -2,7 +2,15 @@
 cmake_minimum_required(VERSION 3.5)
 project(nash)
 
+if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/nanogui")
+  message(FATAL_ERROR "The Nash dependency repositories (nanogui) is missing! "
+    "You probably did not clone the project with --recursive. It is possible to recover "
+    "by calling \"git submodule update --init --recursive\"")
+endif()
+
 # Include NanoGui
+set(NANOGUI_BUILD_EXAMPLE OFF)
+set(NANOGUI_BUILD_PYTHON OFF)
 add_subdirectory(lib/nanogui EXCLUDE_FROM_ALL)
 include_directories(lib/nanogui/include)
 include_directories(${NANOGUI_EXTRA_INCS})
@@ -27,7 +35,7 @@ add_library(nash ${nash})
 target_link_libraries(nash nanogui ${NANOGUI_EXTRA_LIBS})
 
 # Compile all the executable files
-file(GLOB exec_sources prog/*.cpp prog/**/*.cpp)
+file(GLOB exec_sources app/*.cpp app/**/*.cpp test/*.cpp test/**/*.cpp)
 foreach(exec_source ${exec_sources})
   string(REPLACE ".cpp" "" temp_path ${exec_source})
   string(REPLACE "${CMAKE_CURRENT_LIST_DIR}/" "" temp_path ${temp_path})
