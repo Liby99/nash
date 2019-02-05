@@ -1,0 +1,78 @@
+#include "object/sphere.h"
+
+using namespace nash;
+
+Sphere::Sphere() : Mesh() {
+  generateMesh();
+}
+
+void Sphere::generateMesh() {
+  
+  // First generate inital 6 points
+  float s = sqrt(2) / 2;
+  Vertices vertices;
+  vertices.push_back(Vector3f(0, -1, 0));
+  vertices.push_back(Vector3f(s, 0, s));
+  vertices.push_back(Vector3f(-s, 0, s));
+  vertices.push_back(Vector3f(s, 0, -s));
+  vertices.push_back(Vector3f(-s, 0, -s));
+  vertices.push_back(Vector3f(0, 1, 0));
+  
+  // Then generate initial triangles
+  Triangles triangles;
+  triangles.push_back(Vector3u(0, 2, 1));
+  triangles.push_back(Vector3u(0, 1, 3));
+  triangles.push_back(Vector3u(1, 2, 5));
+  triangles.push_back(Vector3u(2, 0, 4));
+  triangles.push_back(Vector3u(3, 4, 0));
+  triangles.push_back(Vector3u(4, 5, 2));
+  triangles.push_back(Vector3u(5, 3, 1));
+  triangles.push_back(Vector3u(5, 4, 3));
+  
+  // Subdivide the triangles starting from 0
+  subdivide(vertices, triangles, 0);
+  
+  // Finally generate from this triangles
+  indices = nanogui::MatrixXu(3, triangles.size());
+  for (int i = 0; i < triangles.size(); i++) {
+    indices.col(i) << triangles[i].x(), triangles[i].y(), triangles[i].z();
+  }
+  positions = MatrixXf(3, vertices.size());
+  normals = MatrixXf(3, vertices.size());
+  for (int i = 0; i < vertices.size(); i++) {
+    positions.col(i) << vertices[i].x(), vertices[i].y(), vertices[i].z();
+    normals.col(i) << vertices[i].x(), vertices[i].y(), vertices[i].z();
+  }
+}
+
+void Sphere::subdivide(Vertices & vertices, Triangles & triangles, int step) {
+  
+  // Stop if done subdivision
+  if (step >= SUBDIVISION) return;
+  
+  // Loop over existing triangles and subdivide a tri to four tris.
+  int numTriangles = triangles.size(); // Cache the amount since it will be changing
+  for (int i = 0; i < numTriangles; i++) {
+  
+    // Fetch information from triangles
+    Vector3u & tri = triangles[i];
+    int i1 = tri.x(), i2 = tri.y(), i3 = tri.z();
+    Vector3f & v1 = vertices[i1], & v2 = vertices[i2], & v3 = vertices[i3];
+  
+    // Subdivide using mid points on each edge
+    Vector3f m1 = 0.5 * (v1 + v2), m2 = 0.5 * (v2 + v3), m3 = 0.5 * (v3 + v1);
+    // Normalize midpoints so that the vertices still lie on unit sphere
+    vertices.push_back(m1.normalized());
+    vertices.push_back(m2.normalized());
+    vertices.push_back(m3.normalized());
+  
+    // Existing triangle will now be the center one
+    tri.x() = vertices.size() - 3, tri.y() = tri.x() + 1, tri.z() = tri.y() + 1;
+    triangles.push_back(Vector3u(i1, tri.x(), tri.z()));
+    triangles.push_back(Vector3u(tri.x(), i2, tri.y()));
+    triangles.push_back(Vector3u(tri.z(), tri.y(), i3));
+  }
+  
+  // Recursive subdivide. Tail recursion
+  subdivide(vertices, triangles, step + 1);
+}

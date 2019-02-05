@@ -18,16 +18,15 @@ public:
 
 int main() {
   nanogui::init();
+  
   Scene scene;
   scene.camera.position << 3, 3, 3;
-  Cube cube;
-  cube.setParent(scene.root);
-  cube.setShader(Shader::get());
-
-  // ========   ATTENTION   ======== //
+  
+  Sphere sphere;
+  sphere.setParent(scene.root);
+  sphere.setShader(Shader::get());
   Rotator rotator("rotator");
-  cube.attachScript(rotator);
-  // ======== END ATTENTION ======== //
+  sphere.attachScript(rotator);
 
   Viewer viewer(1280, 720, "Viewer test", scene);
   viewer.start();

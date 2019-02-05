@@ -9,7 +9,7 @@ namespace nash {
     Mesh();
     virtual void render();
   protected:
-    nanogui::MatrixXu indices;
+    MatrixXu indices;
     MatrixXf positions;
     MatrixXf normals;
   };
