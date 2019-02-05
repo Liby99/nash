@@ -3,6 +3,7 @@
 #include "viewer/camera.h"
 #include "viewer/canvas.h"
 #include "viewer/scene.h"
+#include "object/mesh.h"
 #include "object/cube.h"
 #include "object/object.h"
 #include "utility/script.h"

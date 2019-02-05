@@ -2,7 +2,7 @@
 
 using namespace nash;
 
-Cube::Cube() {
+Cube::Cube() : Mesh() {
   indices = nanogui::MatrixXu(3, 12);
   indices.col(0) << 0, 1, 2;
   indices.col(1) << 2, 3, 0;
@@ -68,11 +68,4 @@ Cube::Cube() {
   normals.col(21) << 0, -1, 0;
   normals.col(22) << 0, -1, 0;
   normals.col(23) << 0, -1, 0;
-}
-
-void Cube::render() {
-  shader->uploadIndices(indices);
-  shader->uploadAttr("position", positions);
-  shader->uploadAttr("normal", normals);
-  shader->drawIndexed(GL_TRIANGLES, 0, 12);
 }
