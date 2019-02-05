@@ -2,4 +2,6 @@
 #include "viewer/camera.h"
 #include "viewer/scene.h"
 #include "object/object.h"
+#include "utility/shader.h"
+#include "utility/transform.h"
 #include "utility/math.h"
