@@ -1,8 +1,8 @@
-#include "utility/transformation.h"
+#include "utility/transform.h"
 
 using namespace nash;
 
-Transformation::Transformation() :
+nash::Transform::Transform() :
   world(Matrix4f::Identity()),
   rotation(Quaternionf::Identity()),
   position(Vector3f::Zero()),
@@ -10,7 +10,7 @@ Transformation::Transformation() :
   // Do Nothing
 }
 
-Matrix4f Transformation::getTransform() {
+Matrix4f nash::Transform::getTransform() {
   Matrix4f local = Matrix4f::Zero();
   local.col(3) << position.x(), position.y(), position.z(), 1;
   local.block(0, 0, 2, 2) = rotation.normalized().toRotationMatrix();

@@ -3,13 +3,13 @@
 
 #include <vector>
 #include <stdexcept>
-#include "utility/transformation.h"
+#include "utility/transform.h"
 #include "utility/shader.h"
 
 namespace nash {
   class Object {
   public:
-    Transformation transform;
+    nash::Transform transform;
 
     Object();
 

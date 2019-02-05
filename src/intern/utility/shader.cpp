@@ -74,6 +74,13 @@ void Shader::initAll() {
   }
 }
 
+void Shader::freeAll() {
+  for (auto it = store.begin(); it != store.end(); ++it) {
+    it->second->free();
+    delete it->second;
+  }
+}
+
 Shader & Shader::get(std::string & name) {
   if (store.count(name) == 1) {
     return *(store[name]);

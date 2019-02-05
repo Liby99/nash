@@ -9,6 +9,7 @@
 namespace nash {
   class Shader {
   public:
+    void init();
     void bind();
     void free();
     void setUniform(const std::string & name, const Matrix4f & mat);
@@ -29,13 +30,13 @@ namespace nash {
     void drawIndexed(int type, uint32_t offset, uint32_t count);
 
     static void initAll();
+    static void freeAll();
     static Shader & get(std::string & name);
   private:
     std::string name;
     nanogui::GLShader * shader;
     Shader(std::string & name);
     ~Shader();
-    void init();
 
     static std::map<std::string, Shader *> store;
   };
