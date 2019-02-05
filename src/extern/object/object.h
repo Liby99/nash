@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include "utility/transform.h"
 #include "utility/shader.h"
+#include "utility/script.h"
 
 namespace nash {
   class Object {
@@ -32,6 +33,11 @@ namespace nash {
     void setActive(bool active);
     bool isActive();
 
+    // Scripting
+    void attachScript(Script & script);
+    Script & getScript(std::string & name);
+    void removeScript(std::string & name);
+
     // Object Life Cycle pipeline.
     virtual void start();
     virtual void update();
@@ -47,6 +53,7 @@ namespace nash {
     Shader * shader;
     Object * parent;
     std::vector<Object *> children;
+    std::vector<Script *> scripts;
   };
 }
 

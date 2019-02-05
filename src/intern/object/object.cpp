@@ -69,6 +69,30 @@ bool Object::isActive() {
   return active;
 }
 
+void Object::attachScript(Script & script) {
+  scripts.push_back(&script);
+}
+
+Script & Object::getScript(std::string & name) {
+  auto it = find_if(scripts.begin(), scripts.end(), [&name](const Script * s) {
+    return s->name == name;
+  });
+  if (it != scripts.end()) {
+    return **it;
+  } else {
+    throw std::invalid_argument("Not existed script " + name);
+  }
+}
+
+void Object::removeScript(std::string & name) {
+  auto it = find_if(scripts.begin(), scripts.end(), [&name](const Script * s) {
+    return s->name == name;
+  });
+  if (it != scripts.end()) {
+    scripts.erase(it);
+  }
+}
+
 void Object::start() {
   // Do nothing
 }
@@ -83,6 +107,10 @@ void Object::render() {
 
 void Object::startWrapper() {
   start();
+  for (int i = 0; i < scripts.size(); i++) {
+    scripts[i]->bind(this);
+    scripts[i]->start();
+  }
   for (int i = 0; i < children.size(); i++) {
     children[i]->startWrapper();
   }
@@ -93,6 +121,10 @@ void Object::updateWrapper(Matrix4f & world) {
     transform.world = world;
     Matrix4f currTransform = transform.getTransform();
     update();
+    for (int i = 0; i < scripts.size(); i++) {
+      scripts[i]->bind(this);
+      scripts[i]->update();
+    }
     for (int i = 0; i < children.size(); i++) {
       children[i]->updateWrapper(currTransform);
     }
