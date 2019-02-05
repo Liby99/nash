@@ -6,7 +6,7 @@
 namespace nash {
   class Sphere : public Mesh {
   public:
-    static const int SUBDIVISION = 3;
+    static const int SUBDIVISION = 4;
     Sphere();
   private:
     typedef std::vector<Vector3f> Vertices;

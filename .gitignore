@@ -8,3 +8,7 @@ pdf/
 *.log
 *.pdf
 *.gz
+
+# Clion related
+cmake-build-debug/
+.idea/

@@ -67,10 +67,11 @@ void Sphere::subdivide(Vertices & vertices, Triangles & triangles, int step) {
     vertices.push_back(m3.normalized());
   
     // Existing triangle will now be the center one
-    tri.x() = vertices.size() - 3, tri.y() = tri.x() + 1, tri.z() = tri.y() + 1;
-    triangles.push_back(Vector3u(i1, tri.x(), tri.z()));
-    triangles.push_back(Vector3u(tri.x(), i2, tri.y()));
-    triangles.push_back(Vector3u(tri.z(), tri.y(), i3));
+    uint32_t curr = vertices.size(), ni1 = curr - 3, ni2 = curr - 2, ni3 = curr - 1;
+    triangles.push_back(Vector3u(i1, ni1, ni3));
+    triangles.push_back(Vector3u(ni1, i2, ni2));
+    triangles.push_back(Vector3u(ni3, ni2, i3));
+    triangles[i] << ni1, ni2, ni3;
   }
   
   // Recursive subdivide. Tail recursion
