@@ -2,6 +2,10 @@
 cmake_minimum_required(VERSION 3.5)
 project(nash)
 
+# Options
+option(NASH_BUILD_APP "Building application executables" ON)
+option(NASH_BUILD_TEST "Building test executables" ON)
+
 # Global setup
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MACOSX_RPATH 1)
@@ -43,17 +47,19 @@ execute_process(
 include_directories(src/extern)
 
 # Compile all the cpp files and link to `nash` library along with NanoGui
-file(
-  GLOB nash_sources
-  src/intern/**/*.cpp src/extern/**/*.h
-)
+file(GLOB nash_sources src/intern/**/*.cpp src/extern/**/*.h)
 set(nash ${nash_sources})
 add_library(nash ${nash})
 target_link_libraries(nash nanogui assimp ${NANOGUI_EXTRA_LIBS})
 
 # Compile all the executable files
-file(GLOB exec_sources app/*.cpp app/**/*.cpp test/*.cpp test/**/*.cpp)
-foreach(exec_source ${exec_sources})
+if(NASH_BUILD_TEST)
+  file(GLOB tests test/*.cpp test/**/*.cpp)
+endif(NASH_BUILD_TEST)
+if(NASH_BUILD_APP)
+  file(GLOB apps app/*.cpp app/**/*.cpp)
+endif(NASH_BUILD_APP)
+foreach(exec_source ${tests} ${apps})
   string(REPLACE ".cpp" "" temp_path ${exec_source})
   string(REPLACE "${CMAKE_CURRENT_LIST_DIR}/" "" temp_path ${temp_path})
   get_filename_component(temp_dir ${temp_path} DIRECTORY)
