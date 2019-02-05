@@ -7,7 +7,7 @@ Scene::Scene() : camera(), root() {
 }
 
 void Scene::setSize(int width, int height) {
-  
+  camera.setSize(width, height);
 }
 
 void Scene::start() {
@@ -20,5 +20,6 @@ void Scene::update() {
 }
 
 void Scene::render() {
-  root.renderWrapper();
+  Matrix4f viewPersp = camera.getViewPerspective();
+  root.renderWrapper(viewPersp);
 }

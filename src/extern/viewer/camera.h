@@ -9,15 +9,20 @@ namespace nash {
   class Camera {
   public:
     Vector3f position;
-    Vector3f center;
+    Vector3f target;
     Vector3f up;
 
     int width, height;
-    float nearPlane, farPlane;
-    float aspectRatio;
+    float zNear, zFar;
+    float aspect;
     float fovy;
 
     Camera();
+    void setSize(int width, int height);
+    Matrix4f getViewPerspective();
+  protected:
+    Matrix4f getView();
+    Matrix4f getPerspective();
   };
 }
 

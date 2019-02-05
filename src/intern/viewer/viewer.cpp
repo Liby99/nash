@@ -1,7 +1,5 @@
 #include "viewer/viewer.h"
 
-#include <iostream>
-
 using namespace nash;
 
 const nanogui::Color Viewer::BACKGROUND = { 30, 30, 30, 255 };
@@ -12,8 +10,6 @@ const int Viewer::PADDING = 5;
 
 Viewer::Viewer(int w, int h, std::string name, Scene & scene) :
   nanogui::Screen(Vector2i(w, h), name, false) {
-
-  // std::cout << "test test 1" << std::endl;
   using namespace nanogui;
   setBackground(BACKGROUND);
   sceneWindow = new Window(this, "Scene Viewer");
@@ -21,21 +17,14 @@ Viewer::Viewer(int w, int h, std::string name, Scene & scene) :
   sceneCanvas = new Canvas(sceneWindow, scene);
   sceneCanvas->setBackgroundColor(BACKGROUND);
   sceneCanvas->setSize(w - 2 * PADDING, h - HEADER_HEIGHT - 2 * PADDING);
-
-  // std::cout << "test test 1" << std::endl;
 }
 
 void Viewer::start() {
-  // std::cout << "test 1" << std::endl;
-  // std::cout << "test 2" << std::endl;
   Shader::initAll();
-  // std::cout << "test 3" << std::endl;
   sceneCanvas->start();
-  // std::cout << "test 4" << std::endl;
   performLayout();
   drawAll();
   setVisible(true);
-  // std::cout << "test 5" << std::endl;
   nanogui::mainloop();
   Shader::freeAll();
 }

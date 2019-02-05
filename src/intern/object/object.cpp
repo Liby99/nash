@@ -99,15 +99,16 @@ void Object::updateWrapper(Matrix4f & world) {
   }
 }
 
-void Object::renderWrapper() {
+void Object::renderWrapper(Matrix4f & viewPersp) {
   if (active) {
     if (hasShader()) {
       shader->bind();
       shader->setUniform("model", transform.getTransform());
+      shader->setUniform("viewPersp", viewPersp);
       render();
     }
     for (int i = 0; i < children.size(); i++) {
-      children[i]->renderWrapper();
+      children[i]->renderWrapper(viewPersp);
     }
   }
 }

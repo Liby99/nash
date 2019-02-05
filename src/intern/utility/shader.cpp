@@ -38,8 +38,7 @@ void Shader::setUniform(const std::string & name, float value) {
   shader->setUniform(name, value);
 }
 
-template<typename Mat>
-void Shader::uploadAttr(const std::string & name, const Mat & m) {
+void Shader::uploadAttr(const std::string & name, const MatrixXf & m) {
   shader->uploadAttrib(name, m);
 }
 
@@ -55,8 +54,7 @@ void Shader::shareAttr(const Shader & other, const std::string & name, const std
   shader->shareAttrib(*(other.shader), name, as);
 }
 
-template<typename Mat>
-void Shader::uploadIndices(const Mat & m) {
+void Shader::uploadIndices(const nanogui::MatrixXu & m) {
   shader->uploadIndices(m);
 }
 
@@ -91,7 +89,21 @@ Shader & Shader::get(std::string & name) {
   }
 }
 
-Shader::Shader(std::string & name) : name(name), shader(new nanogui::GLShader()) {
+Shader & Shader::get() {
+  if (store.count("") == 1) {
+    return *(store[""]);
+  } else {
+    Shader * shader = new Shader();
+    store[""] = shader;
+    return *shader;
+  }
+}
+
+Shader::Shader() : name("default"), simple(true), shader(new nanogui::GLShader()) {
+  // Do nothing
+}
+
+Shader::Shader(std::string & name) : name(name), simple(false), shader(new nanogui::GLShader()) {
   // Do nothing
 }
 
@@ -100,7 +112,39 @@ Shader::~Shader() {
 }
 
 void Shader::init() {
-  shader->initFromFiles(name, name + ".vert.glsl", name + ".frag.glsl");
+  if (simple) {
+    shader->init(
+      "DEFAULT_SHADER",
+      "#version 400\n"
+      "layout(location=0) in vec3 position;\n"
+      "layout(location=1) in vec3 normal;\n"
+      "out vec3 fragPosition;\n"
+      "out vec3 fragNormal;\n"
+      "uniform mat4 model = mat4(1);\n"
+      "uniform mat4 viewPersp = mat4(1);\n"
+      "void main() {\n"
+      "    mat4 mvp = viewPersp * model;\n"
+      "    gl_Position = mvp * vec4(position, 1);\n"
+      "    fragPosition = vec3(model * vec4(position, 1));\n"
+      "    fragNormal = vec3(transpose(inverse(model)) * vec4(normal, 0));\n"
+      "}",
+      "#version 400\n"
+      "in vec3 fragPosition;\n"
+      "in vec3 fragNormal;\n"
+      "uniform vec3 AmbientColor = vec3(0.2);\n"
+      "uniform vec3 LightDirection = normalize(vec3(1, 5, 2));\n"
+      "uniform vec3 LightColor = vec3(1);\n"
+      "uniform vec3 DiffuseColor = vec3(0.5);\n"
+      "out vec4 finalColor;\n"
+      "void main() {\n"
+      "    vec3 irradiance = AmbientColor + LightColor * max(0, dot(LightDirection, fragNormal));\n"
+      "    vec3 reflectance = irradiance * DiffuseColor;\n"
+      "    finalColor = vec4(sqrt(reflectance), 1);\n"
+      "}"
+    );
+  } else {
+    shader->initFromFiles(name, name + ".vert.glsl", name + ".frag.glsl");
+  }
 }
 
 std::map<std::string, Shader *> Shader::store = std::map<std::string, Shader *>();

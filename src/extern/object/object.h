@@ -40,10 +40,9 @@ namespace nash {
     // Base wrapper which could not be changed.
     void startWrapper();
     void updateWrapper(Matrix4f & world);
-    void renderWrapper();
+    void renderWrapper(Matrix4f & viewPersp);
 
-  private:
-
+  protected:
     bool active;
     Shader * shader;
     Object * parent;
