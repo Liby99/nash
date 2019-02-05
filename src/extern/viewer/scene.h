@@ -1,7 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "object/Object.h"
+#include "object/object.h"
 
 namespace nash {
   class Scene {

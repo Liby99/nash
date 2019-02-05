@@ -2,6 +2,11 @@
 cmake_minimum_required(VERSION 3.5)
 project(nash)
 
+# Global setup
+set(CMAKE_CXX_STANDARD 17)
+add_definitions(-DGL_SILENCE_DEPRECATION)
+
+# Dependency checks
 if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/nanogui")
   message(FATAL_ERROR "The Nash dependency repositories (nanogui) is missing! "
     "You probably did not clone the project with --recursive. It is possible to recover "

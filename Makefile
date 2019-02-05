@@ -3,7 +3,11 @@ DOC_SOURCE_DIR = doc
 DOC_OUTPUT_DIR = pdf
 DOC_PDF = $(patsubst %, $(DOC_OUTPUT_DIR)/%.pdf, $(DOC_TARGET))
 
-build:
+SRC_FILES = src/**/*.cpp src/**/*.h app/*.cpp app/**/*.cpp test/*.cpp test/**/*.cpp
+
+all: build
+
+build: FORCE
 	@ sh ./build.sh
 
 doc: $(DOC_PDF)
@@ -21,3 +25,5 @@ clean-doc:
 	@ rm -rf $(DOC_OUTPUT_DIR)
 
 clean: clean-build clean-doc
+
+FORCE:

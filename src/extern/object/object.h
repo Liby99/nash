@@ -2,13 +2,14 @@
 #define OBJECT_H
 
 #include <vector>
-#include "utility/transform.h"
+#include <stdexcept>
+#include "utility/transformation.h"
 #include "utility/shader.h"
 
 namespace nash {
   class Object {
   public:
-    Transform transform;
+    Transformation transform;
 
     Object();
 
@@ -17,28 +18,32 @@ namespace nash {
     Object & getParent();
     void setParent(Object & p);
     void removeFromParent();
-    // std::vector<Object *> & getChildren();
-    // Object & getChild(int i);
+    std::vector<Object *> & getChildren();
+    Object & getChild(int i);
 
     // Shader spec
-    // Shader & getShader();
-    // void setShader(Shader & shader);
+    bool hasShader();
+    Shader & getShader();
+    void setShader(Shader & shader);
 
     // Activation
-    // void setActive(bool active);
-    // bool isActive();
+    void activate();
+    void deactivate();
+    void setActive(bool active);
+    bool isActive();
 
     // Object Life Cycle pipeline.
-    // virtual void start();
-    // virtual void update();
-    // virtual void render();
+    virtual void start();
+    virtual void update();
+    virtual void render();
 
     // Base wrapper which could not be changed.
-    // void startWrapper();
-    // void updateWrapper();
-    // void renderWrapper();
+    void startWrapper();
+    void updateWrapper(Matrix4f & world);
+    void renderWrapper();
 
   private:
+
     bool active;
     Shader * shader;
     Object * parent;
