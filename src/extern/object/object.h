@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "utility/transform.h"
+#include "utility/shader.h"
 
 namespace nash {
   class Object {
@@ -12,29 +13,30 @@ namespace nash {
     Object();
 
     // Scene tree
+    bool hasParent();
     Object & getParent();
-    void setParent(Object * p);
+    void setParent(Object & p);
     void removeFromParent();
-    std::vector<Object *> & getChildren();
-    Object & getChild(int i);
+    // std::vector<Object *> & getChildren();
+    // Object & getChild(int i);
 
     // Shader spec
-    Shader & getShader();
-    void setShader(Shader & shader);
+    // Shader & getShader();
+    // void setShader(Shader & shader);
 
     // Activation
-    void setActive(bool active);
-    bool isActive();
+    // void setActive(bool active);
+    // bool isActive();
 
-    // Object Life Cycle pipeline. 
-    virtual void start();
-    virtual void update();
-    virtual void render();
+    // Object Life Cycle pipeline.
+    // virtual void start();
+    // virtual void update();
+    // virtual void render();
 
     // Base wrapper which could not be changed.
-    void startWrapper();
-    void updateWrapper();
-    void renderWrapper();
+    // void startWrapper();
+    // void updateWrapper();
+    // void renderWrapper();
 
   private:
     bool active;
