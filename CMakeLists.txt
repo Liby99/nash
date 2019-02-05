@@ -4,6 +4,7 @@ project(nash)
 
 # Global setup
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_MACOSX_RPATH 1)
 add_definitions(-DGL_SILENCE_DEPRECATION)
 
 # Dependency checks
@@ -21,6 +22,17 @@ include_directories(lib/nanogui/include)
 include_directories(${NANOGUI_EXTRA_INCS})
 add_definitions(${NANOGUI_EXTRA_DEFS})
 
+# Include Assimp
+set(ASSIMP_NO_EXPORT ON)
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
+set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT FALSE)
+set(ASSIMP_INCLUDE_FORMATS OBJ PLY OFF)
+foreach(include_format ${ASSIMP_INCLUDE_FORMATS})
+  set(ASSIMP_BUILD_${include_format}_IMPORTER TRUE)
+endforeach()
+add_subdirectory(lib/assimp EXCLUDE_FROM_ALL)
+include_directories(lib/assimp/include)
+
 # Generate single header file using the script
 execute_process(
   COMMAND python3 ${CMAKE_CURRENT_LIST_DIR}/script/generate_header.py nash
@@ -37,7 +49,7 @@ file(
 )
 set(nash ${nash_sources})
 add_library(nash ${nash})
-target_link_libraries(nash nanogui ${NANOGUI_EXTRA_LIBS})
+target_link_libraries(nash nanogui assimp ${NANOGUI_EXTRA_LIBS})
 
 # Compile all the executable files
 file(GLOB exec_sources app/*.cpp app/**/*.cpp test/*.cpp test/**/*.cpp)
@@ -50,4 +62,4 @@ foreach(exec_source ${exec_sources})
   set_target_properties(${temp_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${temp_dir})
   target_link_libraries(${temp_name} nash)
   include("${temp_dir}/CMakeLists.txt" OPTIONAL)
-endforeach(exec_source ${exec_sources})
+endforeach()
