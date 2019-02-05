@@ -8,7 +8,7 @@ SRC_FILES = src/**/*.cpp src/**/*.h app/*.cpp app/**/*.cpp test/*.cpp test/**/*.
 all: build
 
 build: FORCE
-	@ sh ./build.sh
+	@ sh ./script/build.sh
 
 doc: $(DOC_PDF)
 
