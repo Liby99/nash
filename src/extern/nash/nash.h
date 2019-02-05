@@ -1,4 +1,5 @@
 #include "sh/sh.h"
+#include "sh/sh_sphere.h"
 #include "viewer/viewer.h"
 #include "viewer/camera.h"
 #include "viewer/canvas.h"
@@ -9,7 +10,5 @@
 #include "object/object.h"
 #include "utility/script.h"
 #include "utility/shader.h"
-#include "utility/edge.h"
 #include "utility/transform.h"
 #include "utility/math.h"
-#include "utility/triangle.h"
