@@ -1,3 +1,7 @@
+/**
+ * A test rendering low poly sphere with a `Rotator` script attached to it.
+ */
+
 #include <nash/nash.h>
 
 using namespace nash;

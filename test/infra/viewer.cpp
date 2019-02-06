@@ -1,3 +1,7 @@
+/**
+ * Test to see if a viewer could be loaded
+ */
+
 #include <nash/nash.h>
 
 using namespace nash;
