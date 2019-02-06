@@ -24,9 +24,26 @@ bool Canvas::keyboardEvent(int key, int scancode, int action, int modifiers) {
   return context.keyboardEvent(key, scancode, action, modifiers);
 }
 
+bool Canvas::mouseButtonEvent(const Vector2i & p, int button, bool down, int modifiers) {
+  return context.mouseButtonEvent(p, button, down, modifiers);
+}
+
+bool Canvas::mouseMotionEvent(const Vector2i & p, const Vector2i & rel, int button, int modifiers) {
+  return context.mouseMotionEvent(p, button, modifiers);
+}
+
+bool Canvas::mouseEnterEvent(const Vector2i & p, bool enter) {
+  return context.mouseEnterEvent(p, enter);
+}
+
+bool Canvas::scrollEvent(const Vector2i & p, const Vector2f & rel) {
+  return context.scrollEvent(p, rel);
+}
+
 void Canvas::drawGL() {
   glEnable(GL_DEPTH_TEST);
   scene->update(context);
   scene->render(context);
+  context.endOfFrameCycle();
   glDisable(GL_DEPTH_TEST);
 }

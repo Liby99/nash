@@ -7,7 +7,10 @@
 namespace nash {
   class ThirdPersonCamera : public Script<Camera> {
   public:
-    static constexpr float MOVE_SPEED = 0.02;
+    static constexpr float MOVE_SPEED = 0.03f;
+    static constexpr float SCROLL_SPEED = 0.01f;
+    static constexpr float ROTATE_SPEED = 0.005f;
+
     ThirdPersonCamera();
     void update();
   private:

@@ -33,8 +33,15 @@ void ThirdPersonCamera::update() {
   }
   target->target += vel;
 
-  // Then we get the mouse input to change azimuth, incline and distance
-  /* TODO */
+  // Then we get the mouse input to change azimuth, incline and distance when is dragging
+  if (context->getMouseLeft()) {
+    Vector2i curRel = context->getCursorMovement();
+    azimuth -= curRel.x() * ROTATE_SPEED;
+    incline = fmaxf(-PI / 2 + 0.01f, fminf(PI / 2 - 0.01f, incline + curRel.y() * ROTATE_SPEED));
+  }
+
+  // Get the scroll event
+  distance = fmaxf(0.01f, distance - context->getScrollMovement().y() * SCROLL_SPEED);
 
   // Then we calculate the position based on center and azimuth, incline and distance
   float x = target->target.x() + sin(azimuth) * cos(incline) * distance;

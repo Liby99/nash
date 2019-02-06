@@ -25,6 +25,7 @@ void Viewer::start() {
   performLayout();
   drawAll();
   setVisible(true);
+  sceneCanvas->requestFocus();
   nanogui::mainloop();
   Shader::freeAll();
 }
