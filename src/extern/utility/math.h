@@ -17,6 +17,8 @@ namespace nash {
   class Math {
   public:
     static Vector2f normalCartToPolar(const Vector3f & pos);
+    static Vector3f polarToCart(const Vector2f & pol);
+    static Vector3f polarToCart(float theta, float phi);
   };
 }
 

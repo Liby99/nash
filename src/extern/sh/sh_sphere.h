@@ -1,6 +1,7 @@
 #ifndef SH_SPHERE_H
 #define SH_SPHERE_H
 
+#include <stdio.h>
 #include "object/sphere.h"
 #include "sh/sh.h"
 

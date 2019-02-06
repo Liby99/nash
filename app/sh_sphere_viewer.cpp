@@ -26,7 +26,7 @@ int main() {
     }
   }
 
-  Viewer viewer(1280, 720, "Spherical Harmonics Viewer", scene);
+  Viewer viewer(1280, 720, "Spherical Harmonics Spheres Viewer", scene);
   viewer.start();
 
   for (int i = 0; i < spheres.size(); i++) {

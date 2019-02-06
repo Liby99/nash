@@ -6,7 +6,7 @@
 namespace nash {
   class Sphere : public Mesh {
   public:
-    static const int SUBDIVISION = 4;
+    static const int SUBDIVISION = 5;
     Sphere();
     Sphere(int subdivision);
   private:
