@@ -2,35 +2,6 @@
 
 using namespace nash;
 
-class Toggle : public Script {
-public:
-  bool pressing, show;
-
-  Toggle(const std::string & name) : Toggle(name, true) { }
-
-  Toggle(const std::string & name, bool initial) : Script(name) {
-    show = initial;
-  }
-
-  virtual void update() {
-    if (!pressing) {
-      if (context->getKey('a')) {
-        pressing = true;
-        show = !show;
-        if (show) {
-          object->show();
-        } else {
-          object->hide();
-        }
-      }
-    } else {
-      if (!context->getKey('a')) {
-        pressing = false;
-      }
-    }
-  }
-};
-
 int main() {
   nanogui::init();
   Scene scene;

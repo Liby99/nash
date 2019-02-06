@@ -36,6 +36,7 @@ namespace nash {
     bool isActive();
     void show();
     void hide();
+    void setHidden(bool h);
     bool isHidden();
 
     // Scripting

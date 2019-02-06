@@ -78,6 +78,10 @@ void Object::hide() {
   hidden = true;
 }
 
+void Object::setHidden(bool h) {
+  hidden = h;
+}
+
 bool Object::isHidden() {
   return hidden;
 }

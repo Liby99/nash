@@ -14,3 +14,4 @@
 #include "utility/transform.h"
 #include "utility/math.h"
 #include "adhoc/script/rotator.h"
+#include "adhoc/script/toggle.h"
