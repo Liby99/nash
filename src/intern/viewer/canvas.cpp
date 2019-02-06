@@ -16,12 +16,17 @@ void Canvas::setSize(int width, int height) {
 }
 
 void Canvas::start() {
-  scene->start();
+  context.init();
+  scene->start(context);
+}
+
+bool Canvas::keyboardEvent(int key, int scancode, int action, int modifiers) {
+  return false;
 }
 
 void Canvas::drawGL() {
   glEnable(GL_DEPTH_TEST);
-  scene->update();
-  scene->render();
+  scene->update(context);
+  scene->render(context);
   glDisable(GL_DEPTH_TEST);
 }

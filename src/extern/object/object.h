@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include "viewer/context.h"
 #include "utility/transform.h"
 #include "utility/shader.h"
 
@@ -33,6 +34,9 @@ namespace nash {
     void deactivate();
     void setActive(bool active);
     bool isActive();
+    void show();
+    void hide();
+    bool isHidden();
 
     // Scripting
     void attachScript(Script & script);
@@ -45,12 +49,13 @@ namespace nash {
     virtual void render();
 
     // Base wrapper which could not be changed.
-    void startWrapper();
-    void updateWrapper(Matrix4f & world);
-    void renderWrapper(Matrix4f & viewPersp);
+    void startWrapper(Context & context);
+    void updateWrapper(Context & context, Matrix4f & world);
+    void renderWrapper(Context & context, Matrix4f & viewPersp);
 
   protected:
-    bool active;
+    bool active, hidden;
+    Context * context;
     Shader * shader;
     Object * parent;
     std::vector<Object *> children;

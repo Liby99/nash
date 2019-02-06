@@ -2,6 +2,7 @@
 #include "sh/sh_sphere.h"
 #include "viewer/viewer.h"
 #include "viewer/camera.h"
+#include "viewer/context.h"
 #include "viewer/canvas.h"
 #include "viewer/scene.h"
 #include "object/sphere.h"

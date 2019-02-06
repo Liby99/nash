@@ -6,8 +6,12 @@ Script::Script(const std::string & name) : name(name) {
   // Do Nothing
 }
 
-void Script::bind(Object * obj) {
-  object = obj;
+void Script::setContext(Context & ctx) {
+  context = &ctx;
+}
+
+void Script::bind(Object & obj) {
+  object = &obj;
 }
 
 void Script::start() {
@@ -15,9 +19,5 @@ void Script::start() {
 }
 
 void Script::update() {
-  // Do Nothing
-}
-
-void Script::render() {
   // Do Nothing
 }

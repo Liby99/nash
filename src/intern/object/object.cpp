@@ -70,6 +70,18 @@ bool Object::isActive() {
   return active;
 }
 
+void Object::show() {
+  hidden = false;
+}
+
+void Object::hide() {
+  hidden = true;
+}
+
+bool Object::isHidden() {
+  return hidden;
+}
+
 void Object::attachScript(Script & script) {
   scripts.push_back(&script);
 }
@@ -106,42 +118,49 @@ void Object::render() {
   // Do nothing
 }
 
-void Object::startWrapper() {
-  start();
-  for (int i = 0; i < scripts.size(); i++) {
-    scripts[i]->bind(this);
-    scripts[i]->start();
-  }
-  for (int i = 0; i < children.size(); i++) {
-    children[i]->startWrapper();
+void Object::startWrapper(Context & context) {
+  this->context = &context;
+  if (active) {
+    start();
+    for (int i = 0; i < scripts.size(); i++) {
+      scripts[i]->setContext(context);
+      scripts[i]->bind(*this);
+      scripts[i]->start();
+    }
+    for (int i = 0; i < children.size(); i++) {
+      children[i]->startWrapper(context);
+    }
   }
 }
 
-void Object::updateWrapper(Matrix4f & world) {
+void Object::updateWrapper(Context & context, Matrix4f & world) {
+  this->context = &context;
   if (active) {
     transform.world = world;
     Matrix4f currTransform = transform.getTransform();
     update();
     for (int i = 0; i < scripts.size(); i++) {
-      scripts[i]->bind(this);
+      scripts[i]->setContext(context);
+      scripts[i]->bind(*this);
       scripts[i]->update();
     }
     for (int i = 0; i < children.size(); i++) {
-      children[i]->updateWrapper(currTransform);
+      children[i]->updateWrapper(context, currTransform);
     }
   }
 }
 
-void Object::renderWrapper(Matrix4f & viewPersp) {
+void Object::renderWrapper(Context & context, Matrix4f & viewPersp) {
+  this->context = &context;
   if (active) {
-    if (hasShader()) {
+    if (!hidden && hasShader()) {
       shader->bind();
       shader->setUniform("model", transform.getTransform());
       shader->setUniform("viewPersp", viewPersp);
       render();
     }
     for (int i = 0; i < children.size(); i++) {
-      children[i]->renderWrapper(viewPersp);
+      children[i]->renderWrapper(context, viewPersp);
     }
   }
 }

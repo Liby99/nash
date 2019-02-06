@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include "viewer/context.h"
 #include "viewer/camera.h"
 #include "object/object.h"
 
@@ -12,9 +13,9 @@ namespace nash {
 
     Scene();
     void setSize(int width, int height);
-    void start();
-    void update();
-    void render();
+    void start(Context & context);
+    void update(Context & context);
+    void render(Context & context);
   private:
   };
 }
