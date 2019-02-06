@@ -2,20 +2,6 @@
 
 using namespace nash;
 
-class Rotator : public Script {
-public:
-  int counter;
-  
-  Rotator(const std::string & name) : Script(name) {
-    counter = 0;
-  }
-  
-  virtual void update() {
-    counter++;
-    object->transform.rotation = AngleAxisf(counter * 0.01, Vector3f::UnitY());
-  }
-};
-
 int main() {
   nanogui::init();
   Scene scene;
@@ -29,7 +15,7 @@ int main() {
   cube.attachScript(rotator);
   // ======== END ATTENTION ======== //
 
-  Viewer viewer(1280, 720, "Viewer test", scene);
+  Viewer viewer(1280, 720, "Rotating Cube test", scene);
   viewer.start();
   nanogui::shutdown();
 }

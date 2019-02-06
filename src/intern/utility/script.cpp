@@ -17,3 +17,7 @@ void Script::start() {
 void Script::update() {
   // Do Nothing
 }
+
+void Script::render() {
+  // Do Nothing
+}

@@ -5,9 +5,10 @@
 #include <stdexcept>
 #include "utility/transform.h"
 #include "utility/shader.h"
-#include "utility/script.h"
 
 namespace nash {
+  class Script;
+
   class Object {
   public:
     nash::Transform transform;

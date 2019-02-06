@@ -8,7 +8,9 @@ namespace nash {
   public:
     static const int SUBDIVISION = 4;
     Sphere();
+    Sphere(int subdivision);
   private:
+    int subdivision;
     typedef std::vector<Vector3f> Vertices;
     typedef std::vector<Vector3u> Triangles;
     void generateMesh();

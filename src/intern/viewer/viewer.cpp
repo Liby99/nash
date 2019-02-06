@@ -12,7 +12,7 @@ Viewer::Viewer(int w, int h, std::string name, Scene & scene) :
   nanogui::Screen(Vector2i(w, h), name, false) {
   using namespace nanogui;
   setBackground(BACKGROUND);
-  sceneWindow = new Window(this, "Scene Viewer");
+  sceneWindow = new Window(this, name);
   sceneWindow->setLayout(new GroupLayout(PADDING));
   sceneCanvas = new Canvas(sceneWindow, scene);
   sceneCanvas->setBackgroundColor(BACKGROUND);

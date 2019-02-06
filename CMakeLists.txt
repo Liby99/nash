@@ -47,17 +47,17 @@ execute_process(
 include_directories(src/extern)
 
 # Compile all the cpp files and link to `nash` library along with NanoGui
-file(GLOB nash_sources src/intern/**/*.cpp src/extern/**/*.h)
+file(GLOB_RECURSE nash_sources src/intern/*.cpp src/extern/*.h)
 set(nash ${nash_sources})
 add_library(nash ${nash})
 target_link_libraries(nash nanogui assimp ${NANOGUI_EXTRA_LIBS})
 
 # Compile all the executable files
 if(NASH_BUILD_TEST)
-  file(GLOB tests test/*.cpp test/**/*.cpp)
+  file(GLOB_RECURSE tests test/*.cpp)
 endif(NASH_BUILD_TEST)
 if(NASH_BUILD_APP)
-  file(GLOB apps app/*.cpp app/**/*.cpp)
+  file(GLOB_RECURSE apps app/*.cpp)
 endif(NASH_BUILD_APP)
 foreach(exec_source ${tests} ${apps})
   string(REPLACE ".cpp" "" temp_path ${exec_source})

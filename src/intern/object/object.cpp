@@ -1,4 +1,5 @@
 #include "object/object.h"
+#include "utility/script.h"
 
 using namespace nash;
 
