@@ -10,6 +10,10 @@ void Scene::setSize(int width, int height) {
   camera.setSize(width, height);
 }
 
+void Scene::addObject(Object & object) {
+  object.setParent(root);
+}
+
 void Scene::start(Context & context) {
   camera.start(context);
   root.startWrapper(context);

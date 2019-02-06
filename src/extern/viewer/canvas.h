@@ -8,8 +8,10 @@ namespace nash {
   public:
     Canvas(nanogui::Widget * parent, Scene & scene);
     ~Canvas();
+    
     void setSize(int width, int height);
-    void start();
+    void bindGLFWWindow(GLFWwindow * window);
+    void init();
 
     virtual bool keyboardEvent(int key, int scancode, int action, int modifiers);
     virtual bool mouseButtonEvent(const Vector2i & p, int button, bool down, int modifiers);

@@ -158,11 +158,29 @@ void Object::updateWrapper(Context & context, Matrix4f & world) {
 void Object::renderWrapper(Context & context, Matrix4f & viewPersp) {
   this->context = &context;
   if (active) {
+    
+    // Check if is going to do the rendering
     if (!hidden && hasShader()) {
+      
+      // First set basic properties of this object and the camera
       shader->bind();
       shader->setUniform("model", transform.getTransform());
       shader->setUniform("viewPersp", viewPersp);
+      
+      // Then run the pre render scripts
+      for (int i = 0; i < scripts.size(); i++) {
+        scripts[i]->setContext(context);
+        scripts[i]->bind(*this);
+        scripts[i]->preRender();
+      }
+      
+      // Render the object
       render();
+      
+      // Finally run the post render scripts
+      for (int i = 0; i < scripts.size(); i++) {
+        scripts[i]->postRender();
+      }
     }
     for (int i = 0; i < children.size(); i++) {
       children[i]->renderWrapper(context, viewPersp);

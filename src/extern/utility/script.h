@@ -30,6 +30,14 @@ namespace nash {
     virtual void update() {
       // Do nothing
     }
+    
+    virtual void preRender() {
+      // Do nothing
+    }
+    
+    virtual void postRender() {
+      // Do nothing
+    }
   protected:
     Context * context;
     T * target;

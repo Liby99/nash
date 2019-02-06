@@ -15,7 +15,11 @@ void Canvas::setSize(int width, int height) {
   scene->setSize(width, height);
 }
 
-void Canvas::start() {
+void Canvas::bindGLFWWindow(GLFWwindow * window) {
+  context.bindGLFWWindow(window);
+}
+
+void Canvas::init() {
   context.init();
   scene->start(context);
 }
@@ -29,7 +33,7 @@ bool Canvas::mouseButtonEvent(const Vector2i & p, int button, bool down, int mod
 }
 
 bool Canvas::mouseMotionEvent(const Vector2i & p, const Vector2i & rel, int button, int modifiers) {
-  return context.mouseMotionEvent(p, button, modifiers);
+  return context.mouseMotionEvent(p, rel, button, modifiers);
 }
 
 bool Canvas::mouseEnterEvent(const Vector2i & p, bool enter) {

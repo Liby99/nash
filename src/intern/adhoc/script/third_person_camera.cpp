@@ -4,6 +4,10 @@ using namespace nash;
 
 ThirdPersonCamera::ThirdPersonCamera() : Script<Camera>("third-person-camera"),
   azimuth(0), incline(0), distance(3) { }
+  
+void ThirdPersonCamera::start() {
+  // Do Nothing for now
+}
 
 void ThirdPersonCamera::update() {
 

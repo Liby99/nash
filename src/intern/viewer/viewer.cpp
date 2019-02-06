@@ -21,7 +21,8 @@ Viewer::Viewer(int w, int h, std::string name, Scene & scene) :
 
 void Viewer::start() {
   Shader::initAll();
-  sceneCanvas->start();
+  sceneCanvas->bindGLFWWindow(glfwWindow());
+  sceneCanvas->init();
   performLayout();
   drawAll();
   setVisible(true);

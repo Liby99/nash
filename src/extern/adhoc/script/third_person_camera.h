@@ -12,7 +12,8 @@ namespace nash {
     static constexpr float ROTATE_SPEED = 0.005f;
 
     ThirdPersonCamera();
-    void update();
+    virtual void start();
+    virtual void update();
   private:
     float azimuth, incline, distance;
   };

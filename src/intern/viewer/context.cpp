@@ -29,9 +29,46 @@ void Context::init() {
   newScrollPosition = Vector2f(0, 0);
 }
 
+void Context::bindGLFWWindow(GLFWwindow * win) {
+  window = win;
+  glfwGetWindowSize(window, &windowWidth, &windowHeight);
+}
+
 void Context::endOfFrameCycle() {
   cursorPosition = newCursorPosition;
   scrollPosition = newScrollPosition;
+}
+
+GLFWwindow * Context::getGLFWWindow() {
+  return window;
+}
+
+int Context::getWindowWidth() {
+  return windowWidth;
+}
+
+int Context::getWindowHeight() {
+  return windowHeight;
+}
+
+void Context::resetCursor() {
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void Context::hideCursor() {
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+}
+
+void Context::disableCursor() {
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void Context::setCursorPos(int x, int y) {
+  glfwSetCursorPos(window, x, y);
+}
+
+void Context::centerCursorPos() {
+  setCursorPos(windowWidth / 2, windowHeight / 2);
 }
 
 bool Context::getKey(char key) {
@@ -64,7 +101,7 @@ bool Context::cursorIsInside() {
 }
 
 const Vector2i & Context::getCursorPosition() {
-  return cursorPosition;
+  return exactCursorPosition;
 }
 
 Vector2i Context::getCursorMovement() {
@@ -98,6 +135,7 @@ bool Context::keyboardEvent(int key, int scancode, int action, int modifiers) {
 }
 
 bool Context::mouseButtonEvent(const Vector2i & p, int button, bool down, int modifiers) {
+  exactCursorPosition = p;
   if (button == GLFW_MOUSE_BUTTON_RIGHT) {
     rightButtonDown = down;
   } else if (button == GLFW_MOUSE_BUTTON_LEFT) {
@@ -107,15 +145,16 @@ bool Context::mouseButtonEvent(const Vector2i & p, int button, bool down, int mo
   return true;
 }
 
-bool Context::mouseMotionEvent(const Vector2i & p, int button, int modifiers) {
-  newCursorPosition = p;
+bool Context::mouseMotionEvent(const Vector2i & p, const Vector2i & rel, int button, int modifiers) {
+  exactCursorPosition = p;
+  newCursorPosition = cursorPosition + rel;
   cursorInside = true;
   extractModifiers(modifiers);
   return true;
 }
 
 bool Context::mouseEnterEvent(const Vector2i & p, bool enter) {
-  newCursorPosition = p;
+  exactCursorPosition = p;
   cursorInside = enter;
   return true;
 }

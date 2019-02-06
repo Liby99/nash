@@ -12,7 +12,11 @@ namespace nash {
     Object root;
 
     Scene();
+    
     void setSize(int width, int height);
+    
+    void addObject(Object & object);
+    
     void start(Context & context);
     void update(Context & context);
     void render(Context & context);
