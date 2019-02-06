@@ -37,7 +37,7 @@ bool Context::getKey(char key) {
   switch (key) {
     case '\t': return keyStatus[GLFW_KEY_TAB];
     case '\n': return keyStatus[GLFW_KEY_ENTER];
-    default: return keyStatus[key];
+    default: return keyStatus[toupper(key)];
   }
 }
 

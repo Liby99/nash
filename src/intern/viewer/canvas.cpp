@@ -7,7 +7,7 @@ Canvas::Canvas(nanogui::Widget * parent, Scene & s) : nanogui::GLCanvas(parent),
 }
 
 Canvas::~Canvas() {
-
+  // Do nothing
 }
 
 void Canvas::setSize(int width, int height) {
@@ -21,7 +21,7 @@ void Canvas::start() {
 }
 
 bool Canvas::keyboardEvent(int key, int scancode, int action, int modifiers) {
-  return false;
+  return context.keyboardEvent(key, scancode, action, modifiers);
 }
 
 void Canvas::drawGL() {

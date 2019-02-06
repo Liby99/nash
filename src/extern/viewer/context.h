@@ -1,6 +1,7 @@
 #ifndef CONTEXT_H
 #define CONTEXT_H
 
+#include <ctype.h>
 #include <vector>
 #include <nanogui/nanogui.h>
 
