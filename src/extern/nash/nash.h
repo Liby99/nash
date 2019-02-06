@@ -1,5 +1,3 @@
-#include "sh/sh.h"
-#include "sh/sh_sphere.h"
 #include "viewer/viewer.h"
 #include "viewer/camera.h"
 #include "viewer/context.h"
@@ -16,3 +14,5 @@
 #include "adhoc/script/rotator.h"
 #include "adhoc/script/toggle.h"
 #include "adhoc/script/third_person_camera.h"
+#include "adhoc/sh/sh.h"
+#include "adhoc/sh/sh_sphere.h"

@@ -1,4 +1,4 @@
-#include "sh/sh_sphere.h"
+#include "adhoc/sh/sh_sphere.h"
 
 using namespace nash;
 
@@ -35,7 +35,7 @@ void SHSphere::updatePositions() {
   for (int i = 0; i < indices.cols(); i++) {
     uint32_t i1 = indices.col(i).x(), i2 = indices.col(i).y(), i3 = indices.col(i).z();
     Vector3f v1 = positions.col(i1), v2 = positions.col(i2), v3 = positions.col(i3);
-    Vector3f surfaceNormal = (v3 - v1).cross(v2 - v1);
+    Vector3f surfaceNormal = (v3 - v1).cross(v2 - v1).normalized();
     normals.col(i1) += surfaceNormal;
     normals.col(i2) += surfaceNormal;
     normals.col(i3) += surfaceNormal;

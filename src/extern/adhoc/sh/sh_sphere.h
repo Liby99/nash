@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include "object/sphere.h"
-#include "sh/sh.h"
+#include "adhoc/sh/sh.h"
 
 namespace nash {
   class SHSphere : public Sphere {
