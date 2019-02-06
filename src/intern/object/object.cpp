@@ -5,6 +5,7 @@ using namespace nash;
 
 Object::Object() :
   active(true),
+  hidden(false),
   shader(nullptr),
   parent(nullptr) {
   // Do nothing

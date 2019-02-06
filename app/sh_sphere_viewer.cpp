@@ -6,7 +6,8 @@ int main() {
   nanogui::init();
 
   Scene scene;
-  scene.camera.position << 0, 0, 5;
+  ThirdPersonCamera ctrl;
+  scene.camera.setController(ctrl);
 
   std::vector<SHSphere *> spheres;
   std::vector<Rotator *> rotators;
