@@ -7,17 +7,33 @@
 #include "utility/math.h"
 
 namespace nash {
+  template<typename T>
   class Script {
   public:
     const std::string name;
-    Script(const std::string & name);
-    void setContext(Context & context);
-    void bind(Object & obj);
-    virtual void start();
-    virtual void update();
+
+    Script(const std::string & name) : name(name) {
+      // Do nothing
+    }
+
+    void setContext(Context & ctx) {
+      context = &ctx;
+    }
+
+    void bind(T & tar) {
+      target = &tar;
+    }
+
+    virtual void start() {
+      // Do nothing
+    }
+
+    virtual void update() {
+      // Do nothing
+    }
   protected:
     Context * context;
-    Object * object;
+    T * target;
   };
 }
 

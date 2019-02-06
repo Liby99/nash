@@ -7,7 +7,7 @@
 
 using namespace nash;
 
-class Mover : public Script {
+class Mover : public Script<Object> {
 public:
   static constexpr float SPEED = 0.05;
 
@@ -15,19 +15,11 @@ public:
 
   void update() {
     Vector3f diff(0, 0, 0);
-    if (context->getKey('w')) {
-      diff.y() += SPEED;
-    }
-    if (context->getKey('a')) {
-      diff.x() -= SPEED;
-    }
-    if (context->getKey('s')) {
-      diff.y() -= SPEED;
-    }
-    if (context->getKey('d')) {
-      diff.x() += SPEED;
-    }
-    object->transform.position += diff;
+    if (context->getKey('w')) diff.y() += SPEED;
+    if (context->getKey('a')) diff.x() -= SPEED;
+    if (context->getKey('s')) diff.y() -= SPEED;
+    if (context->getKey('d')) diff.x() += SPEED;
+    target->transform.position += diff;
   }
 };
 

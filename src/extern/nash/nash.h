@@ -15,3 +15,4 @@
 #include "utility/math.h"
 #include "adhoc/script/rotator.h"
 #include "adhoc/script/toggle.h"
+#include "adhoc/script/third_person_camera.h"

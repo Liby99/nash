@@ -1,6 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "utility/script.h"
 #include "utility/math.h"
 
 using namespace Eigen;
@@ -18,9 +19,16 @@ namespace nash {
     float fovy;
 
     Camera();
+
+    void start(Context & context);
+    void update(Context & context);
+    bool hasController();
+    void setController(Script<Camera> & ctrl);
+    Script<Camera> & getController();
     void setSize(int width, int height);
     Matrix4f getViewPerspective();
   protected:
+    Script<Camera> * control;
     Matrix4f getView();
     Matrix4f getPerspective();
   };

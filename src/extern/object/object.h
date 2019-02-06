@@ -8,6 +8,7 @@
 #include "utility/shader.h"
 
 namespace nash {
+  template<typename T>
   class Script;
 
   class Object {
@@ -40,8 +41,8 @@ namespace nash {
     bool isHidden();
 
     // Scripting
-    void attachScript(Script & script);
-    Script & getScript(std::string & name);
+    void attachScript(Script<Object> & script);
+    Script<Object> & getScript(std::string & name);
     void removeScript(std::string & name);
 
     // Object Life Cycle pipeline.
@@ -60,7 +61,7 @@ namespace nash {
     Shader * shader;
     Object * parent;
     std::vector<Object *> children;
-    std::vector<Script *> scripts;
+    std::vector<Script<Object> *> scripts;
   };
 }
 

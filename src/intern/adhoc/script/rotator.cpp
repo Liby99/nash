@@ -8,5 +8,5 @@ Rotator::Rotator(const std::string & name, float speed, Vector3f axis) :
   Script(name), counter(0), speed(speed), axis(axis) { }
 
 void Rotator::update() {
-  object->transform.rotation = AngleAxisf((++counter) * speed, axis);
+  target->transform.rotation = AngleAxisf((++counter) * speed, axis);
 }

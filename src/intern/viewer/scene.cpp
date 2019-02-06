@@ -11,11 +11,13 @@ void Scene::setSize(int width, int height) {
 }
 
 void Scene::start(Context & context) {
+  camera.start(context);
   root.startWrapper(context);
 }
 
 void Scene::update(Context & context) {
   Matrix4f base = Matrix4f::Identity();
+  camera.update(context);
   root.updateWrapper(context, base);
 }
 

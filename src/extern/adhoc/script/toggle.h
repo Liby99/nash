@@ -5,7 +5,7 @@
 #include "utility/script.h"
 
 namespace nash {
-  class Toggle : public Script {
+  class Toggle : public Script<Object> {
   public:
     typedef std::function<bool(Context &)> ToggleFunction;
 

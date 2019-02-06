@@ -18,7 +18,7 @@ Toggle::Toggle(const std::string & name, bool initial, ToggleFunction func) :
 
 void Toggle::start() {
   show = initial;
-  object->setHidden(!show);
+  target->setHidden(!show);
 }
 
 void Toggle::update() {
@@ -26,7 +26,7 @@ void Toggle::update() {
   if (!activating && result) {
     activating = true;
     show = !show;
-    object->setHidden(!show);
+    target->setHidden(!show);
   } else if (activating && !result) {
     if (!eval()) {
       activating = false;

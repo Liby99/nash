@@ -4,8 +4,36 @@ using namespace nash;
 
 Camera::Camera() :
   position(0, 0, -1), target(0, 0, 0), up(0, 1, 0), width(1280), height(720),
-  zNear(0.1), zFar(20), aspect(1.7777778), fovy(45) {
+  zNear(0.1), zFar(20), aspect(1.7777778), fovy(45), control(nullptr) {
   // Do nothing
+}
+
+void Camera::start(Context & context) {
+  if (hasController()) {
+    control->setContext(context);
+    control->bind(*this);
+    control->start();
+  }
+}
+
+void Camera::update(Context & context) {
+  if (hasController()) {
+    control->setContext(context);
+    control->bind(*this);
+    control->update();
+  }
+}
+
+bool Camera::hasController() {
+  return control != nullptr;
+}
+
+void Camera::setController(Script<Camera> & ctrl) {
+  control = &ctrl;
+}
+
+Script<Camera> & Camera::getController() {
+  return *control;
 }
 
 void Camera::setSize(int width, int height) {

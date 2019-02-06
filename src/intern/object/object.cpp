@@ -86,12 +86,12 @@ bool Object::isHidden() {
   return hidden;
 }
 
-void Object::attachScript(Script & script) {
+void Object::attachScript(Script<Object> & script) {
   scripts.push_back(&script);
 }
 
-Script & Object::getScript(std::string & name) {
-  auto it = find_if(scripts.begin(), scripts.end(), [&name](const Script * s) {
+Script<Object> & Object::getScript(std::string & name) {
+  auto it = find_if(scripts.begin(), scripts.end(), [&name](const Script<Object> * s) {
     return s->name == name;
   });
   if (it != scripts.end()) {
@@ -102,7 +102,7 @@ Script & Object::getScript(std::string & name) {
 }
 
 void Object::removeScript(std::string & name) {
-  auto it = find_if(scripts.begin(), scripts.end(), [&name](const Script * s) {
+  auto it = find_if(scripts.begin(), scripts.end(), [&name](const Script<Object> * s) {
     return s->name == name;
   });
   if (it != scripts.end()) {
