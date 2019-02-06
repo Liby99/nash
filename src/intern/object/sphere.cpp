@@ -35,7 +35,7 @@ void Sphere::generateMesh() {
   subdivide(vertices, triangles, 0);
 
   // Finally generate from this triangles
-  indices = nanogui::MatrixXu(3, triangles.size());
+  indices = MatrixXu(3, triangles.size());
   for (int i = 0; i < triangles.size(); i++) {
     indices.col(i) << triangles[i].x(), triangles[i].y(), triangles[i].z();
   }
