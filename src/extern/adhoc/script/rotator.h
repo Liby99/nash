@@ -2,6 +2,7 @@
 #define ROTATOR_H
 
 #include "utility/script.h"
+#include "object/object.h"
 
 namespace nash {
   class Rotator : public Script<Object> {

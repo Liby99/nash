@@ -3,7 +3,6 @@
 
 #include <string>
 #include "viewer/context.h"
-#include "object/object.h"
 #include "utility/math.h"
 
 namespace nash {

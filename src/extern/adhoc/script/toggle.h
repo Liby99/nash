@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "utility/script.h"
+#include "object/object.h"
 
 namespace nash {
   class Toggle : public Script<Object> {

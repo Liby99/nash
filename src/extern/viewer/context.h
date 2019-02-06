@@ -33,8 +33,8 @@ namespace nash {
     bool scrollEvent(const Vector2i & p, const Vector2f & rel);
 
   private:
-    bool shiftStatus, ctrlStatus, altStatus, superStatus;
     std::vector<bool> keyStatus;
+    bool shiftStatus, ctrlStatus, altStatus, superStatus;
     bool leftButtonDown, rightButtonDown, cursorInside;
     Vector2i cursorPosition, newCursorPosition;
     Vector2f scrollPosition, newScrollPosition;

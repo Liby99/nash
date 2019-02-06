@@ -6,11 +6,9 @@
 #include "viewer/context.h"
 #include "utility/transform.h"
 #include "utility/shader.h"
+#include "utility/script.h"
 
 namespace nash {
-  template<typename T>
-  class Script;
-
   class Object {
   public:
     nash::Transform transform;
