@@ -19,10 +19,9 @@ int main() {
   };
 
   Cube cube;
-  cube.setParent(scene.root);
-  cube.setShader(Shader::get());
   Toggle cubeToggle("toggle", func);
   cube.attachScript(cubeToggle);
+  scene.addObject(cube);
 
   Viewer viewer(1280, 720, "Cube test", scene);
   viewer.start();

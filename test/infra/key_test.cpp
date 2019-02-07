@@ -19,16 +19,14 @@ int main() {
   scene.camera.position << 3, 3, 3;
 
   Cube cube;
-  cube.setParent(scene.root);
-  cube.setShader(Shader::get());
   Toggle cubeToggle("toggle", true); // `true` means the initial state is showing
   cube.attachScript(cubeToggle);
+  scene.addObject(cube);
 
   Sphere sphere;
-  sphere.setParent(scene.root);
-  sphere.setShader(Shader::get());
   Toggle sphereToggle("toggle", false); // `false` means the initial state is hiding
   sphere.attachScript(sphereToggle);
+  scene.addObject(sphere);
 
   Viewer viewer(1280, 720, "Cube test", scene);
   viewer.start();

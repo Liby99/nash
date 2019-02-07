@@ -1,3 +1,7 @@
+/**
+ * In this example we demonstrated how do we use assimp object to
+ */
+
 #include <nash/nash.h>
 
 using namespace nash;
@@ -8,10 +12,10 @@ int main(int argc, char * argv[]) {
   Scene scene;
   ThirdPersonCamera camCtrl;
   scene.camera.setController(camCtrl);
-
+  
   AssimpObject teapot("./res/model/teapot.obj");
-  teapot.getRootNode().getChildNode("defaultobject").getMesh("defaultobject")
-    .setShader(Shader::get());
+  Rotator rotator("rotator");
+  teapot.attachScript(rotator);
   scene.addObject(teapot);
 
   Viewer viewer(1280, 720, "Teapot Viewer test", scene);

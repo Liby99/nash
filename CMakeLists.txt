@@ -12,14 +12,14 @@ set(CMAKE_MACOSX_RPATH 1)
 add_definitions(-DGL_SILENCE_DEPRECATION)
 
 # MinGW Support
-if( MINGW )
+if(MINGW)
   set(NANOGUI_BUILD_SHARED OFF)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter -g \
     -Wno-int-in-bool-context -Wno-tautological-compare -Wno-maybe-uninitialized -Wno-return-type \
     -Wno-cast-function-type -Wno-implicit-fallthrough")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter -frtti -g \
-    -Wno-int-in-bool-context -Wno-tautological-compare -Wno-class-memaccess -Wno-maybe-uninitialized -Wno-return-type\
-    -Wno-cast-function-type -Wno-implicit-fallthrough")
+    -Wno-int-in-bool-context -Wno-tautological-compare -Wno-class-memaccess \
+    -Wno-maybe-uninitialized -Wno-return-type -Wno-cast-function-type -Wno-implicit-fallthrough")
 endif()
 
 # Dependency checks
@@ -79,5 +79,5 @@ foreach(exec_source ${tests} ${apps})
   add_executable(${target_name} ${exec_source})
   set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${target_dir})
   target_link_libraries(${target_name} nash)
-  include("${temp_dir}/CMakeLists.txt" OPTIONAL)
+  include("${target_dir}/CMakeLists.txt" OPTIONAL)
 endforeach()

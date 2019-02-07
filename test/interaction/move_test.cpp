@@ -30,10 +30,9 @@ int main() {
   scene.camera.position << 1, 1, 5;
 
   Cube cube;
-  cube.setParent(scene.root);
-  cube.setShader(Shader::get());
   Mover mover("mover");
   cube.attachScript(mover);
+  scene.addObject(cube);
 
   Viewer viewer(1280, 720, "Cube test", scene);
   viewer.start();

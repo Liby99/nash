@@ -3,7 +3,7 @@
 using namespace nash;
 
 Mesh::Mesh() : Object() {
-  // Do nothing
+  Object::setShader(Shader::get());
 }
 
 void Mesh::render() {
