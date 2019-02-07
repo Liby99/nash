@@ -182,6 +182,8 @@ void Object::renderWrapper(Context & context, Matrix4f & viewPersp) {
         scripts[i]->postRender();
       }
     }
+    
+    // Render all the children
     for (int i = 0; i < children.size(); i++) {
       children[i]->renderWrapper(context, viewPersp);
     }
