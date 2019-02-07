@@ -2,6 +2,8 @@
 #define BOX_TREE_MESH_H
 
 #include "object/mesh.h"
+#include "adhoc/raytrace/ray.h"
+#include "adhoc/raytrace/intersection.h"
 
 namespace nash {
   class BoxTreeMesh {
