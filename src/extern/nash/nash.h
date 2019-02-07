@@ -1,3 +1,4 @@
+#include "image/image.h"
 #include "viewer/viewer.h"
 #include "viewer/camera.h"
 #include "viewer/context.h"

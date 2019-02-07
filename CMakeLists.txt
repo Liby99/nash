@@ -49,6 +49,10 @@ endforeach()
 add_subdirectory(lib/assimp EXCLUDE_FROM_ALL)
 include_directories(lib/assimp/include)
 
+# Include stb
+# e.g. #include <stb_image.h>
+include_directories(lib/stb/)
+
 # Generate single header file using the script
 execute_process(
   COMMAND python3 ${CMAKE_CURRENT_LIST_DIR}/script/generate_header.py nash
