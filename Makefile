@@ -10,6 +10,9 @@ all: build
 build: FORCE
 	@ sh ./script/build.sh
 
+format:
+	@ clang-format -i src/**/*.cpp src/**/*.h
+
 doc: $(TEX_PDF)
 
 $(TEX_OUTPUT_DIR)/%.pdf: $(TEX_SOURCE_DIR)/%.tex
