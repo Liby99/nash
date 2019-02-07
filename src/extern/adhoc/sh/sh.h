@@ -1,7 +1,7 @@
 #ifndef SH_H
 #define SH_H
 
-#import "utility/math.h"
+#include "utility/math.h"
 
 namespace nash {
   class SH {
