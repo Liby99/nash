@@ -2,7 +2,7 @@
 
 using namespace nash;
 
-Sphere::Sphere() : Sphere(SUBDIVISION) { }
+Sphere::Sphere() : Sphere(SUBDIVISION) {}
 
 Sphere::Sphere(int subdivision) : Mesh(), subdivision(subdivision) {
   generateMesh();
@@ -47,19 +47,21 @@ void Sphere::generateMesh() {
   }
 }
 
-void Sphere::subdivide(Vertices & vertices, Triangles & triangles, int step) {
+void Sphere::subdivide(Vertices &vertices, Triangles &triangles, int step) {
 
   // Stop if done subdivision
-  if (step >= subdivision) return;
+  if (step >= subdivision)
+    return;
 
   // Loop over existing triangles and subdivide a tri to four tris.
-  int numTriangles = triangles.size(); // Cache the amount since it will be changing
+  int numTriangles =
+      triangles.size(); // Cache the amount since it will be changing
   for (int i = 0; i < numTriangles; i++) {
 
     // Fetch information from triangles
-    Vector3u & tri = triangles[i];
+    Vector3u &tri = triangles[i];
     int i1 = tri.x(), i2 = tri.y(), i3 = tri.z();
-    Vector3f & v1 = vertices[i1], & v2 = vertices[i2], & v3 = vertices[i3];
+    Vector3f &v1 = vertices[i1], &v2 = vertices[i2], &v3 = vertices[i3];
 
     // Subdivide using mid points on each edge
     Vector3f m1 = 0.5 * (v1 + v2), m2 = 0.5 * (v2 + v3), m3 = 0.5 * (v3 + v1);
@@ -69,7 +71,8 @@ void Sphere::subdivide(Vertices & vertices, Triangles & triangles, int step) {
     vertices.push_back(m3.normalized());
 
     // Existing triangle will now be the center one
-    uint32_t curr = vertices.size(), ni1 = curr - 3, ni2 = curr - 2, ni3 = curr - 1;
+    uint32_t curr = vertices.size(), ni1 = curr - 3, ni2 = curr - 2,
+             ni3 = curr - 1;
     triangles.push_back(Vector3u(i1, ni1, ni3));
     triangles.push_back(Vector3u(ni1, i2, ni2));
     triangles.push_back(Vector3u(ni3, ni2, i3));

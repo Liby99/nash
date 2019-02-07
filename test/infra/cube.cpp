@@ -1,5 +1,6 @@
 /**
- * Just a simple test of whether the system can render a simple cube on the screen
+ * Just a simple test of whether the system can render a simple cube on the
+ * screen
  */
 
 #include <nash/nash.h>

@@ -2,9 +2,7 @@
 
 using namespace nash;
 
-Mesh::Mesh() : Object() {
-  Object::setShader(Shader::get());
-}
+Mesh::Mesh() : Object() { Object::setShader(Shader::get()); }
 
 void Mesh::render() {
   shader->uploadIndices(indices);

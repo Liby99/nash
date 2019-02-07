@@ -6,13 +6,13 @@
 
 using namespace nash;
 
-int main(int argc, char * argv[]) {
+int main(int argc, char *argv[]) {
   Nash::init(argc, argv);
 
   Scene scene;
   ThirdPersonCamera camCtrl;
   scene.camera.setController(camCtrl);
-  
+
   AssimpObject teapot("./res/model/teapot.obj");
   Rotator rotator("rotator");
   teapot.attachScript(rotator);

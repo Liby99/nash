@@ -1,7 +1,7 @@
 /**
- * Simple test of whether the system can show a rotating cube on the screen. You can notice that we
- * have attached a script `Rotator` to the cube, and that is the main reason that the cube is
- * rotating (around y-axis)
+ * Simple test of whether the system can show a rotating cube on the screen. You
+ * can notice that we have attached a script `Rotator` to the cube, and that is
+ * the main reason that the cube is rotating (around y-axis)
  */
 
 #include <nash/nash.h>

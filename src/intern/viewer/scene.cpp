@@ -6,26 +6,22 @@ Scene::Scene() : camera(), root() {
   // Do nothing
 }
 
-void Scene::setSize(int width, int height) {
-  camera.setSize(width, height);
-}
+void Scene::setSize(int width, int height) { camera.setSize(width, height); }
 
-void Scene::addObject(Object & object) {
-  object.setParent(root);
-}
+void Scene::addObject(Object &object) { object.setParent(root); }
 
-void Scene::start(Context & context) {
+void Scene::start(Context &context) {
   camera.start(context);
   root.startWrapper(context);
 }
 
-void Scene::update(Context & context) {
+void Scene::update(Context &context) {
   Matrix4f base = Matrix4f::Identity();
   camera.update(context);
   root.updateWrapper(context, base);
 }
 
-void Scene::render(Context & context) {
+void Scene::render(Context &context) {
   Matrix4f viewPersp = camera.getViewPerspective();
   root.renderWrapper(context, viewPersp);
 }

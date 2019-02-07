@@ -1,5 +1,6 @@
 /**
- * Similar test to `cube_rotator.cpp`. We are rendering a `SHSphere` instead of a cube here.
+ * Similar test to `cube_rotator.cpp`. We are rendering a `SHSphere` instead of
+ * a cube here.
  */
 
 #include <nash/nash.h>

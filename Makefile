@@ -10,8 +10,17 @@ all: build
 build: FORCE
 	@ sh ./script/build.sh
 
-format:
-	@ clang-format -i src/**/*.cpp src/**/*.h
+format: format-lib format-app format-test
+
+format-lib:
+	find ./src/intern -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
+	find ./src/extern -name '*.h' | xargs -I '{}' clang-format -i '{}'
+	
+format-app:
+	find ./app -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
+	
+format-test:
+	find ./test -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
 
 doc: $(TEX_PDF)
 

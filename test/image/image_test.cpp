@@ -2,7 +2,7 @@
 
 using namespace nash;
 
-void test(const std::string & filename) {
+void test(const std::string &filename) {
   Image image(filename);
   std::cout << "Loaded " << filename << std::endl;
   std::cout << " - width: " << image.width << std::endl;
@@ -10,9 +10,9 @@ void test(const std::string & filename) {
   std::cout << " - num channels: " << image.numChannels << std::endl;
 }
 
-int main(int argc, char * argv[]) {
+int main(int argc, char *argv[]) {
   Path::init(argv[0]);
-  
+
   // Go to look at CMakeLists.txt for each copied images
   test("./image/head.bmp");
   test("./image/posx.jpg");

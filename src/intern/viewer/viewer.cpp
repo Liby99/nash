@@ -2,14 +2,14 @@
 
 using namespace nash;
 
-const nanogui::Color Viewer::BACKGROUND = { 30, 30, 30, 255 };
+const nanogui::Color Viewer::BACKGROUND = {30, 30, 30, 255};
 
 const int Viewer::HEADER_HEIGHT = 28;
 
 const int Viewer::PADDING = 5;
 
-Viewer::Viewer(int w, int h, std::string name, Scene & scene) :
-  nanogui::Screen(Vector2i(w, h), name, false) {
+Viewer::Viewer(int w, int h, std::string name, Scene &scene)
+    : nanogui::Screen(Vector2i(w, h), name, false) {
   using namespace nanogui;
   setBackground(BACKGROUND);
   sceneWindow = new Window(this, name);
@@ -42,6 +42,4 @@ bool Viewer::keyboardEvent(int key, int scancode, int action, int modifiers) {
   return false;
 }
 
-void Viewer::draw(NVGcontext * ctx) {
-  Screen::draw(ctx);
-}
+void Viewer::draw(NVGcontext *ctx) { Screen::draw(ctx); }

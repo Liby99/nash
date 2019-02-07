@@ -4,13 +4,9 @@ using namespace nash;
 
 std::string Path::argv0 = std::string("");
 
-void Path::init(char * a0) {
-  argv0 = std::string(a0);
-}
+void Path::init(char *a0) { argv0 = std::string(a0); }
 
-const std::string & Path::getArgv0() {
-  return argv0;
-}
+const std::string &Path::getArgv0() { return argv0; }
 
 std::string Path::getCurrentWorkingDirectory() {
 #if defined(__APPLE__)
@@ -35,7 +31,7 @@ std::string Path::getProgramFileName() {
 #endif
 }
 
-std::string Path::getAbsolutePathTo(const std::string & relativePath) {
+std::string Path::getAbsolutePathTo(const std::string &relativePath) {
 #if defined(__APPLE__)
   if (relativePath[0] == '/') {
     return relativePath;
@@ -45,12 +41,12 @@ std::string Path::getAbsolutePathTo(const std::string & relativePath) {
 #endif
 }
 
-std::string Path::getFileName(const std::string & path) {
+std::string Path::getFileName(const std::string &path) {
   std::size_t found = path.find_last_of("/\\");
   return path.substr(found + 1);
 }
 
-std::string Path::getDirectory(const std::string & path) {
+std::string Path::getDirectory(const std::string &path) {
   std::size_t found = path.find_last_of("/\\");
   return path.substr(0, found + 1);
 }

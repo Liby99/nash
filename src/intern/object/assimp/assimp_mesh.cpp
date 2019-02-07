@@ -2,20 +2,18 @@
 
 using namespace nash;
 
-AssimpMesh::AssimpMesh(const aiMesh * mesh) : Mesh() {
+AssimpMesh::AssimpMesh(const aiMesh *mesh) : Mesh() {
   loadName(mesh);
   processMesh(mesh);
 }
 
-const std::string & AssimpMesh::getName() {
-  return name;
-}
+const std::string &AssimpMesh::getName() { return name; }
 
-void AssimpMesh::loadName(const aiMesh * mesh) {
+void AssimpMesh::loadName(const aiMesh *mesh) {
   name = std::string(mesh->mName.C_Str());
 }
 
-void AssimpMesh::processMesh(const aiMesh * mesh) {
+void AssimpMesh::processMesh(const aiMesh *mesh) {
 
   // First load the indices to matrix
   indices = MatrixXu(3, mesh->mNumFaces);

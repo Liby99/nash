@@ -5,18 +5,15 @@ using namespace nash;
 SHSphere::SHSphere(int l, int m) : Sphere(), l(l), m(m) {
   if (abs(m) > l) {
     std::string ms = std::to_string(m), ls = std::to_string(l);
-    throw std::invalid_argument("expected |m| < l, but found m = " + ms + ", l = " + ls);
+    throw std::invalid_argument("expected |m| < l, but found m = " + ms +
+                                ", l = " + ls);
   }
   updatePositions();
 }
 
-int SHSphere::getL() {
-  return l;
-}
+int SHSphere::getL() { return l; }
 
-int SHSphere::getM() {
-  return m;
-}
+int SHSphere::getM() { return m; }
 
 void SHSphere::updatePositions() {
 
@@ -33,8 +30,10 @@ void SHSphere::updatePositions() {
 
   // Then loop through all the surfaces to add up the normals to each vertex
   for (int i = 0; i < indices.cols(); i++) {
-    uint32_t i1 = indices.col(i).x(), i2 = indices.col(i).y(), i3 = indices.col(i).z();
-    Vector3f v1 = positions.col(i1), v2 = positions.col(i2), v3 = positions.col(i3);
+    uint32_t i1 = indices.col(i).x(), i2 = indices.col(i).y(),
+             i3 = indices.col(i).z();
+    Vector3f v1 = positions.col(i1), v2 = positions.col(i2),
+             v3 = positions.col(i3);
     Vector3f surfaceNormal = (v3 - v1).cross(v2 - v1).normalized();
     normals.col(i1) += surfaceNormal;
     normals.col(i2) += surfaceNormal;

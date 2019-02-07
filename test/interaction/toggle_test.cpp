@@ -1,7 +1,8 @@
 /**
- * In this example, you can press either `a` or `b` to hide/show the cube. This is a demonstration
- * of using lambda function as the toggle function instead of just using single keys. Therefore
- * you can create much more complex toggle right here.
+ * In this example, you can press either `a` or `b` to hide/show the cube. This
+ * is a demonstration of using lambda function as the toggle function instead of
+ * just using single keys. Therefore you can create much more complex toggle
+ * right here.
  */
 
 #include <nash/nash.h>
@@ -14,7 +15,7 @@ int main() {
   Scene scene;
   scene.camera.position << 3, 3, 3;
 
-  Toggle::ToggleFunction func = [](Context & context) {
+  Toggle::ToggleFunction func = [](Context &context) {
     return context.getKey('a') || context.getKey('b');
   };
 

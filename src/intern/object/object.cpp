@@ -3,23 +3,16 @@
 
 using namespace nash;
 
-Object::Object() :
-  active(true),
-  hidden(false),
-  shader(nullptr),
-  parent(nullptr) {
+Object::Object()
+    : active(true), hidden(false), shader(nullptr), parent(nullptr) {
   // Do nothing
 }
 
-bool Object::hasParent() {
-  return parent != nullptr;
-}
+bool Object::hasParent() { return parent != nullptr; }
 
-Object & Object::getParent() {
-  return *parent;
-}
+Object &Object::getParent() { return *parent; }
 
-void Object::setParent(Object & p) {
+void Object::setParent(Object &p) {
   if (parent != nullptr) {
     removeFromParent();
   }
@@ -29,72 +22,46 @@ void Object::setParent(Object & p) {
 
 void Object::removeFromParent() {
   if (parent != nullptr) {
-    std::vector<Object *> & cs = parent->children;
+    std::vector<Object *> &cs = parent->children;
     cs.erase(std::remove(cs.begin(), cs.end(), this), cs.end());
     parent = nullptr;
   }
 }
 
-std::vector<Object *> & Object::getChildren() {
-  return children;
-}
+std::vector<Object *> &Object::getChildren() { return children; }
 
-Object & Object::getChild(int i) {
-  return *(children[i]);
-}
+Object &Object::getChild(int i) { return *(children[i]); }
 
-bool Object::hasShader() {
-  return shader != nullptr;
-}
+bool Object::hasShader() { return shader != nullptr; }
 
-Shader & Object::getShader() {
-  return *shader;
-}
+Shader &Object::getShader() { return *shader; }
 
-void Object::setShader(Shader & s) {
-  shader = &s;
-}
+void Object::setShader(Shader &s) { shader = &s; }
 
-void Object::activate() {
-  setActive(true);
-}
+void Object::activate() { setActive(true); }
 
-void Object::deactivate() {
-  setActive(false);
-}
+void Object::deactivate() { setActive(false); }
 
-void Object::setActive(bool a) {
-  active = a;
-}
+void Object::setActive(bool a) { active = a; }
 
-bool Object::isActive() {
-  return active;
-}
+bool Object::isActive() { return active; }
 
-void Object::show() {
-  hidden = false;
-}
+void Object::show() { hidden = false; }
 
-void Object::hide() {
-  hidden = true;
-}
+void Object::hide() { hidden = true; }
 
-void Object::setHidden(bool h) {
-  hidden = h;
-}
+void Object::setHidden(bool h) { hidden = h; }
 
-bool Object::isHidden() {
-  return hidden;
-}
+bool Object::isHidden() { return hidden; }
 
-void Object::attachScript(Script<Object> & script) {
+void Object::attachScript(Script<Object> &script) {
   scripts.push_back(&script);
 }
 
-Script<Object> & Object::getScript(std::string & name) {
-  auto it = find_if(scripts.begin(), scripts.end(), [&name](const Script<Object> * s) {
-    return s->name == name;
-  });
+Script<Object> &Object::getScript(std::string &name) {
+  auto it =
+      find_if(scripts.begin(), scripts.end(),
+              [&name](const Script<Object> *s) { return s->name == name; });
   if (it != scripts.end()) {
     return **it;
   } else {
@@ -102,10 +69,10 @@ Script<Object> & Object::getScript(std::string & name) {
   }
 }
 
-void Object::removeScript(std::string & name) {
-  auto it = find_if(scripts.begin(), scripts.end(), [&name](const Script<Object> * s) {
-    return s->name == name;
-  });
+void Object::removeScript(std::string &name) {
+  auto it =
+      find_if(scripts.begin(), scripts.end(),
+              [&name](const Script<Object> *s) { return s->name == name; });
   if (it != scripts.end()) {
     scripts.erase(it);
   }
@@ -123,7 +90,7 @@ void Object::render() {
   // Do nothing
 }
 
-void Object::startWrapper(Context & context) {
+void Object::startWrapper(Context &context) {
   this->context = &context;
   if (active) {
     start();
@@ -138,7 +105,7 @@ void Object::startWrapper(Context & context) {
   }
 }
 
-void Object::updateWrapper(Context & context, Matrix4f & world) {
+void Object::updateWrapper(Context &context, Matrix4f &world) {
   this->context = &context;
   if (active) {
     transform.world = world;
@@ -155,34 +122,34 @@ void Object::updateWrapper(Context & context, Matrix4f & world) {
   }
 }
 
-void Object::renderWrapper(Context & context, Matrix4f & viewPersp) {
+void Object::renderWrapper(Context &context, Matrix4f &viewPersp) {
   this->context = &context;
   if (active) {
-    
+
     // Check if is going to do the rendering
     if (!hidden && hasShader()) {
-      
+
       // First set basic properties of this object and the camera
       shader->bind();
       shader->setUniform("model", transform.getTransform());
       shader->setUniform("viewPersp", viewPersp);
-      
+
       // Then run the pre render scripts
       for (int i = 0; i < scripts.size(); i++) {
         scripts[i]->setContext(context);
         scripts[i]->bind(*this);
         scripts[i]->preRender();
       }
-      
+
       // Render the object
       render();
-      
+
       // Finally run the post render scripts
       for (int i = 0; i < scripts.size(); i++) {
         scripts[i]->postRender();
       }
     }
-    
+
     // Render all the children
     for (int i = 0; i < children.size(); i++) {
       children[i]->renderWrapper(context, viewPersp);
