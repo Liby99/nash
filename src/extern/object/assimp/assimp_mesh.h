@@ -9,12 +9,6 @@ namespace nash {
   public:
     AssimpMesh(const aiMesh * mesh);
     const std::string & getName();
-    
-    // void render() {
-    //   std::cout << "render from mesh asdfasdafds" << std::endl;
-    //   Mesh::render();
-    // }
-    
   private:
     std::string name;
     void loadName(const aiMesh * mesh);
