@@ -1,6 +1,9 @@
 #ifndef SAMPLER_H
 #define SAMPLER_H
 
+#include <vector>
+#include "utility/math.h"
+
 namespace nash {
   class Sampler {
   public:

@@ -1,4 +1,4 @@
-#include "object/cube.h"
+#include "object/primitive/cube.h"
 
 using namespace nash;
 

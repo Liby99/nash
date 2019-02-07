@@ -2,7 +2,7 @@
 #define SH_SPHERE_H
 
 #include <stdio.h>
-#include "object/sphere.h"
+#include "object/primitive/sphere.h"
 #include "adhoc/sh/sh.h"
 
 namespace nash {

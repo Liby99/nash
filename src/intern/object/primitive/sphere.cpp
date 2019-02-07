@@ -1,4 +1,4 @@
-#include "object/sphere.h"
+#include "object/primitive/sphere.h"
 
 using namespace nash;
 

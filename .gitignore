@@ -1,6 +1,9 @@
 build/
 pdf/
 
+# System files
+.DS_Store
+
 # Latex related files
 *.aux
 *.fdb_latexmk

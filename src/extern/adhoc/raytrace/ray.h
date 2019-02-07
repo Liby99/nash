@@ -1,7 +1,9 @@
 #ifndef RAY_H
 #define RAY_H
 
-using namespace {
+#include "utility/math.h"
+
+namespace nash {
   class Ray {
   public:
     Vector3f pos, dir;

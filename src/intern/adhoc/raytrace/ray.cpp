@@ -1,4 +1,4 @@
-#include "utility/ray.h"
+#include "adhoc/raytrace/ray.h"
 
 using namespace nash;
 

@@ -10,7 +10,7 @@ void Sampler::sampleSphere(Vector2f & sample) {
   // TODO
 }
 
-void Sampler::sampleHemiSphere(std::vector<Vector> & samples) {
+void Sampler::sampleHemiSphere(std::vector<Vector2f> & samples) {
   // TODO
 }
 
