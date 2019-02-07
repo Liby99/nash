@@ -5,11 +5,9 @@ using namespace nash;
 AssimpObject::AssimpObject(const std::string & filename) : Object() {
 
   // Setup importer and load
+  std::string absPath = Path::getAbsolutePathTo(filename); // Note the absolute path
   Assimp::Importer importer;
-  const aiScene * assimpScene = importer.ReadFile(
-    Path::getAbsolutePathTo(filename), // Note that we are generating absolute path to load
-    aiProcess_Triangulate // We are always using triangles
-  );
+  const aiScene * assimpScene = importer.ReadFile(absPath, aiProcess_Triangulate);
 
   // If the import fail, throw error
   if (assimpScene == nullptr) {
@@ -19,8 +17,7 @@ AssimpObject::AssimpObject(const std::string & filename) : Object() {
   // Process the scene
   processScene(assimpScene);
 
-  // Note that the importer will be recycled here, and all the assimp related memory
-  // will be freed
+  // Note the importer will be auto-recycled here. All the assimp related memory will be freed
 }
 
 AssimpObject::~AssimpObject() {
