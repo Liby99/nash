@@ -13,18 +13,10 @@ namespace nash {
   public:
     AssimpObject(const std::string & filename);
     ~AssimpObject();
-    
-    // void render() {
-    //   // std::cout << "render from object asdfasdafds" << std::endl;
-    //   // root->print();
-    // }
-    
     AssimpNode & getRootNode();
   private:
-    
     AssimpNode * root;
     std::vector<AssimpMesh *> meshes;
-    
     void processScene(const aiScene * scene);
     AssimpNode * parseAssimpNode(const aiNode * assimpNode);
   };

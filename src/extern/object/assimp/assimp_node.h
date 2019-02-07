@@ -15,22 +15,6 @@ namespace nash {
     void addChild(AssimpNode & node);
     AssimpMesh & getMesh(const std::string & name);
     AssimpNode & getNode(const std::string & name);
-    
-    // void render() {
-    //   std::cout << "render from node asdfasdafds" << std::endl;
-    // }
-    //
-    // void print() {
-    //   std::cout << "begin " << name << std::endl;
-    //   for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-    //     std::cout << "node: ";
-    //     it->second->print();
-    //   }
-    //   for (auto it = meshes.begin(); it != meshes.end(); ++it) {
-    //     std::cout << "mesh: " << it->second->getName() << std::endl;
-    //   }
-    //   std::cout << "end " << name << std::endl;
-    // }
   private:
     std::string name;
     std::map<std::string, AssimpMesh *> meshes;

@@ -3,7 +3,7 @@
 using namespace nash;
 
 AssimpNode::AssimpNode(const std::string & name) : Object(), name(name) {
-  std::cout << name << " node generated" << std::endl;
+  
 }
 
 const std::string & AssimpNode::getName() {

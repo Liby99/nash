@@ -18,8 +18,6 @@ AssimpObject::AssimpObject(const std::string & filename) : Object() {
   
   // Note that the importer will be recycled here, and all the assimp related memory
   // will be freed
-  
-  std::cout << "object num children: " << children.size() << std::endl;
 }
 
 AssimpObject::~AssimpObject() {
