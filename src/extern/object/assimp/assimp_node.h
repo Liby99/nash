@@ -11,10 +11,14 @@ namespace nash {
   public:
     AssimpNode(const std::string & name);
     const std::string & getName();
+
     void addMesh(AssimpMesh & mesh);
-    void addChild(AssimpNode & node);
+    bool hasMesh(const std::string & name);
     AssimpMesh & getMesh(const std::string & name);
-    AssimpNode & getNode(const std::string & name);
+
+    void addChildNode(AssimpNode & node);
+    bool hasChildNode(const std::string & name);
+    AssimpNode & getChildNode(const std::string & name);
   private:
     std::string name;
     std::map<std::string, AssimpMesh *> meshes;

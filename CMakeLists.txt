@@ -1,5 +1,5 @@
 # Basic setups
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(nash)
 
 # Options
@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MACOSX_RPATH 1)
 add_definitions(-DGL_SILENCE_DEPRECATION)
 
+# MinGW Support
 if( MINGW )
   set(NANOGUI_BUILD_SHARED OFF)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter -g \
@@ -20,7 +21,6 @@ if( MINGW )
     -Wno-int-in-bool-context -Wno-tautological-compare -Wno-class-memaccess -Wno-maybe-uninitialized -Wno-return-type\
     -Wno-cast-function-type -Wno-implicit-fallthrough")
 endif()
-
 
 # Dependency checks
 if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/nanogui")

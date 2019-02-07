@@ -24,7 +24,7 @@ public:
 };
 
 int main() {
-  nanogui::init();
+  Nash::init();
 
   Scene scene;
   scene.camera.position << 1, 1, 5;
@@ -37,5 +37,6 @@ int main() {
 
   Viewer viewer(1280, 720, "Cube test", scene);
   viewer.start();
-  nanogui::shutdown();
+
+  Nash::shutdown();
 }

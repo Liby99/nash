@@ -3,7 +3,7 @@
 using namespace nash;
 
 int main() {
-  nanogui::init();
+  Nash::init();
 
   Scene scene;
   ThirdPersonCamera ctrl;
@@ -35,5 +35,5 @@ int main() {
     delete rotators[i];
   }
 
-  nanogui::shutdown();
+  Nash::shutdown();
 }

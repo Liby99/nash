@@ -7,9 +7,11 @@
 using namespace nash;
 
 int main() {
-  nanogui::init();
+  Nash::init();
+
   Scene scene;
   Viewer viewer(1280, 720, "Viewer test", scene);
   viewer.start();
-  nanogui::shutdown();
+
+  Nash::shutdown();
 }

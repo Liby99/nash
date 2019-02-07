@@ -4,6 +4,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "utility/path.h"
 #include "object/object.h"
 #include "object/assimp/assimp_node.h"
 #include "object/assimp/assimp_mesh.h"

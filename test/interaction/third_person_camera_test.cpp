@@ -15,7 +15,7 @@ using namespace nash;
 class FollowCamera : public Script<Object> {
 public:
   FollowCamera(const std::string & name, Camera & cam) : Script<Object>(name), camera(&cam) { }
-  
+
   void update() {
     target->transform.position = camera->target;
   }
@@ -27,13 +27,13 @@ class TintColor : public Script<Object> {
 public:
   TintColor(const std::string & name, const Vector3f & color) :
     Script<Object>(name), color(color) { }
-  
+
   void preRender() {
     if (target->hasShader()) {
       target->getShader().setUniform("DiffuseColor", color);
     }
   }
-  
+
   void postRender() {
     if (target->hasShader()) {
       target->getShader().setUniform("DiffuseColor", Vector3f(0.1, 0.1, 0.1));
@@ -44,7 +44,7 @@ private:
 };
 
 int main() {
-  nanogui::init();
+  Nash::init();
 
   Scene scene;
   ThirdPersonCamera camCtrl;
@@ -74,7 +74,7 @@ int main() {
   TintColor tintRed("tint-red", Vector3f(0.3, 0.1, 0.1));
   plane.attachScript(tintRed);
   scene.addObject(plane);
-  
+
   Sphere followingSphere;
   followingSphere.transform.scale << 0.1, 0.1, 0.1;
   followingSphere.setParent(scene.root);
@@ -84,5 +84,6 @@ int main() {
 
   Viewer viewer(1280, 720, "Cube test", scene);
   viewer.start();
-  nanogui::shutdown();
+
+  Nash::shutdown();
 }

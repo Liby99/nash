@@ -16,14 +16,14 @@ void AssimpMesh::loadName(const aiMesh * mesh) {
 }
 
 void AssimpMesh::processMesh(const aiMesh * mesh) {
-  
+
   // First load the indices to matrix
   indices = MatrixXu(3, mesh->mNumFaces);
   for (int i = 0; i < mesh->mNumFaces; i++) {
     aiFace f = mesh->mFaces[i];
     indices.col(i) << f.mIndices[0], f.mIndices[1], f.mIndices[2];
   }
-  
+
   // Then load the positions
   positions = MatrixXf(3, mesh->mNumVertices);
   normals = MatrixXf(3, mesh->mNumVertices);
