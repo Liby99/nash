@@ -131,7 +131,7 @@ void Shader::init() {
       "#version 400\n"
       "in vec3 fragPosition;\n"
       "in vec3 fragNormal;\n"
-      "uniform vec3 AmbientColor = vec3(0.0);\n"
+      "uniform vec3 AmbientColor = vec3(0.1);\n"
       "uniform vec3 LightDirection = normalize(vec3(1, 5, 2));\n"
       "uniform vec3 LightColor = vec3(0.8);\n"
       "uniform vec3 DiffuseColor = vec3(0.1);\n"
