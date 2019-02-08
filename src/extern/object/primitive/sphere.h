@@ -17,6 +17,6 @@ namespace nash {
     void generateMesh();
     void subdivide(Vertices &vertices, Triangles &triangles, int step);
   };
-} 
+}
 
 #endif

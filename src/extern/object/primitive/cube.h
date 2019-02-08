@@ -8,6 +8,6 @@ namespace nash {
   public:
     Cube();
   };
-} 
+}
 
 #endif

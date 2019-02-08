@@ -18,6 +18,6 @@ namespace nash {
     nanogui::Window *sceneWindow;
     Canvas *sceneCanvas;
   };
-} 
+}
 
 #endif

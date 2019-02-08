@@ -23,6 +23,6 @@ namespace nash {
 
   private:
   };
-} 
+}
 
 #endif

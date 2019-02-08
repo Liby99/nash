@@ -38,6 +38,6 @@ namespace nash {
     Context *context;
     T *target;
   };
-} 
+}
 
 #endif

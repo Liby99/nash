@@ -14,6 +14,6 @@ namespace nash {
     Transform();
     Matrix4f getTransform();
   };
-} 
+}
 
 #endif

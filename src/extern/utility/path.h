@@ -24,6 +24,6 @@ namespace nash {
     static const int BUF_SIZE = 128;
     static std::string argv0;
   };
-}; 
+};
 
 #endif

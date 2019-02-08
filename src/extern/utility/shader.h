@@ -42,6 +42,6 @@ namespace nash {
 
     static std::map<std::string, Shader *> store;
   };
-} 
+}
 
 #endif

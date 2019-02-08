@@ -25,6 +25,6 @@ namespace nash {
     std::map<std::string, AssimpMesh *> meshes;
     std::map<std::string, AssimpNode *> nodes;
   };
-} 
+}
 
 #endif

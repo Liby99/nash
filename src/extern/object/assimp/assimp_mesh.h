@@ -15,6 +15,6 @@ namespace nash {
     void loadName(const aiMesh *mesh);
     void processMesh(const aiMesh *mesh);
   };
-} 
+}
 
 #endif

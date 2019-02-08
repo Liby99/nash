@@ -12,6 +12,6 @@ namespace nash {
     static void sampleHemiSphere(std::vector<Vector2f> &samples);
     static void sampleHemiSphere(Vector2f &sample);
   };
-} 
+}
 
 #endif

@@ -20,6 +20,6 @@ namespace nash {
     static Vector3f polarToCart(const Vector2f &pol);
     static Vector3f polarToCart(float theta, float phi);
   };
-} 
+}
 
 #endif

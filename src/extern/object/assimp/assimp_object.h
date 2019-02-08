@@ -22,6 +22,6 @@ namespace nash {
     void processScene(const aiScene *scene);
     AssimpNode *parseAssimpNode(const aiNode *assimpNode);
   };
-} 
+}
 
 #endif

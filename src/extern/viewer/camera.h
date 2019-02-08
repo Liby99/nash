@@ -33,6 +33,6 @@ namespace nash {
     Matrix4f getView();
     Matrix4f getPerspective();
   };
-} 
+}
 
 #endif

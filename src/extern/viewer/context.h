@@ -58,6 +58,6 @@ namespace nash {
 
     void extractModifiers(int modifiers);
   };
-} 
+}
 
 #endif

@@ -26,6 +26,6 @@ namespace nash {
     Scene *scene;
     Context context;
   };
-} 
+}
 
 #endif

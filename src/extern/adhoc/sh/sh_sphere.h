@@ -16,6 +16,6 @@ namespace nash {
     int l, m;
     void updatePositions();
   };
-} 
+}
 
 #endif

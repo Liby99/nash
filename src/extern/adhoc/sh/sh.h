@@ -13,6 +13,6 @@ namespace nash {
   private:
     static int factorial(int i);
   };
-} 
+}
 
 #endif

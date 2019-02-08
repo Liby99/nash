@@ -14,6 +14,6 @@ namespace nash {
     MatrixXf positions;
     MatrixXf normals;
   };
-} 
+}
 
 #endif

@@ -17,6 +17,6 @@ namespace nash {
   private:
     float azimuth, incline, distance;
   };
-} 
+}
 
 #endif
