@@ -51,14 +51,14 @@ int main() {
   scene.camera.setController(camCtrl);
 
   Cube cube;
-  cube.transform.scale << 0.6, 0.5, 0.4;
+  cube.transform.scale << 1.2, 1, 0.8;
   cube.transform.position << 0.8, -0.1, -1;
   TintColor tintGreen("tint-green", Vector3f(0.1, 0.5, 0.3));
   cube.attachScript(tintGreen);
   scene.addObject(cube);
 
   Cube cube2;
-  cube2.transform.scale << 0.5, 0.2, 0.4;
+  cube2.transform.scale << 1, 0.4, 0.8;
   cube2.transform.position << -1.2, -0.45, 0.3;
   cube2.transform.rotation = Quaternionf(AngleAxisf(1.0, Vector3f::UnitY()));
   TintColor tintBlue("tint-blue", Vector3f(0.1, 0.5, 0.5));
@@ -73,7 +73,7 @@ int main() {
   scene.addObject(plane);
 
   Sphere followingSphere;
-  followingSphere.transform.scale << 0.1, 0.1, 0.1;
+  followingSphere.transform.scale << 0.2, 0.2, 0.2;
   FollowCamera followCameraScript("follow-camera", scene.camera);
   followingSphere.attachScript(followCameraScript);
   scene.addObject(followingSphere);
