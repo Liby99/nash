@@ -8,7 +8,7 @@ SRC_FILES = src/**/*.cpp src/**/*.h app/*.cpp app/**/*.cpp test/*.cpp test/**/*.
 all: build
 
 build: FORCE
-	@ sh ./script/build.sh
+	sh ./script/build
 
 format: format-lib format-app format-test
 
@@ -21,6 +21,12 @@ format-app:
 	
 format-test:
 	find ./test -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
+
+setup-pre-commit:
+	cp ./script/pre-commit .git/hooks/
+
+remove-pre-commit:
+	rm .git/hooks/pre-commit
 
 doc: $(TEX_PDF)
 
