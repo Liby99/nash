@@ -5,18 +5,18 @@
 #include "viewer/camera.h"
 
 namespace nash {
-class ThirdPersonCamera : public Script<Camera> {
-public:
-  static constexpr float MOVE_SPEED = 0.03f;
-  static constexpr float SCROLL_SPEED = 0.01f;
-  static constexpr float ROTATE_SPEED = 0.005f;
+  class ThirdPersonCamera : public Script<Camera> {
+  public:
+    static constexpr float MOVE_SPEED = 0.03f;
+    static constexpr float SCROLL_SPEED = 0.01f;
+    static constexpr float ROTATE_SPEED = 0.005f;
 
-  ThirdPersonCamera();
-  virtual void update();
+    ThirdPersonCamera();
+    virtual void update();
 
-private:
-  float azimuth, incline, distance;
-};
-} // namespace nash
+  private:
+    float azimuth, incline, distance;
+  };
+} 
 
 #endif

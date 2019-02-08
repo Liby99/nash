@@ -7,32 +7,32 @@
 using namespace Eigen;
 
 namespace nash {
-class Camera {
-public:
-  Vector3f position;
-  Vector3f target;
-  Vector3f up;
+  class Camera {
+  public:
+    Vector3f position;
+    Vector3f target;
+    Vector3f up;
 
-  int width, height;
-  float zNear, zFar;
-  float aspect;
-  float fovy;
+    int width, height;
+    float zNear, zFar;
+    float aspect;
+    float fovy;
 
-  Camera();
+    Camera();
 
-  void start(Context &context);
-  void update(Context &context);
-  bool hasController();
-  void setController(Script<Camera> &ctrl);
-  Script<Camera> &getController();
-  void setSize(int width, int height);
-  Matrix4f getViewPerspective();
+    void start(Context &context);
+    void update(Context &context);
+    bool hasController();
+    void setController(Script<Camera> &ctrl);
+    Script<Camera> &getController();
+    void setSize(int width, int height);
+    Matrix4f getViewPerspective();
 
-protected:
-  Script<Camera> *control;
-  Matrix4f getView();
-  Matrix4f getPerspective();
-};
-} // namespace nash
+  protected:
+    Script<Camera> *control;
+    Matrix4f getView();
+    Matrix4f getPerspective();
+  };
+} 
 
 #endif

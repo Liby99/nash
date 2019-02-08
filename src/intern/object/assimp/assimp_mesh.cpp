@@ -9,9 +9,7 @@ AssimpMesh::AssimpMesh(const aiMesh *mesh) : Mesh() {
 
 const std::string &AssimpMesh::getName() { return name; }
 
-void AssimpMesh::loadName(const aiMesh *mesh) {
-  name = std::string(mesh->mName.C_Str());
-}
+void AssimpMesh::loadName(const aiMesh *mesh) { name = std::string(mesh->mName.C_Str()); }
 
 void AssimpMesh::processMesh(const aiMesh *mesh) {
 

@@ -10,18 +10,18 @@
 #include <assimp/scene.h>
 
 namespace nash {
-class AssimpObject : public Object {
-public:
-  AssimpObject(const std::string &filename);
-  ~AssimpObject();
-  AssimpNode &getRootNode();
+  class AssimpObject : public Object {
+  public:
+    AssimpObject(const std::string &filename);
+    ~AssimpObject();
+    AssimpNode &getRootNode();
 
-private:
-  AssimpNode *root;
-  std::vector<AssimpMesh *> meshes;
-  void processScene(const aiScene *scene);
-  AssimpNode *parseAssimpNode(const aiNode *assimpNode);
-};
-} // namespace nash
+  private:
+    AssimpNode *root;
+    std::vector<AssimpMesh *> meshes;
+    void processScene(const aiScene *scene);
+    AssimpNode *parseAssimpNode(const aiNode *assimpNode);
+  };
+} 
 
 #endif

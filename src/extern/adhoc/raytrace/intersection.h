@@ -4,15 +4,15 @@
 #include "adhoc/raytrace/ray.h"
 
 namespace nash {
-class Intersection {
-public:
-  bool hit;
-  Vector3f position, normal;
-  const Ray *ray;
+  class Intersection {
+  public:
+    bool hit;
+    Vector3f position, normal;
+    const Ray *ray;
 
-  Intersection(const Ray &ray);
-  void update(Vector3f position);
-};
-} // namespace nash
+    Intersection(const Ray &ray);
+    void update(Vector3f position);
+  };
+}
 
 #endif

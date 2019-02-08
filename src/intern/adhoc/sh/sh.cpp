@@ -55,8 +55,7 @@ float SH::p(int l, int m, float x) {
  * K_l^m = \sqrt{\frac{2l + 1}{4\pi} \frac{(l-\abs{m})!}{(l+\abs{m})!}}
  */
 float SH::k(int l, int m) {
-  double temp =
-      ((2.0 * l + 1.0) * factorial(l - m)) / (4.0 * PI * factorial(l + m));
+  double temp = ((2.0 * l + 1.0) * factorial(l - m)) / (4.0 * PI * factorial(l + m));
   return sqrt(temp);
 }
 

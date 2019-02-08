@@ -9,15 +9,15 @@
 #include <string>
 
 namespace nash {
-class Image {
-public:
-  int width, height, numChannels;
-  Image(const std::string &filename);
-  ~Image();
+  class Image {
+  public:
+    int width, height, numChannels;
+    Image(const std::string &filename);
+    ~Image();
 
-private:
-  unsigned char *data;
-};
-} // namespace nash
+  private:
+    unsigned char *data;
+  };
+} 
 
 #endif

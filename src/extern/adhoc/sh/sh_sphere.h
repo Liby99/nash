@@ -6,16 +6,16 @@
 #include <stdio.h>
 
 namespace nash {
-class SHSphere : public Sphere {
-public:
-  SHSphere(int l, int m);
-  int getL();
-  int getM();
+  class SHSphere : public Sphere {
+  public:
+    SHSphere(int l, int m);
+    int getL();
+    int getM();
 
-private:
-  int l, m;
-  void updatePositions();
-};
-} // namespace nash
+  private:
+    int l, m;
+    void updatePositions();
+  };
+} 
 
 #endif

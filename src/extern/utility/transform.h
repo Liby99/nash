@@ -4,16 +4,16 @@
 #include "utility/math.h"
 
 namespace nash {
-class Transform {
-public:
-  Matrix4f world;
-  Quaternionf rotation;
-  Vector3f position;
-  Vector3f scale;
+  class Transform {
+  public:
+    Matrix4f world;
+    Quaternionf rotation;
+    Vector3f position;
+    Vector3f scale;
 
-  Transform();
-  Matrix4f getTransform();
-};
-} // namespace nash
+    Transform();
+    Matrix4f getTransform();
+  };
+} 
 
 #endif

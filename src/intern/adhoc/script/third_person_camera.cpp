@@ -3,8 +3,7 @@
 using namespace nash;
 
 ThirdPersonCamera::ThirdPersonCamera()
-    : Script<Camera>("third-person-camera"), azimuth(0), incline(0),
-      distance(3) {}
+    : Script<Camera>("third-person-camera"), azimuth(0), incline(0), distance(3) {}
 
 void ThirdPersonCamera::update() {
 
@@ -29,13 +28,11 @@ void ThirdPersonCamera::update() {
   if (context->getMouseLeft()) {
     Vector2i curRel = context->getCursorMovement();
     azimuth -= curRel.x() * ROTATE_SPEED;
-    incline = fmaxf(-PI / 2 + 0.01f,
-                    fminf(PI / 2 - 0.01f, incline + curRel.y() * ROTATE_SPEED));
+    incline = fmaxf(-PI / 2 + 0.01f, fminf(PI / 2 - 0.01f, incline + curRel.y() * ROTATE_SPEED));
   }
 
   // Get the scroll event
-  distance =
-      fmaxf(0.01f, distance - context->getScrollMovement().y() * SCROLL_SPEED);
+  distance = fmaxf(0.01f, distance - context->getScrollMovement().y() * SCROLL_SPEED);
 
   // Then we calculate the position based on center and azimuth, incline and
   // distance

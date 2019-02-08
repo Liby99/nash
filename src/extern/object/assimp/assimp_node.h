@@ -7,24 +7,24 @@
 #include <map>
 
 namespace nash {
-class AssimpNode : public Object {
-public:
-  AssimpNode(const std::string &name);
-  const std::string &getName();
+  class AssimpNode : public Object {
+  public:
+    AssimpNode(const std::string &name);
+    const std::string &getName();
 
-  void addMesh(AssimpMesh &mesh);
-  bool hasMesh(const std::string &name);
-  AssimpMesh &getMesh(const std::string &name);
+    void addMesh(AssimpMesh &mesh);
+    bool hasMesh(const std::string &name);
+    AssimpMesh &getMesh(const std::string &name);
 
-  void addChildNode(AssimpNode &node);
-  bool hasChildNode(const std::string &name);
-  AssimpNode &getChildNode(const std::string &name);
+    void addChildNode(AssimpNode &node);
+    bool hasChildNode(const std::string &name);
+    AssimpNode &getChildNode(const std::string &name);
 
-private:
-  std::string name;
-  std::map<std::string, AssimpMesh *> meshes;
-  std::map<std::string, AssimpNode *> nodes;
-};
-} // namespace nash
+  private:
+    std::string name;
+    std::map<std::string, AssimpMesh *> meshes;
+    std::map<std::string, AssimpNode *> nodes;
+  };
+} 
 
 #endif

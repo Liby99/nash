@@ -14,12 +14,12 @@ typedef Eigen::Matrix<uint32_t, 2, 1> Vector2u;
 typedef Eigen::Matrix<uint32_t, Eigen::Dynamic, Eigen::Dynamic> MatrixXu;
 
 namespace nash {
-class Math {
-public:
-  static Vector2f normalCartToPolar(const Vector3f &pos);
-  static Vector3f polarToCart(const Vector2f &pol);
-  static Vector3f polarToCart(float theta, float phi);
-};
-} // namespace nash
+  class Math {
+  public:
+    static Vector2f normalCartToPolar(const Vector3f &pos);
+    static Vector3f polarToCart(const Vector2f &pol);
+    static Vector3f polarToCart(float theta, float phi);
+  };
+} 
 
 #endif

@@ -4,10 +4,10 @@
 #include "object/mesh.h"
 
 namespace nash {
-class Cube : public Mesh {
-public:
-  Cube();
-};
-} // namespace nash
+  class Cube : public Mesh {
+  public:
+    Cube();
+  };
+} 
 
 #endif

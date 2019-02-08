@@ -4,9 +4,7 @@ using namespace nash;
 
 Sphere::Sphere() : Sphere(SUBDIVISION) {}
 
-Sphere::Sphere(int subdivision) : Mesh(), subdivision(subdivision) {
-  generateMesh();
-}
+Sphere::Sphere(int subdivision) : Mesh(), subdivision(subdivision) { generateMesh(); }
 
 void Sphere::generateMesh() {
 
@@ -54,8 +52,7 @@ void Sphere::subdivide(Vertices &vertices, Triangles &triangles, int step) {
     return;
 
   // Loop over existing triangles and subdivide a tri to four tris.
-  int numTriangles =
-      triangles.size(); // Cache the amount since it will be changing
+  int numTriangles = triangles.size(); // Cache the amount since it will be changing
   for (int i = 0; i < numTriangles; i++) {
 
     // Fetch information from triangles
@@ -71,8 +68,7 @@ void Sphere::subdivide(Vertices &vertices, Triangles &triangles, int step) {
     vertices.push_back(m3.normalized());
 
     // Existing triangle will now be the center one
-    uint32_t curr = vertices.size(), ni1 = curr - 3, ni2 = curr - 2,
-             ni3 = curr - 1;
+    uint32_t curr = vertices.size(), ni1 = curr - 3, ni2 = curr - 2, ni3 = curr - 1;
     triangles.push_back(Vector3u(i1, ni1, ni3));
     triangles.push_back(Vector3u(ni1, i2, ni2));
     triangles.push_back(Vector3u(ni3, ni2, i3));

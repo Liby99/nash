@@ -45,23 +45,15 @@ int Context::getWindowWidth() { return windowWidth; }
 
 int Context::getWindowHeight() { return windowHeight; }
 
-void Context::resetCursor() {
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-}
+void Context::resetCursor() { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
 
-void Context::hideCursor() {
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-}
+void Context::hideCursor() { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); }
 
-void Context::disableCursor() {
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-}
+void Context::disableCursor() { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); }
 
 void Context::setCursorPos(int x, int y) { glfwSetCursorPos(window, x, y); }
 
-void Context::centerCursorPos() {
-  setCursorPos(windowWidth / 2, windowHeight / 2);
-}
+void Context::centerCursorPos() { setCursorPos(windowWidth / 2, windowHeight / 2); }
 
 bool Context::getKey(char key) {
   switch (key) {
@@ -95,15 +87,11 @@ bool Context::cursorIsInside() { return cursorInside; }
 
 const Vector2i &Context::getCursorPosition() { return exactCursorPosition; }
 
-Vector2i Context::getCursorMovement() {
-  return newCursorPosition - cursorPosition;
-}
+Vector2i Context::getCursorMovement() { return newCursorPosition - cursorPosition; }
 
 const Vector2f &Context::getScrollPosition() { return scrollPosition; }
 
-Vector2f Context::getScrollMovement() {
-  return newScrollPosition - scrollPosition;
-}
+Vector2f Context::getScrollMovement() { return newScrollPosition - scrollPosition; }
 
 bool Context::keyboardEvent(int key, int scancode, int action, int modifiers) {
 
@@ -123,8 +111,7 @@ bool Context::keyboardEvent(int key, int scancode, int action, int modifiers) {
   return true;
 }
 
-bool Context::mouseButtonEvent(const Vector2i &p, int button, bool down,
-                               int modifiers) {
+bool Context::mouseButtonEvent(const Vector2i &p, int button, bool down, int modifiers) {
   exactCursorPosition = p;
   if (button == GLFW_MOUSE_BUTTON_RIGHT) {
     rightButtonDown = down;
@@ -135,8 +122,7 @@ bool Context::mouseButtonEvent(const Vector2i &p, int button, bool down,
   return true;
 }
 
-bool Context::mouseMotionEvent(const Vector2i &p, const Vector2i &rel,
-                               int button, int modifiers) {
+bool Context::mouseMotionEvent(const Vector2i &p, const Vector2i &rel, int button, int modifiers) {
   exactCursorPosition = p;
   newCursorPosition = cursorPosition + rel;
   cursorInside = true;

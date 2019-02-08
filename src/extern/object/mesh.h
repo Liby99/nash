@@ -4,16 +4,16 @@
 #include "object/object.h"
 
 namespace nash {
-class Mesh : public Object {
-public:
-  Mesh();
-  virtual void render();
+  class Mesh : public Object {
+  public:
+    Mesh();
+    virtual void render();
 
-protected:
-  MatrixXu indices;
-  MatrixXf positions;
-  MatrixXf normals;
-};
-} // namespace nash
+  protected:
+    MatrixXu indices;
+    MatrixXf positions;
+    MatrixXf normals;
+  };
+} 
 
 #endif

@@ -6,23 +6,23 @@
 #include "viewer/context.h"
 
 namespace nash {
-class Scene {
-public:
-  Camera camera;
-  Object root;
+  class Scene {
+  public:
+    Camera camera;
+    Object root;
 
-  Scene();
+    Scene();
 
-  void setSize(int width, int height);
+    void setSize(int width, int height);
 
-  void addObject(Object &object);
+    void addObject(Object &object);
 
-  void start(Context &context);
-  void update(Context &context);
-  void render(Context &context);
+    void start(Context &context);
+    void update(Context &context);
+    void render(Context &context);
 
-private:
-};
-} // namespace nash
+  private:
+  };
+} 
 
 #endif

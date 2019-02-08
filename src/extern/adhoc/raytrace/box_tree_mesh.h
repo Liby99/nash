@@ -6,11 +6,11 @@
 #include "object/mesh.h"
 
 namespace nash {
-class BoxTreeMesh {
-public:
-  BoxTreeMesh(const Mesh &mesh);
-  bool intersect(const Ray &ray, Intersection &intersection);
-};
-} // namespace nash
+  class BoxTreeMesh {
+  public:
+    BoxTreeMesh(const Mesh &mesh);
+    bool intersect(const Ray &ray, Intersection &intersection);
+  };
+}
 
 #endif

@@ -15,8 +15,7 @@ using namespace nash;
 
 class FollowCamera : public Script<Object> {
 public:
-  FollowCamera(const std::string &name, Camera &cam)
-      : Script<Object>(name), camera(&cam) {}
+  FollowCamera(const std::string &name, Camera &cam) : Script<Object>(name), camera(&cam) {}
 
   void update() { target->transform.position = camera->target; }
 
@@ -26,8 +25,7 @@ private:
 
 class TintColor : public Script<Object> {
 public:
-  TintColor(const std::string &name, const Vector3f &color)
-      : Script<Object>(name), color(color) {}
+  TintColor(const std::string &name, const Vector3f &color) : Script<Object>(name), color(color) {}
 
   void preRender() {
     if (target->hasShader()) {
