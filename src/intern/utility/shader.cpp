@@ -83,11 +83,11 @@ Shader &Shader::get() {
   }
 }
 
-Shader::Shader() : name("default"), simple(true), shader(new nanogui::GLShader()) {
+Shader::Shader() : name(""), path(""), simple(true), shader(new nanogui::GLShader()) {
   // Do nothing
 }
 
-Shader::Shader(std::string &name) : name(name), simple(false), shader(new nanogui::GLShader()) {
+Shader::Shader(const std::string &name) : name(name), simple(false), shader(new nanogui::GLShader()), path(Path::getAbsolutePathTo(name)) {
   // Do nothing
 }
 
@@ -124,7 +124,7 @@ void Shader::init() {
                  "    finalColor = vec4(sqrt(reflectance), 1);\n"
                  "}");
   } else {
-    shader->initFromFiles(name, name + ".vert.glsl", name + ".frag.glsl");
+    shader->initFromFiles(name, path + ".vert.glsl", path + ".frag.glsl");
   }
 }
 
