@@ -11,6 +11,7 @@ namespace nash {
   class Shader {
   public:
     void init();
+    void initDefault();
     void bind();
     void free();
     void setUniform(const std::string &name, const Matrix4f &mat);
@@ -31,7 +32,7 @@ namespace nash {
     static void initAll();
     static void freeAll();
     static Shader &get();
-    static Shader &get(std::string &name);
+    static Shader &get(const std::string &name);
 
   private:
     bool simple;

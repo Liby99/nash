@@ -1,6 +1,8 @@
 #ifndef VIEWER_H
 #define VIEWER_H
 
+#include "image/texture.h"
+#include "utility/shader.h"
 #include "viewer/canvas.h"
 
 namespace nash {

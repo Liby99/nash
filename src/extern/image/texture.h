@@ -2,16 +2,22 @@
 #define TEXTURE_H
 
 #include <nanogui/nanogui.h>
+#include <vector>
 
 namespace nash {
   class Texture {
   public:
-    const GLuint &getTextureId() const;
+    GLuint textureId;
+    virtual void init();
     virtual void bind(GLuint pos) const;
 
+    static void initAll();
+
   protected:
-    GLuint textureId;
     Texture();
+
+  private:
+    static std::vector<Texture *> textures;
   };
 }
 

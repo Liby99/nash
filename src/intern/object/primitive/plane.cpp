@@ -18,4 +18,10 @@ Plane::Plane() : Mesh() {
   normals.col(1) << 0, 1, 0;
   normals.col(2) << 0, 1, 0;
   normals.col(3) << 0, 1, 0;
+
+  texCoords = MatrixXf(2, 4);
+  texCoords.col(0) << 0.0, 0.0;
+  texCoords.col(1) << 0.0, 1.0;
+  texCoords.col(2) << 1.0, 1.0;
+  texCoords.col(3) << 1.0, 0.0;
 }

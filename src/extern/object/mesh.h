@@ -13,6 +13,7 @@ namespace nash {
     MatrixXu indices;
     MatrixXf positions;
     MatrixXf normals;
+    MatrixXf texCoords;
   };
 }
 
