@@ -1,5 +1,8 @@
 #include "image/image.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 using namespace nash;
 
 Image::Image(const std::string &filename) : width(0), height(0), numChannels(0) {

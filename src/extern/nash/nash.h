@@ -10,6 +10,8 @@
 #include "adhoc/sh/sh.h"
 #include "adhoc/sh/sh_sphere.h"
 #include "image/image.h"
+#include "image/texture.h"
+#include "image/texture_2d.h"
 #include "object/assimp/assimp_mesh.h"
 #include "object/assimp/assimp_node.h"
 #include "object/assimp/assimp_object.h"

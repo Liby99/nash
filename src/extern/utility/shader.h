@@ -2,7 +2,7 @@
 #define SHADER_H
 
 #include "utility/math.h"
-#incluee "utility/path.h"
+#include "utility/path.h"
 #include <map>
 #include <nanogui/nanogui.h>
 #include <string>
@@ -39,7 +39,7 @@ namespace nash {
     std::string path;
     nanogui::GLShader *shader;
     Shader();
-    Shader(std::string &name);
+    Shader(const std::string &name);
     ~Shader();
 
     static std::map<std::string, Shader *> store;

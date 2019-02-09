@@ -87,7 +87,9 @@ Shader::Shader() : name(""), path(""), simple(true), shader(new nanogui::GLShade
   // Do nothing
 }
 
-Shader::Shader(const std::string &name) : name(name), simple(false), shader(new nanogui::GLShader()), path(Path::getAbsolutePathTo(name)) {
+Shader::Shader(const std::string &name)
+    : name(name), path(Path::getAbsolutePathTo(name)), simple(false),
+      shader(new nanogui::GLShader()) {
   // Do nothing
 }
 
@@ -95,7 +97,7 @@ Shader::~Shader() { delete shader; }
 
 void Shader::init() {
   if (simple) {
-    shader->init("DEFAULT_SHADER",
+    shader->init("",
                  "#version 400\n"
                  "layout(location=0) in vec3 position;\n"
                  "layout(location=1) in vec3 normal;\n"
