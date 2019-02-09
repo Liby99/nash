@@ -11,11 +11,9 @@ namespace nash {
     static constexpr float SCROLL_SPEED = 0.01f;
     static constexpr float ROTATE_SPEED = 0.005f;
 
+    float azimuth, incline, distance;
     ThirdPersonCamera();
     virtual void update();
-
-  private:
-    float azimuth, incline, distance;
   };
 }
 

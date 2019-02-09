@@ -2,23 +2,29 @@
 
 using namespace nash;
 
-class LoadTexture : public Script<Object> {
+class TexturedPlane : public Plane {
 public:
-  LoadTexture(const std::string &name, Texture &texture) : LoadTexture(name, texture, 1) {}
+  TexturedPlane(const std::string &imageName, int texPos) : Plane(), texPos(texPos) {
+    texImage = new Image(imageName);
+    texture = new Texture2D(*texImage);
+    setShader(Shader::get("./shader/plain_texture"));
+  }
 
-  LoadTexture(const std::string &name, Texture &texture, int pos)
-      : Script<Object>(name), texture(&texture), pos(pos) {}
+  ~TexturedPlane() {
+    delete texture;
+    delete texImage;
+  }
 
-  virtual void preRender() {
-    if (target->hasShader()) {
-      texture->bind(pos);
-      target->getShader().setUniform("tex", pos);
-    }
+  virtual void render() {
+    texture->bind(texPos);
+    getShader().setUniform("tex", texPos);
+    Plane::render();
   }
 
 private:
-  int pos;
-  Texture *texture;
+  Image *texImage;
+  Texture2D *texture;
+  int texPos;
 };
 
 int main(int argc, char *argv[]) {
@@ -26,34 +32,19 @@ int main(int argc, char *argv[]) {
 
   Scene scene;
   ThirdPersonCamera camCtrl;
+  camCtrl.incline = PI / 4;
   scene.camera.setController(camCtrl);
 
-  Image bridgeImage("./image/posx.jpg");
-  Image gogoImage("./image/gogo.png");
-  Image headImage("./image/head.bmp");
-  Texture2D bridgeTexture(bridgeImage);
-  Texture2D gogoTexture(gogoImage);
-  Texture2D headTexture(headImage);
-  LoadTexture loadBridgeTexture("load-texture-bridge", bridgeTexture, 1);
-  LoadTexture loadGogoTexture("load-texture-gogo", gogoTexture, 2);
-  LoadTexture loadHeadTexture("load-texture-head", headTexture, 3);
+  TexturedPlane plane1("./image/posx.jpg", 1);
+  plane1.transform.position << -1, 0, 0;
+  scene.addObject(plane1);
 
-  Plane plane;
-  plane.transform.position << -1, -0.5, 0;
-  plane.setShader(Shader::get("./shader/plain_texture"));
-  plane.attachScript(loadBridgeTexture);
-  scene.addObject(plane);
-
-  Plane plane2;
-  plane2.transform.position << 0, -0.5, 0;
-  plane2.setShader(Shader::get("./shader/plain_texture"));
-  plane2.attachScript(loadGogoTexture);
+  TexturedPlane plane2("./image/gogo.png", 2);
+  // plane2 will stay at origin
   scene.addObject(plane2);
 
-  Plane plane3;
-  plane3.transform.position << 1, -0.5, 0;
-  plane3.setShader(Shader::get("./shader/plain_texture"));
-  plane3.attachScript(loadHeadTexture);
+  TexturedPlane plane3("./image/head.bmp", 3);
+  plane3.transform.position << 1, 0, 0;
   scene.addObject(plane3);
 
   Viewer viewer(1280, 720, "Plane test", scene);
