@@ -8,13 +8,22 @@ SHSphere::SHSphere(int l, int m) : Sphere(), l(l), m(m) {
     throw std::invalid_argument("expected |m| < l, but found m = " + ms + ", l = " + ls);
   }
   updatePositions();
+  setShader(Shader::get("./shader/sh_sphere"));
 }
 
 int SHSphere::getL() { return l; }
 
 int SHSphere::getM() { return m; }
 
+void SHSphere::render() {
+  shader->uploadAttr("shCoef", coefs);
+  Sphere::render();
+}
+
 void SHSphere::updatePositions() {
+
+  // Generate coefficients
+  coefs = MatrixXf(1, positions.cols());
 
   // First loop through all positions and set the radius from center to be SH::y
   for (int i = 0; i < positions.cols(); i++) {
@@ -22,6 +31,7 @@ void SHSphere::updatePositions() {
     float theta = thetaPhi.x(), phi = thetaPhi.y();
     float sh = SH::y(l, m, theta, phi);
     positions.col(i) *= abs(sh);
+    coefs.col(i) << sh;
 
     // Temporarily set normal to 0
     normals.col(i) = Vector3f::Zero();

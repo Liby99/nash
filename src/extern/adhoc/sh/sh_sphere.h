@@ -11,9 +11,11 @@ namespace nash {
     SHSphere(int l, int m);
     int getL();
     int getM();
+    virtual void render();
 
   private:
     int l, m;
+    MatrixXf coefs;
     void updatePositions();
   };
 }

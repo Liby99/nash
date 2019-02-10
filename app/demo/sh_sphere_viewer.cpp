@@ -2,8 +2,8 @@
 
 using namespace nash;
 
-int main() {
-  Nash::init();
+int main(int argc, char *argv[]) {
+  Nash::init(argc, argv);
 
   Scene scene;
   ThirdPersonCamera ctrl;
@@ -16,14 +16,13 @@ int main() {
   for (int l = 0; l < n; l++) {
     for (int m = -l; m <= l; m++) {
       SHSphere *sphere = new SHSphere(l, m);
-      sphere->setParent(scene.root);
-      sphere->setShader(Shader::get());
       sphere->transform.position = Vector3f(m * 0.8, 2 - l * 0.8, 0);
       sphere->transform.scale = Vector3f(0.6, 0.6, 0.6);
       Rotator *rotator = new Rotator("rotator", 0.01, Vector3f(1, 1, 1).normalized());
       sphere->attachScript(*rotator);
       spheres.push_back(sphere);
       rotators.push_back(rotator);
+      scene.addObject(*sphere);
     }
   }
 
