@@ -5,7 +5,9 @@ using namespace nash;
 AssimpObject::AssimpObject(const std::string &filename) : Object() {
 
   // Setup importer and load
-  std::string absPath = Path::getAbsolutePathTo(filename); // Note the absolute path
+  //std::string absPath = Path::getAbsolutePathTo(filename); // Note the
+  // absolute path
+  std::string absPath = filename;
   Assimp::Importer importer;
   const aiScene *assimpScene = importer.ReadFile(absPath, aiProcess_Triangulate);
 
@@ -68,4 +70,8 @@ AssimpNode *AssimpObject::parseAssimpNode(const aiNode *assimpNode) {
 
   // Return generated node
   return node;
+}
+
+const std::vector<AssimpMesh *> &AssimpObject::getMeshes() const {
+  return meshes;
 }

@@ -6,7 +6,7 @@
 namespace nash {
   class Ray {
   public:
-    Vector3f pos, dir;
+    Vector3f pos, dir, invDir;
     Ray(const Vector3f &pos, const Vector3f &dir);
     void step();
   };

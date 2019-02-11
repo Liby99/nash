@@ -9,6 +9,11 @@ namespace nash {
     Mesh();
     virtual void render();
 
+    const MatrixXu &getIndices() const;
+
+    const MatrixXf &getPositions() const;
+
+    const MatrixXf &getNormals() const;
   protected:
     MatrixXu indices;
     MatrixXf positions;

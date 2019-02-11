@@ -1,19 +1,44 @@
-// #include "utility/sampler.h"
-//
-// using namespace nash;
-//
-// void Sampler::sampleSphere(std::vector<Vector2f> &samples) {
-//   // TODO
-// }
-//
-// Vector2f Sampler::sampleSphere() {
-//   // TODO
-// }
-//
-// void Sampler::sampleHemiSphere(std::vector<Vector2f> &samples) {
-//   // TODO
-// }
-//
-// Vector2f Sampler::sampleHemiSphere() {
-//   // TODO
-// }
+#include "utility/sampler.h"
+#include <chrono>
+#include <random>
+
+using namespace nash;
+
+void Sampler::sampleSphere(std::vector<Vector3f> &samples) {
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+  std::mt19937 gen(seed);
+  std::uniform_real_distribution<double> uniform(0.0, 1.0);
+
+  int count = samples.size();
+
+  for (int i = 0; i < count; i++) {
+    double theta = 2 * M_PI * uniform(gen);
+    double phi = acos(1 - 2 * uniform(gen));
+    double x = sin(phi) * cos(theta);
+    double y = sin(phi) * sin(theta);
+    double z = cos(phi);
+
+    samples[i] = Vector3f(x, y, z);
+  }
+}
+
+Vector3f Sampler::sampleSphere() {
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+  std::mt19937 gen(seed);
+  std::uniform_real_distribution<double> uniform(0.0, 1.0);
+  double theta = 2 * M_PI * uniform(gen);
+  double phi = acos(1 - 2 * uniform(gen));
+  double x = sin(phi) * cos(theta);
+  double y = sin(phi) * sin(theta);
+  double z = cos(phi);
+  return Vector3f(x,y,z);
+}
+
+void Sampler::sampleHemiSphere(std::vector<Vector3f> &samples,
+                               Vector3f normal) {
+  // TODO
+}
+
+Vector3f Sampler::sampleHemiSphere(Vector3f normal) {
+  // TODO
+}

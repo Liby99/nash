@@ -8,6 +8,7 @@ namespace nash {
   public:
     bool hit;
     Vector3f position, normal;
+    float t;
     const Ray *ray;
 
     Intersection(const Ray &ray);

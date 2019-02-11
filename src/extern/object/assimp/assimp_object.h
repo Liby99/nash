@@ -16,6 +16,8 @@ namespace nash {
     ~AssimpObject();
     AssimpNode &getRootNode();
 
+    const std::vector<AssimpMesh *> &getMeshes() const;
+
   private:
     AssimpNode *root;
     std::vector<AssimpMesh *> meshes;
