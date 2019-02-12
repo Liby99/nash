@@ -1,5 +1,7 @@
 
 #include <nash/nash.h>
+#include <chrono>
+#include <omp.h>
 
 using namespace nash;
 
@@ -10,14 +12,22 @@ int main() {
   Intersection intersection(*r);
   bool result = t.intersect(*r, intersection);
 
+
+
   // an .obj mesh
   AssimpObject teapot("F:/users/DESKTOP/Documents/GitHub/nash/res/model"
                       "/teapot.obj");
   const AssimpMesh & mesh = *(teapot.getMeshes()[0]);
+  std::cerr << "Start" << std::endl;
+  auto start = std::chrono::system_clock::now();
   BoxTreeMesh * teapotBTMesh = new BoxTreeMesh(mesh);
 
   std::vector<Vector3f> samples(50);
   Sampler::sampleSphere(samples);
+
+  std::cerr << "Iteration:" << mesh.getPositions().cols() << std::endl;
+
+#pragma omp parallel for
   for(int i = 0; i < mesh.getPositions().cols(); i++){
     int count = 0;
     Vector3f currPos = mesh.getPositions().col(i);
@@ -34,8 +44,12 @@ int main() {
 
       }
     }
-    fprintf(stderr, "Current point is:(%f,%f,%f); The percentage of "
-                    "intersections is: %f%% \n", currPos[0], currPos[1],
-                    currPos[2], (float)count/samples.size() * 100);
+    //fprintf(stderr, "Current point is:(%f,%f,%f); The percentage of "
+    //                "intersections is: %f%% \n", currPos[0], currPos[1],
+    //                currPos[2], (float)count/samples.size() * 100);
   }
+
+  auto end = std::chrono::system_clock::now();
+  auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+  std::cerr << elapsed.count() << '\n';
 }
