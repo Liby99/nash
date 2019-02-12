@@ -5,6 +5,7 @@ project(nash)
 # Options
 option(NASH_BUILD_APP "Building application executables" ON)
 option(NASH_BUILD_TEST "Building test executables" ON)
+option(USE_OPEN_MP "Build use open mp" OFF)
 
 # Global setup
 set(CMAKE_CXX_STANDARD 17)
@@ -30,9 +31,14 @@ if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/nanogui")
 endif()
 
 # Include OpenMP
-find_package(OpenMP)
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+if(USE_OPEN_MP)
+  find_package(OpenMP)
+  if(OPENMP_FOUND)
+    add_definitions(USE_OPEN_MP)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+  endif()
+endif()
 
 # Include NanoGui
 set(NANOGUI_BUILD_EXAMPLE OFF)

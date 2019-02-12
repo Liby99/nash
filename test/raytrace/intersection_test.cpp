@@ -1,25 +1,22 @@
-
 #include <chrono>
 #include <nash/nash.h>
+
+#ifdef USE_OPEN_MP
 #include <omp.h>
+#endif
 
 using namespace nash;
 
 class ColoredMesh : public Mesh {
 public:
-  ColoredMesh(const AssimpMesh &assimpMesh, const MatrixXf &color) : Mesh(),
-                                                                     color(
-                                                                         color) {
+  ColoredMesh(const AssimpMesh &assimpMesh, const MatrixXf &color) : Mesh(), color(color) {
     positions = assimpMesh.getPositions();
     normals = assimpMesh.getNormals();
     indices = assimpMesh.getIndices();
-    setShader(Shader::get("F:/users/DESKTOP/Documents/GitHub/nash/res/shader"
-                          "/plain_color"));
+    setShader(Shader::get("./shader/plain_color"));
   }
 
-  ~ColoredMesh() {
-
-  }
+  ~ColoredMesh() {}
 
   virtual void render() {
     shader->uploadAttr("color", color);
@@ -31,6 +28,8 @@ private:
 };
 
 int main(int argc, char *argv[]) {
+  Nash::init(argc, argv);
+
   // simple triangle
   Triangle t({Vector3f(0, 0, 0), Vector3f(0, 0, 3), Vector3f(3, 0, 0)});
   Ray *tr = new Ray(Vector3f(1, 1, 1), Vector3f(-0.5, -1, -0.5));
@@ -44,8 +43,7 @@ int main(int argc, char *argv[]) {
   bool bresult = b.intersect(*br, bintersection);
 
   // an .obj mesh
-  AssimpObject teapot(
-      "F:/users/DESKTOP/Documents/GitHub/nash/res/model/teapot.obj");
+  AssimpObject teapot("./model/teapot.obj");
   const AssimpMesh &mesh = *(teapot.getMeshes()[0]);
   std::cerr << "Start" << std::endl;
   auto start = std::chrono::system_clock::now();
@@ -59,16 +57,18 @@ int main(int argc, char *argv[]) {
   MatrixXf color(3, mesh.getPositions().cols());
 
 #ifdef BRUTEFORCE
-  std::vector<Triangle*> tris;
-  for(int i = 0 ; i < mesh.getIndices().cols(); i ++){
+  std::vector<Triangle *> tris;
+  for (int i = 0; i < mesh.getIndices().cols(); i++) {
     Vector3u currInd = mesh.getIndices().col(i);
     tris.push_back(new Triangle(mesh.getPositions().col(currInd[0]),
-                    mesh.getPositions().col(currInd[1]),
-                    mesh.getPositions().col(currInd[2])));
+                                mesh.getPositions().col(currInd[1]),
+                                mesh.getPositions().col(currInd[2])));
   }
 #endif
 
+#ifdef USE_OPEN_MP
 #pragma omp parallel for
+#endif
   for (int i = 0; i < mesh.getPositions().cols(); i++) {
     int count = 0;
     Vector3f currPos = mesh.getPositions().col(i);
@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
       ray.step();
       Intersection intersection1(ray);
 #ifdef BRUTEFORCE
-      for(int k = 0; k < tris.size(); k ++) {
+      for (int k = 0; k < tris.size(); k++) {
         tris[k]->intersect(ray, intersection1);
       }
 #else
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
       } else {
       }
     }
-    float percent = (float) count / samples.size();
+    float percent = (float)count / samples.size();
     // TODO: delete this when finalized
     // std::cerr << percent << std::endl;
     color.col(i) = Vector3f(1 - percent, 1 - percent, 1 - percent);
@@ -100,11 +100,8 @@ int main(int argc, char *argv[]) {
   }
 
   auto end = std::chrono::system_clock::now();
-  auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-      end - start);
+  auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
   std::cerr << elapsed.count() << '\n';
-
-  Nash::init(argc, argv);
 
   Scene scene;
   ThirdPersonCamera camCtrl;

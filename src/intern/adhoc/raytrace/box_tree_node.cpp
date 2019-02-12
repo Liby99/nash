@@ -4,8 +4,7 @@
 
 using namespace nash;
 
-BoxTreeNode::BoxTreeNode(const MatrixXu &indices,
-                         const BoxTreeMesh *boxTreeMesh)
+BoxTreeNode::BoxTreeNode(const MatrixXu &indices, const BoxTreeMesh *boxTreeMesh)
     : indices(indices), boxTreeMesh(boxTreeMesh) {
   left = nullptr;
   right = nullptr;
@@ -49,7 +48,6 @@ bool BoxTreeNode::intersect(const Ray &ray, Intersection &intersection) {
       ret = (right->intersect(ray, intersection) || ret);
     }
   } else {
-
   }
   return ret;
 }
