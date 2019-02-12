@@ -1,12 +1,11 @@
 #ifndef BOX_TREE_NODE_H
 #define BOX_TREE_NODE_H
 
-#include <nash/nash.h>
+#include "adhoc/raytrace/bounding_box.h"
+#include "adhoc/raytrace/triangle.h"
 
 namespace nash {
-  class Triangle;
   class BoxTreeMesh;
-  class BoundingBox;
   class BoxTreeNode {
   public:
     BoxTreeNode(const MatrixXu &indices, const BoxTreeMesh *boxTreeMesh);

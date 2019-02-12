@@ -1,14 +1,11 @@
-
 #include <adhoc/raytrace/triangle.h>
-#include <nash/nash.h>
-#include <stdexcept>
 
 using namespace nash;
 
 Triangle::Triangle(const Vector3f a, const Vector3f b, const Vector3f c) {
-  vertices_.push_back(a);
-  vertices_.push_back(b);
-  vertices_.push_back(c);
+  vertices.push_back(a);
+  vertices.push_back(b);
+  vertices.push_back(c);
   calculateNormal();
 }
 
@@ -16,15 +13,15 @@ Triangle::Triangle(const std::initializer_list<Vector3f> vertices) {
   if (vertices.size() != 3) {
     throw std::runtime_error("Wrong number of vertices");
   }
-  this->vertices_.insert(this->vertices_.end(), vertices.begin(), vertices.end());
+  this->vertices.insert(this->vertices.end(), vertices.begin(), vertices.end());
   calculateNormal();
 }
 
 bool Triangle::intersect(const Ray &ray, Intersection &intersection) {
   // O + tD = A + u(B-A) + v(C-A)
   float t = 0, u = 0, v = 0;
-  Vector3f edge_1 = vertices_[1] - vertices_[0];
-  Vector3f edge_2 = vertices_[2] - vertices_[0];
+  Vector3f edge_1 = vertices[1] - vertices[0];
+  Vector3f edge_2 = vertices[2] - vertices[0];
   Vector3f P = ray.dir.cross(edge_2);
   float det = P.dot(edge_1);
 
@@ -33,7 +30,7 @@ bool Triangle::intersect(const Ray &ray, Intersection &intersection) {
     return false;
 
   float invDet = 1 / det;
-  Vector3f T = ray.pos - vertices_[0];
+  Vector3f T = ray.pos - vertices[0];
   Vector3f Q = T.cross(edge_1);
 
   u = invDet * P.dot(T);
@@ -58,15 +55,15 @@ bool Triangle::intersect(const Ray &ray, Intersection &intersection) {
     intersection.hit = true;
     intersection.t = t;
     intersection.position = ray.pos + ray.dir * t;
-    intersection.normal = (det > 0) ? normal_ : -1 * normal_;
+    intersection.normal = (det > 0) ? normal : -1 * normal;
   }
 
   return true;
 }
 
 void Triangle::calculateNormal() {
-  Vector3f A = vertices_[1] - vertices_[0]; // edge 1
-  Vector3f B = vertices_[2] - vertices_[0]; // edge 2
-  normal_ = A.cross(B);
-  normal_.normalize();
+  Vector3f e1 = vertices[1] - vertices[0]; // edge 1
+  Vector3f e2 = vertices[2] - vertices[0]; // edge 2
+  normal = e1.cross(e2);
+  normal.normalize();
 }

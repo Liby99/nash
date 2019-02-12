@@ -1,7 +1,4 @@
-
 #include <adhoc/raytrace/bounding_box.h>
-#include <float.h>
-#include <nash/nash.h>
 
 using namespace nash;
 

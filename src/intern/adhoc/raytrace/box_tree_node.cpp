@@ -1,6 +1,5 @@
-
+#include <adhoc/raytrace/box_tree_mesh.h>
 #include <adhoc/raytrace/box_tree_node.h>
-#include <nash/nash.h>
 
 using namespace nash;
 

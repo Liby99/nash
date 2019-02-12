@@ -1,7 +1,9 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include <nash/nash.h>
+#include "adhoc/raytrace/intersection.h"
+#include "adhoc/raytrace/ray.h"
+#include <vector>
 
 namespace nash {
   class Triangle {
@@ -15,8 +17,8 @@ namespace nash {
   private:
     void calculateNormal();
 
-    std::vector<Vector3f> vertices_;
-    Vector3f normal_;
+    std::vector<Vector3f> vertices;
+    Vector3f normal;
   };
 }
 

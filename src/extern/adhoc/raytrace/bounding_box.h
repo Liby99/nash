@@ -1,7 +1,10 @@
 #ifndef BOUNDING_BOX_H
 #define BOUNDING_BOX_H
 
-#include <nash/nash.h>
+#include "adhoc/raytrace/intersection.h"
+#include "adhoc/raytrace/ray.h"
+#include <float.h>
+#include <vector>
 
 namespace nash {
   class BoundingBox {

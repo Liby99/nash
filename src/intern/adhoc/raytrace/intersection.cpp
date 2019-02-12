@@ -1,5 +1,4 @@
-
-#include <nash/nash.h>
+#include "adhoc/raytrace/intersection.h"
 
 using namespace nash;
 

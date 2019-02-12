@@ -11,6 +11,10 @@ option(USE_OPEN_MP "Build use open mp" OFF)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MACOSX_RPATH 1)
 add_definitions(-DGL_SILENCE_DEPRECATION)
+set(curr_dir ${CMAKE_CURRENT_LIST_DIR})
+set(script_dir ${curr_dir}/script)
+set(extern_dir ${curr_dir}/src/extern)
+set(intern_dir ${curr_dir}/src/intern)
 
 # MinGW Support
 if(MINGW)
@@ -65,16 +69,16 @@ include_directories(lib/assimp/include)
 include_directories(lib/stb/)
 
 # Generate single header file using the script
-execute_process(
-  COMMAND python3 ${CMAKE_CURRENT_LIST_DIR}/script/generate_header.py nash
-  ${CMAKE_CURRENT_LIST_DIR}/src/extern/
-)
+set(generate_header ${script_dir}/generate_header.py)
+execute_process(COMMAND python3 ${generate_header} nash ${extern_dir})
+set(add_clang_format_ignore ${script_dir}/add_clang_format_ignore.py) # And prepend clang-format off
+execute_process(COMMAND python3 ${add_clang_format_ignore} ${extern_dir}/nash/nash.h)
 
 # Set Include Directory to Extern
 include_directories(src/extern)
 
 # Compile all the cpp files and link to `nash` library along with NanoGui
-file(GLOB_RECURSE nash_sources src/intern/*.cpp src/extern/*.h)
+file(GLOB_RECURSE nash_sources ${intern_dir}/*.cpp ${extern_dir}/*.h)
 set(nash ${nash_sources})
 add_library(nash ${nash})
 target_link_libraries(nash nanogui assimp ${NANOGUI_EXTRA_LIBS})
