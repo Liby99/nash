@@ -1,7 +1,7 @@
 
-#include <nash/nash.h>
 #include <adhoc/raytrace/bounding_box.h>
 #include <float.h>
+#include <nash/nash.h>
 
 using namespace nash;
 
@@ -11,15 +11,13 @@ BoundingBox::BoundingBox(const Vector3f min, const Vector3f max) {
 }
 
 BoundingBox::BoundingBox(const std::initializer_list<Vector3f> vertices) {
-  this->vertices_.insert(this->vertices_.end(), vertices.begin(),
-                         vertices.end());
+  this->vertices_.insert(this->vertices_.end(), vertices.begin(), vertices.end());
   calculateBoundingBox();
 }
 
 BoundingBox::BoundingBox(const std::vector<Vector3f> vertices) {
   // calculate bounding box given vertices
-  this->vertices_.insert(this->vertices_.end(), vertices.begin(),
-                         vertices.end());
+  this->vertices_.insert(this->vertices_.end(), vertices.begin(), vertices.end());
   calculateBoundingBox();
 }
 
@@ -47,25 +45,19 @@ void BoundingBox::calculateBoundingBox() {
   }
 
   // calculate extents
-  extents = Vector3f((vertices_[1][0] - vertices_[0][0]) / 2,
-                     (vertices_[1][1] - vertices_[0][1]) / 2,
-                     (vertices_[1][2] - vertices_[0][2]) / 2);
+  extents =
+      Vector3f((vertices_[1][0] - vertices_[0][0]) / 2, (vertices_[1][1] - vertices_[0][1]) / 2,
+               (vertices_[1][2] - vertices_[0][2]) / 2);
 
   // calculate center
   center = (vertices_[0] + vertices_[1]) / 2;
 }
 
-const std::vector<Vector3f> &BoundingBox::getVertices_() const {
-  return vertices_;
-}
+const std::vector<Vector3f> &BoundingBox::getVertices_() const { return vertices_; }
 
-const Vector3f &BoundingBox::getExtents() const {
-  return extents;
-}
+const Vector3f &BoundingBox::getExtents() const { return extents; }
 
-const Vector3f &BoundingBox::getCenter() const {
-  return center;
-}
+const Vector3f &BoundingBox::getCenter() const { return center; }
 
 bool BoundingBox::intersect(const Ray &ray, Intersection &intersection) {
   float t = 0;
@@ -76,10 +68,8 @@ bool BoundingBox::intersect(const Ray &ray, Intersection &intersection) {
   float lbz = (vertices_[0][2] - ray.pos[2]) * ray.invDir[2];
   float rtz = (vertices_[1][2] - ray.pos[2]) * ray.invDir[2];
 
-  float tmin = std::max(std::max(std::min(lbx, rtx), std::min(lby, rty)),
-                        std::min(lbz, rtz));
-  float tmax = std::min(std::min(std::max(lbx, rtx), std::max(lby, rty)),
-                        std::max(lbz, rtz));
+  float tmin = std::max(std::max(std::min(lbx, rtx), std::min(lby, rty)), std::min(lbz, rtz));
+  float tmax = std::min(std::min(std::max(lbx, rtx), std::max(lby, rty)), std::max(lbz, rtz));
 
   // AABB is behind the ray
   if (tmax < 0) {
@@ -95,8 +85,3 @@ bool BoundingBox::intersect(const Ray &ray, Intersection &intersection) {
   t = tmin;
   return true;
 }
-
-
-
-
-

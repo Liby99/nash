@@ -1,6 +1,6 @@
 
-#include <nash/nash.h>
 #include <chrono>
+#include <nash/nash.h>
 #include <omp.h>
 
 using namespace nash;
@@ -12,15 +12,13 @@ int main() {
   Intersection intersection(*r);
   bool result = t.intersect(*r, intersection);
 
-
-
   // an .obj mesh
   AssimpObject teapot("F:/users/DESKTOP/Documents/GitHub/nash/res/model"
                       "/teapot.obj");
-  const AssimpMesh & mesh = *(teapot.getMeshes()[0]);
+  const AssimpMesh &mesh = *(teapot.getMeshes()[0]);
   std::cerr << "Start" << std::endl;
   auto start = std::chrono::system_clock::now();
-  BoxTreeMesh * teapotBTMesh = new BoxTreeMesh(mesh);
+  BoxTreeMesh *teapotBTMesh = new BoxTreeMesh(mesh);
 
   std::vector<Vector3f> samples(50);
   Sampler::sampleSphere(samples);
@@ -28,23 +26,22 @@ int main() {
   std::cerr << "Iteration:" << mesh.getPositions().cols() << std::endl;
 
 #pragma omp parallel for
-  for(int i = 0; i < mesh.getPositions().cols(); i++){
+  for (int i = 0; i < mesh.getPositions().cols(); i++) {
     int count = 0;
     Vector3f currPos = mesh.getPositions().col(i);
-    //Vector3f currNorm = mesh.getNormals().col(i);
-    for(int j = 0; j < samples.size(); j ++){
+    // Vector3f currNorm = mesh.getNormals().col(i);
+    for (int j = 0; j < samples.size(); j++) {
       Ray ray(currPos, samples[j]);
       ray.step();
       Intersection intersection1(ray);
       bool result = teapotBTMesh->intersect(ray, intersection1);
-      if(result){
+      if (result) {
         // TODO: if intersect
-        count ++;
-      }else{
-
+        count++;
+      } else {
       }
     }
-    //fprintf(stderr, "Current point is:(%f,%f,%f); The percentage of "
+    // fprintf(stderr, "Current point is:(%f,%f,%f); The percentage of "
     //                "intersections is: %f%% \n", currPos[0], currPos[1],
     //                currPos[2], (float)count/samples.size() * 100);
   }

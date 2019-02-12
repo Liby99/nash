@@ -31,11 +31,10 @@ Vector3f Sampler::sampleSphere() {
   double x = sin(phi) * cos(theta);
   double y = sin(phi) * sin(theta);
   double z = cos(phi);
-  return Vector3f(x,y,z);
+  return Vector3f(x, y, z);
 }
 
-void Sampler::sampleHemiSphere(std::vector<Vector3f> &samples,
-                               Vector3f normal) {
+void Sampler::sampleHemiSphere(std::vector<Vector3f> &samples, Vector3f normal) {
   // TODO
 }
 

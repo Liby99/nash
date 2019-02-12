@@ -1,13 +1,11 @@
 
-#include <nash/nash.h>
 #include <adhoc/raytrace/box_tree_node.h>
-
+#include <nash/nash.h>
 
 using namespace nash;
 
-BoxTreeNode::BoxTreeNode(const MatrixXu &indices,
-                         const BoxTreeMesh *boxTreeMesh) :
-    indices(indices), boxTreeMesh(boxTreeMesh) {
+BoxTreeNode::BoxTreeNode(const MatrixXu &indices, const BoxTreeMesh *boxTreeMesh)
+    : indices(indices), boxTreeMesh(boxTreeMesh) {
   left = nullptr;
   right = nullptr;
   // create bounding box
@@ -20,8 +18,8 @@ BoxTreeNode::BoxTreeNode(const MatrixXu &indices,
   }
   boundingBox = new BoundingBox(vertices);
   int currSize = indices.cols();
-  //TODO: delete this when finalized
-  //fprintf(stderr, "======Current indices size: %d\n", currSize);
+  // TODO: delete this when finalized
+  // fprintf(stderr, "======Current indices size: %d\n", currSize);
   if (indices.cols() > boxTreeMesh->leafSize) {
     partition();
   } else {
@@ -53,9 +51,7 @@ bool BoxTreeNode::intersect(const Ray &ray, Intersection &intersection) {
   return ret;
 }
 
-bool BoxTreeNode::isLeaf() const {
-  return left == nullptr && right == nullptr;
-}
+bool BoxTreeNode::isLeaf() const { return left == nullptr && right == nullptr; }
 
 void BoxTreeNode::partition() {
   Vector3f extents = boundingBox->getExtents();
@@ -68,8 +64,8 @@ void BoxTreeNode::partition() {
   }
 
   Vector3f anchor = boundingBox->getCenter();
-  //float leftCoord = anchor[dim] - extents[dim];
-  //float rightCoord = anchor[dim] - extents[dim];
+  // float leftCoord = anchor[dim] - extents[dim];
+  // float rightCoord = anchor[dim] - extents[dim];
 
   // partition along 'dim' axis
   MatrixXu leftIndices(3, 0);
@@ -86,8 +82,8 @@ void BoxTreeNode::partition() {
     }
     center /= 3;
 
-    //TODO: delete this when finalized
-    //if (i == 0 || i == 1) {
+    // TODO: delete this when finalized
+    // if (i == 0 || i == 1) {
     //  fprintf(stderr, "dim = %d\nCurrent anchor is:(%f,%f,%f) with extent(%f,"
     //                  "%f,%f);\n "
     //                  "with the triangle "
@@ -108,16 +104,16 @@ void BoxTreeNode::partition() {
 
   // build children
   if (leftIndices.cols() == 0 || rightIndices.cols() == 0) {
-    //TODO: delete this when finalized
-    //fprintf(stderr, "one of indices is zero\n");
+    // TODO: delete this when finalized
+    // fprintf(stderr, "one of indices is zero\n");
     // suboptimal partition
     int count = indices.cols();
     int leftCount = count / 2;
     int rightCount = count - leftCount;
     leftIndices = MatrixXu(3, leftCount);
     rightIndices = MatrixXu(3, rightCount);
-    //TODO: delete this when finalized
-    //fprintf(stderr, "LeftCount %d, RightCount %d\n", leftCount, rightCount);
+    // TODO: delete this when finalized
+    // fprintf(stderr, "LeftCount %d, RightCount %d\n", leftCount, rightCount);
     int i = 0;
     for (int j = 0; j < leftCount; j++) {
       leftIndices.col(j) = indices.col(i);
@@ -130,7 +126,4 @@ void BoxTreeNode::partition() {
   }
   left = new BoxTreeNode(leftIndices, boxTreeMesh);
   right = new BoxTreeNode(rightIndices, boxTreeMesh);
-
-
 }
-

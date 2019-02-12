@@ -11,8 +11,7 @@ namespace nash {
 
     static Vector3f sampleSphere();
 
-    static void sampleHemiSphere(std::vector<Vector3f> &samples,
-        Vector3f normal);
+    static void sampleHemiSphere(std::vector<Vector3f> &samples, Vector3f normal);
 
     static Vector3f sampleHemiSphere(Vector3f normal);
   };

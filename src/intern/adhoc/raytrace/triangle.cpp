@@ -1,11 +1,9 @@
 
-#include <nash/nash.h>
 #include <adhoc/raytrace/triangle.h>
+#include <nash/nash.h>
 #include <stdexcept>
 
-
 using namespace nash;
-
 
 Triangle::Triangle(const Vector3f a, const Vector3f b, const Vector3f c) {
   vertices_.push_back(a);
@@ -18,8 +16,7 @@ Triangle::Triangle(const std::initializer_list<Vector3f> vertices) {
   if (vertices.size() != 3) {
     throw std::runtime_error("Wrong number of vertices");
   }
-  this->vertices_.insert(this->vertices_.end(), vertices.begin(),
-                         vertices.end());
+  this->vertices_.insert(this->vertices_.end(), vertices.begin(), vertices.end());
   calculateNormal();
 }
 
@@ -65,7 +62,6 @@ bool Triangle::intersect(const Ray &ray, Intersection &intersection) {
   }
 
   return true;
-
 }
 
 void Triangle::calculateNormal() {
@@ -74,4 +70,3 @@ void Triangle::calculateNormal() {
   normal_ = A.cross(B);
   normal_.normalize();
 }
-

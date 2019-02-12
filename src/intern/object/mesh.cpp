@@ -12,16 +12,8 @@ void Mesh::render() {
   shader->drawIndexed(GL_TRIANGLES, 0, indices.cols());
 }
 
-const MatrixXu &Mesh::getIndices() const {
-  return indices;
-}
+const MatrixXu &Mesh::getIndices() const { return indices; }
 
-const MatrixXf &Mesh::getPositions() const {
-  return positions;
-}
+const MatrixXf &Mesh::getPositions() const { return positions; }
 
-const MatrixXf &Mesh::getNormals() const {
-  return normals;
-}
-
-
+const MatrixXf &Mesh::getNormals() const { return normals; }

@@ -3,6 +3,4 @@
 
 using namespace nash;
 
-Intersection::Intersection(const Ray &ray) {
-
-}
+Intersection::Intersection(const Ray &ray) {}

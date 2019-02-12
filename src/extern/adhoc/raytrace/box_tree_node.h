@@ -8,19 +8,20 @@ namespace nash {
   class BoundingBox;
   class BoxTreeNode {
   public:
-    BoxTreeNode(const MatrixXu & indices, const BoxTreeMesh * boxTreeMesh);
+    BoxTreeNode(const MatrixXu &indices, const BoxTreeMesh *boxTreeMesh);
     bool intersect(const Ray &ray, Intersection &intersection);
     bool isLeaf() const;
+
   private:
     void partition();
-    BoxTreeNode * left;
-    BoxTreeNode * right;
+    BoxTreeNode *left;
+    BoxTreeNode *right;
 
-    BoundingBox * boundingBox;
-    Triangle * triangle;
+    BoundingBox *boundingBox;
+    Triangle *triangle;
     const MatrixXu &indices;
     const BoxTreeMesh *boxTreeMesh;
-    //std::vector<Vector3f> primitives;
+    // std::vector<Vector3f> primitives;
   };
 }
 

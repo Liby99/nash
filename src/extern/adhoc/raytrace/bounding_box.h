@@ -24,7 +24,6 @@ namespace nash {
     std::vector<Vector3f> vertices_;
     Vector3f extents;
     Vector3f center;
-
   };
 }
 

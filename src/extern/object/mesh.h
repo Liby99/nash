@@ -14,6 +14,7 @@ namespace nash {
     const MatrixXf &getPositions() const;
 
     const MatrixXf &getNormals() const;
+
   protected:
     MatrixXu indices;
     MatrixXf positions;

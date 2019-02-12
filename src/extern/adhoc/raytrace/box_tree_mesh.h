@@ -14,10 +14,11 @@ namespace nash {
     const Mesh &getMesh() const;
 
     int leafSize = 1;
+
   private:
     void partition();
-    const Mesh & mesh;
-    BoxTreeNode * root;
+    const Mesh &mesh;
+    BoxTreeNode *root;
   };
 }
 

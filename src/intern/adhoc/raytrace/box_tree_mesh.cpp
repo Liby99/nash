@@ -1,28 +1,18 @@
 
-#include <nash/nash.h>
 #include <adhoc/raytrace/box_tree_mesh.h>
-
+#include <nash/nash.h>
 
 using namespace nash;
 
-BoxTreeMesh::BoxTreeMesh(const Mesh &mesh): mesh(mesh) {
-  partition();
-}
+BoxTreeMesh::BoxTreeMesh(const Mesh &mesh) : mesh(mesh) { partition(); }
 
 bool BoxTreeMesh::intersect(const Ray &ray, Intersection &intersection) {
   // TODO
   return root->intersect(ray, intersection);
 }
 
-BoxTreeMesh::~BoxTreeMesh() {
-  delete root;
-}
+BoxTreeMesh::~BoxTreeMesh() { delete root; }
 
-const Mesh &BoxTreeMesh::getMesh() const {
-  return mesh;
-}
+const Mesh &BoxTreeMesh::getMesh() const { return mesh; }
 
-void BoxTreeMesh::partition() {
-  root = new BoxTreeNode(mesh.getIndices(), this);
-}
-
+void BoxTreeMesh::partition() { root = new BoxTreeNode(mesh.getIndices(), this); }
