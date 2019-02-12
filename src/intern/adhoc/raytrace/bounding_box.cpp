@@ -81,7 +81,12 @@ bool BoundingBox::intersect(const Ray &ray, Intersection &intersection) {
     return false;
   }
 
-  // intersect, at O + tD, where t = tmin
-  t = tmin;
+  // intersect, at O + tD
+  if(tmin < 0) {
+    t = tmax;
+  } else {
+    t = tmin;
+  }
+
   return true;
 }

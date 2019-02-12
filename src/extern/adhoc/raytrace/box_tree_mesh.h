@@ -5,6 +5,7 @@
 #include <object/mesh.h>
 
 namespace nash {
+  class BoxTreeNode;
   class BoxTreeMesh {
   public:
     BoxTreeMesh(const Mesh &mesh);

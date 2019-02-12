@@ -1,6 +1,8 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
+#include <nash/nash.h>
+
 namespace nash {
   class Triangle {
   public:

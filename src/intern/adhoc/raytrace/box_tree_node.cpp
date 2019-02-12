@@ -4,7 +4,8 @@
 
 using namespace nash;
 
-BoxTreeNode::BoxTreeNode(const MatrixXu &indices, const BoxTreeMesh *boxTreeMesh)
+BoxTreeNode::BoxTreeNode(const MatrixXu &indices,
+                         const BoxTreeMesh *boxTreeMesh)
     : indices(indices), boxTreeMesh(boxTreeMesh) {
   left = nullptr;
   right = nullptr;
@@ -17,8 +18,8 @@ BoxTreeNode::BoxTreeNode(const MatrixXu &indices, const BoxTreeMesh *boxTreeMesh
     vertices.push_back(boxTreeMesh->getMesh().getPositions().col(currTri[2]));
   }
   boundingBox = new BoundingBox(vertices);
-  int currSize = indices.cols();
   // TODO: delete this when finalized
+  // int currSize = indices.cols();
   // fprintf(stderr, "======Current indices size: %d\n", currSize);
   if (indices.cols() > boxTreeMesh->leafSize) {
     partition();
@@ -45,8 +46,10 @@ bool BoxTreeNode::intersect(const Ray &ray, Intersection &intersection) {
       ret = left->intersect(ray, intersection);
     }
     if (right) {
-      ret = (ret || right->intersect(ray, intersection));
+      ret = (right->intersect(ray, intersection) || ret);
     }
+  } else {
+
   }
   return ret;
 }
@@ -82,16 +85,6 @@ void BoxTreeNode::partition() {
     }
     center /= 3;
 
-    // TODO: delete this when finalized
-    // if (i == 0 || i == 1) {
-    //  fprintf(stderr, "dim = %d\nCurrent anchor is:(%f,%f,%f) with extent(%f,"
-    //                  "%f,%f);\n "
-    //                  "with the triangle "
-    //                  "center: (%f,%f,%f)\n", dim, anchor[0], anchor[1],
-    //          anchor[2],
-    //          extents[0], extents[1], extents[2],
-    //          center[0], center[1], center[2]);
-    //}
     // the center of this triangle is on the left side
     if (center[dim] < anchor[dim]) {
       leftIndices.conservativeResize(NoChange, leftIndices.cols() + 1);
@@ -104,8 +97,6 @@ void BoxTreeNode::partition() {
 
   // build children
   if (leftIndices.cols() == 0 || rightIndices.cols() == 0) {
-    // TODO: delete this when finalized
-    // fprintf(stderr, "one of indices is zero\n");
     // suboptimal partition
     int count = indices.cols();
     int leftCount = count / 2;

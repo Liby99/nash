@@ -4,6 +4,7 @@
 #include <nash/nash.h>
 
 namespace nash {
+  class Triangle;
   class BoxTreeMesh;
   class BoundingBox;
   class BoxTreeNode {

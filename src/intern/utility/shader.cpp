@@ -1,3 +1,6 @@
+
+#include <utility/shader.h>
+
 #include "utility/shader.h"
 
 using namespace nash;
@@ -131,7 +134,14 @@ Shader::Shader() : name(""), path(""), simple(true), shader(new nanogui::GLShade
 }
 
 Shader::Shader(const std::string &name)
-    : name(name), path(Path::getAbsolutePathTo(name)), simple(false),
+    :
+    name(name),
+#ifdef WIN32
+    path(name),
+#else
+    path(Path::getAbsolutePathTo(name)),
+#endif
+    simple(false),
       shader(new nanogui::GLShader()) {
   // Do nothing
 }
@@ -139,3 +149,4 @@ Shader::Shader(const std::string &name)
 Shader::~Shader() { delete shader; }
 
 std::map<std::string, Shader *> Shader::store = std::map<std::string, Shader *>();
+
