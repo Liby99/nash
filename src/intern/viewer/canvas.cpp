@@ -44,6 +44,8 @@ bool Canvas::scrollEvent(const Vector2i &p, const Vector2f &rel) {
 
 void Canvas::drawGL() {
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   scene->update(context);
   scene->render(context);
   context.endOfFrameCycle();

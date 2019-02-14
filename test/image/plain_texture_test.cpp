@@ -16,7 +16,6 @@ public:
   }
 
   virtual void render() {
-    glEnable(GL_BLEND);
     texture->bind(texPos);
     getShader().setUniform("tex", texPos);
     Plane::render();
