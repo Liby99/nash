@@ -7,6 +7,7 @@
 
 using namespace nash;
 
+
 class ColoredMesh : public Mesh {
 public:
   ColoredMesh(const AssimpMesh &assimpMesh, const MatrixXf &color) : Mesh(), color(color) {

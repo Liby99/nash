@@ -4,6 +4,8 @@ name = sys.argv[1]
 root_dir = sys.argv[2]
 header_dir = os.path.join(root_dir, name)
 
+print("Generating header in {}".format(header_dir))
+
 # Make directory if not exist
 if not os.path.exists(header_dir):
     os.makedirs(header_dir)
