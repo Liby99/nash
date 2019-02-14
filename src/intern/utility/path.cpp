@@ -1,4 +1,5 @@
 #include "utility/path.h"
+#include <stdexcept>
 
 using namespace nash;
 
