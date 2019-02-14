@@ -12,6 +12,8 @@ std::string Path::getCurrentWorkingDirectory() {
 #if defined(__APPLE__)
   char buffer[BUF_SIZE];
   return std::string(getcwd(buffer, BUF_SIZE));
+#else
+  throw std::runtime_error("Not implemented");
 #endif
 }
 
@@ -22,12 +24,24 @@ std::string Path::getProgramDirectory() {
   } else {
     return getCurrentWorkingDirectory() + "/" + getDirectory(getArgv0());
   }
+#elif defined(_WIN32)
+  char buffer[256];
+  GetModuleFileName(NULL, buffer, 256);
+  return getDirectory(std::string(buffer));
+#else
+  throw std::runtime_error("Not implemented");
 #endif
 }
 
 std::string Path::getProgramFileName() {
 #if defined(__APPLE__)
   return getFileName(getArgv0());
+#elif defined(_WIN32)
+  char buffer[256];
+  GetModuleFileName(NULL, buffer, 256);
+  return getFileName(std::string(buffer));
+#else
+  throw std::runtime_error("Not implemented");
 #endif
 }
 
@@ -38,6 +52,14 @@ std::string Path::getAbsolutePathTo(const std::string &relativePath) {
   } else {
     return getProgramDirectory() + "/" + relativePath;
   }
+#elif defined(_WIN32)
+  if (relativePath.length() > 3 && relativePath[1] == ':' && relativePath[2] == '/') {
+    return relativePath;
+  } else {
+    return getProgramDirectory() + "/" + relativePath;
+  }
+#else
+  throw std::runtime_error("Not implemented");
 #endif
 }
 

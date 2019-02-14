@@ -5,6 +5,8 @@
 
 #if defined(__APPLE__)
 #include <unistd.h>
+#elif defined(_WIN32)
+#include <windows.h>
 #endif
 
 namespace nash {

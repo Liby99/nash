@@ -15,3 +15,6 @@ pdf/
 # Clion related
 cmake-build-debug/
 .idea/
+
+# VS related
+.vs/

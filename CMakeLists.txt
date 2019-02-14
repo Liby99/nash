@@ -10,15 +10,14 @@ option(USE_OPEN_MP "Build use open mp" OFF)
 # Global setup
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MACOSX_RPATH 1)
-add_definitions(-DGL_SILENCE_DEPRECATION)
 set(curr_dir ${CMAKE_CURRENT_LIST_DIR})
 set(script_dir ${curr_dir}/script)
 set(extern_dir ${curr_dir}/src/extern)
 set(intern_dir ${curr_dir}/src/intern)
+add_definitions(-DGL_SILENCE_DEPRECATION)
 
 # MinGW Support
 if(MINGW)
-  set(NANOGUI_BUILD_SHARED OFF)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter -g \
     -Wno-int-in-bool-context -Wno-tautological-compare -Wno-maybe-uninitialized -Wno-return-type \
     -Wno-cast-function-type -Wno-implicit-fallthrough")
@@ -47,6 +46,7 @@ endif()
 # Include NanoGui
 set(NANOGUI_BUILD_EXAMPLE OFF)
 set(NANOGUI_BUILD_PYTHON OFF)
+set(NANOGUI_BUILD_SHARED OFF)
 add_subdirectory(lib/nanogui EXCLUDE_FROM_ALL)
 include_directories(lib/nanogui/include)
 include_directories(${NANOGUI_EXTRA_INCS})
@@ -80,7 +80,7 @@ include_directories(src/extern)
 # Compile all the cpp files and link to `nash` library along with NanoGui
 file(GLOB_RECURSE nash_sources ${intern_dir}/*.cpp ${extern_dir}/*.h)
 set(nash ${nash_sources})
-add_library(nash ${nash})
+add_library(nash STATIC ${nash})
 target_link_libraries(nash nanogui assimp ${NANOGUI_EXTRA_LIBS})
 
 # Compile all the executable files
