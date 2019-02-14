@@ -56,7 +56,7 @@ bool BoxTreeNode::isLeaf() const { return left == nullptr && right == nullptr; }
 void BoxTreeNode::partition() {
   Vector3f extents = boundingBox->getExtents();
   int dim;
-  float max = std::max(std::max(extents[0], extents[1]), extents[2]);
+  float max = std::fmax(std::fmax(extents[0], extents[1]), extents[2]);
   for (dim = 0; dim < 2; dim++) {
     if (fabs(extents[dim] - max) < 1e-10) {
       break;
