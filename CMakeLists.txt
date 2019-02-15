@@ -24,7 +24,6 @@ if(MINGW)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter -frtti -g \
     -Wno-int-in-bool-context -Wno-tautological-compare -Wno-class-memaccess \
     -Wno-maybe-uninitialized -Wno-return-type -Wno-cast-function-type -Wno-implicit-fallthrough")
-  set(USE_OPEN_MP ON)
 endif()
 
 # Dependency checks
@@ -38,7 +37,7 @@ endif()
 if(USE_OPEN_MP)
   find_package(OpenMP)
   if(OPENMP_FOUND)
-    add_definitions(USE_OPEN_MP)
+    add_definitions(-DUSE_OPEN_MP)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
   endif()

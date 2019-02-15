@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <adhoc/sh/sh_file.h>
 #include <utility/path.h>
+#include <string.h>
 
 using namespace nash;
 

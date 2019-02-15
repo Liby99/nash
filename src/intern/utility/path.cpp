@@ -10,7 +10,7 @@ void Path::init(char *a0) { argv0 = std::string(a0); }
 const std::string &Path::getArgv0() { return argv0; }
 
 std::string Path::getCurrentWorkingDirectory() {
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__unix__)
   char buffer[BUF_SIZE];
   return std::string(getcwd(buffer, BUF_SIZE));
 #else
@@ -19,7 +19,7 @@ std::string Path::getCurrentWorkingDirectory() {
 }
 
 std::string Path::getProgramDirectory() {
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__unix__)
   if (getArgv0().size() > 0 && getArgv0()[0] == '/') {
     return getDirectory(getArgv0());
   } else {
@@ -35,7 +35,7 @@ std::string Path::getProgramDirectory() {
 }
 
 std::string Path::getProgramFileName() {
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__unix__)
   return getFileName(getArgv0());
 #elif defined(_WIN32)
   char buffer[256];
@@ -47,7 +47,7 @@ std::string Path::getProgramFileName() {
 }
 
 std::string Path::getAbsolutePathTo(const std::string &relativePath) {
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__unix__)
   if (relativePath[0] == '/') {
     return relativePath;
   } else {
