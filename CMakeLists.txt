@@ -18,10 +18,10 @@ add_definitions(-DGL_SILENCE_DEPRECATION)
 
 # MinGW Support
 if(MINGW)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unknown-pragmas -O3 -Wno-unused-parameter -g \
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter -g \
     -Wno-int-in-bool-context -Wno-tautological-compare -Wno-maybe-uninitialized -Wno-return-type \
     -Wno-cast-function-type -Wno-implicit-fallthrough")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -O3 -Wno-unused-parameter -frtti -g \
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter -frtti -g \
     -Wno-int-in-bool-context -Wno-tautological-compare -Wno-class-memaccess \
     -Wno-maybe-uninitialized -Wno-return-type -Wno-cast-function-type -Wno-implicit-fallthrough")
   set(USE_OPEN_MP ON)

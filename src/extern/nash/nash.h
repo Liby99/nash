@@ -32,4 +32,5 @@
 #include "adhoc/script/toggle.h"
 #include "adhoc/script/third_person_camera.h"
 #include "adhoc/sh/sh.h"
+#include "adhoc/sh/sh_file.h"
 #include "adhoc/sh/sh_sphere.h"
