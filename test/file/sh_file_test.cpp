@@ -1,4 +1,5 @@
 #include <nash/nash.h>
+#include <limits>
 
 using namespace nash;
 
@@ -17,7 +18,7 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < 101; i++) {
     float *coefList = (float *) malloc(coefsSize);
     for (int j = 0; j < coefsCount; j++) {
-      coefList[j] = 1.001 * j;
+      coefList[j] = 1.001f * j;
     }
     // Create Object
     SHCoefs *currCoefs = new SHCoefs;
@@ -42,8 +43,10 @@ int main(int argc, char *argv[]) {
     SHCoefs *currCoefs = shFileLoad.getSamples()[i];
     float * coefList = currCoefs->coefs;
     for (int j = 0; j < loadCoefsCount; j++) {
-      std::cerr << "Expected:" << 1.001 * j << "; Actual:" << coefList[j] << std::endl;
-      //assert(abs(coefList[j] - 1.001 * j) > 1e-10);
+      if(fabsf(coefList[j] - 1.001f * j) > std::numeric_limits<float>::epsilon()) {
+        //assert(fabsf(coefList[j] - 1.001f * j) > std::numeric_limits<float>::epsilon());
+        std::cerr << "Expected:" << 1.001 * j << "; Actual:" << coefList[j] << std::endl;
+      }
     }
   }
   std::cerr << "Test passed" << std::endl;
