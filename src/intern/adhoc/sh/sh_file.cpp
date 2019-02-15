@@ -86,7 +86,7 @@ void SHFile::load(const std::string &filepath) {
   for(int i = 0; i < vertCount; i ++){
     float * coefs = (float*)malloc(coefsSize);
     memset(coefs, 0, coefsSize);
-    memcpy(coefs, buf + 8 + i * actualSize, coefsSize);
+    memcpy(coefs, buf + 8 + i * actualSize, std::min(actualSize, coefsSize));
 
     // Create Object
     SHCoefs * currCoefs = new SHCoefs;

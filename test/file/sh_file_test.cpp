@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 
   int vertCount = 101;
   int numDegree = 5;
-  int loadDegree = 2;
+  int loadDegree = 3;
   int coefsCount = numDegree * numDegree;
   int coefsSize = coefsCount * sizeof(float);
 
