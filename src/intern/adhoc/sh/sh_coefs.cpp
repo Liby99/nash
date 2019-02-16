@@ -18,29 +18,17 @@ SHCoefs::~SHCoefs() {
   }
 }
 
-float SHCoefs::get(int l, int m) {
-  return get(SH::getCoefIndex(l, m));
-}
+float SHCoefs::get(int l, int m) { return get(SH::getCoefIndex(l, m)); }
 
-float SHCoefs::get(int index) {
-  return coefs[index];
-}
+float SHCoefs::get(int index) { return coefs[index]; }
 
-void SHCoefs::set(int l, int m, float v) {
-  set(SH::getCoefIndex(l, m), v);
-}
+void SHCoefs::set(int l, int m, float v) { set(SH::getCoefIndex(l, m), v); }
 
-void SHCoefs::set(int index, float v) {
-  coefs[index] = v;
-}
+void SHCoefs::set(int index, float v) { coefs[index] = v; }
 
-void SHCoefs::accumulate(int l, int m, float v) {
-  accumulate(SH::getCoefIndex(l, m), v);
-}
+void SHCoefs::accumulate(int l, int m, float v) { accumulate(SH::getCoefIndex(l, m), v); }
 
-void SHCoefs::accumulate(int index, float v) {
-  coefs[index] += v;
-}
+void SHCoefs::accumulate(int index, float v) { coefs[index] += v; }
 
 void SHCoefs::normalize(int count) {
   int numCoefs = SH::getNumCoefs(numDegree);

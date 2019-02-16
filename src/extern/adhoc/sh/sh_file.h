@@ -1,9 +1,9 @@
 #ifndef SH_FILE_H
 #define SH_FILE_H
 
-#include <vector>
-#include "utility/file.h"
 #include "adhoc/sh/sh_coefs.h"
+#include "utility/file.h"
+#include <vector>
 
 namespace nash {
   class SHFile : public File {
