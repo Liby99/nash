@@ -34,6 +34,6 @@
 #include "adhoc/script/third_person_camera.h"
 #include "adhoc/sh/sh_coefs.h"
 #include "adhoc/sh/sh.h"
+#include "adhoc/sh/sh_sample.h"
 #include "adhoc/sh/sh_sphere.h"
 #include "adhoc/sh/sh_file.h"
-#include "adhoc/sh/mesh_sh_generator.h"

@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
   int loadCoefsCount = loadDegree * loadDegree;
   std::cerr << "Checking data integrity" << std::endl;
   for (int i = 0; i < 101; i++) {
-    SHCoefs *currCoefs = shFileLoad.getSamples()[i];
+    SHCoefs *currCoefs = shFileLoad.getCoefsList()[i];
     float *coefList = currCoefs->coefs;
     for (int j = 0; j < loadCoefsCount; j++) {
       if (fabsf(coefList[j] - 1.001f * j) > std::numeric_limits<float>::epsilon()) {

@@ -8,8 +8,8 @@ using namespace nash;
 
 SHFile::SHFile(int numDegree) : numDegree(numDegree) {}
 
-SHFile::SHFile(const std::vector<SHCoefs *> samples, int numDegree)
-    : samples(samples), numDegree(numDegree) {}
+SHFile::SHFile(const std::vector<SHCoefs *> coefsList, int numDegree)
+    : coefsList(coefsList), numDegree(numDegree) {}
 
 void SHFile::save(const std::string &filepath) {
   const std::string absPath = Path::getAbsolutePathTo(filepath);
@@ -17,7 +17,7 @@ void SHFile::save(const std::string &filepath) {
   if (pFile == nullptr) {
     throw std::runtime_error("Cannot load file " + absPath);
   }
-  int vertCount = samples.size();
+  int vertCount = coefsList.size();
   int coefsCount = numDegree * numDegree;
 
   // ((1 + 1) (header) + vert * coefs) * 4 bytes
@@ -30,7 +30,7 @@ void SHFile::save(const std::string &filepath) {
 
   // write content
   for (int i = 0; i < vertCount; i++) {
-    const SHCoefs *currSample = samples[i];
+    const SHCoefs *currSample = coefsList[i];
 
     int srcSize = currSample->numDegree * currSample->numDegree * sizeof(float);
     int distSize = coefsCount * sizeof(float);
@@ -77,8 +77,8 @@ void SHFile::load(const std::string &filepath) {
   int actualSize = ((int *)buf)[1] * ((int *)buf)[1] * sizeof(float);
 
   // ((1 + 1) (header) + vert * coefs) * 4 bytes
-  samples.clear();
-  samples.resize(vertCount);
+  coefsList.clear();
+  coefsList.resize(vertCount);
 
   // parse content
   for (int i = 0; i < vertCount; i++) {
@@ -91,12 +91,12 @@ void SHFile::load(const std::string &filepath) {
     currCoefs->numDegree = numDegree;
     currCoefs->coefs = coefs;
 
-    samples[i] = currCoefs;
+    coefsList[i] = currCoefs;
   }
 
   delete buf;
 }
 
-const std::vector<SHCoefs *> &SHFile::getSamples() const { return samples; }
+const std::vector<SHCoefs *> &SHFile::getCoefsList() const { return coefsList; }
 
 int SHFile::getNumDegree() const { return numDegree; }

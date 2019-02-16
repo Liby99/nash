@@ -9,18 +9,18 @@ namespace nash {
   class SHFile : public File {
   public:
     SHFile(int numDegree);
-    SHFile(const std::vector<SHCoefs *> samples, int numDegree);
+    SHFile(const std::vector<SHCoefs *> coefsList, int numDegree);
 
     void save(const std::string &filepath) override;
 
     void load(const std::string &filepath) override;
 
-    const std::vector<SHCoefs *> &getSamples() const;
+    const std::vector<SHCoefs *> &getCoefsList() const;
 
     int getNumDegree() const;
 
   private:
-    std::vector<SHCoefs *> samples;
+    std::vector<SHCoefs *> coefsList;
     int numDegree;
   };
 }
