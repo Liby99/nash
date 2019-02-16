@@ -8,6 +8,8 @@ const int Viewer::HEADER_HEIGHT = 28;
 
 const int Viewer::PADDING = 5;
 
+const int Viewer::MIN_REFRESH_INTERVAL = 10;
+
 Viewer::Viewer(int w, int h, std::string name, Scene &scene)
     : nanogui::Screen(Vector2i(w, h), name, false) {
   using namespace nanogui;
@@ -28,7 +30,7 @@ void Viewer::start() {
   drawAll();
   setVisible(true);
   sceneCanvas->requestFocus();
-  nanogui::mainloop();
+  nanogui::mainloop(MIN_REFRESH_INTERVAL);
   Shader::freeAll();
 }
 

@@ -10,6 +10,7 @@ namespace nash {
   public:
     static const nanogui::Color BACKGROUND;
     static const int HEADER_HEIGHT, PADDING;
+    static const int MIN_REFRESH_INTERVAL;
 
     Viewer(int width, int height, std::string name, Scene &scene);
     void start();
