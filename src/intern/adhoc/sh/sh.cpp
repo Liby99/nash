@@ -59,6 +59,14 @@ float SH::k(int l, int m) {
   return sqrt(temp);
 }
 
+int SH::getCoefIndex(int l, int m) {
+  return l * (l + 1) + m;
+}
+
+int SH::getNumCoefs(int numDegree) {
+  return numDegree * numDegree;
+}
+
 /**
  * Calculate the factorial of i. (e.g. i!)
  */

@@ -3,12 +3,12 @@
 
 #include <string>
 
-namespace nash{
-  class File{
+namespace nash {
+  class File {
   public:
-    virtual void save(const std::string & filepath) = 0;
-    virtual void load(const std::string & filepath) = 0;
+    virtual void save(const std::string &filepath) = 0;
+    virtual void load(const std::string &filepath) = 0;
   };
 }
 
-#endif //FILE_H
+#endif // FILE_H

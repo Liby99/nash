@@ -2,9 +2,7 @@
 #define MESH_SH_GENERATOR_H
 
 namespace nash {
-  class MeshSHGenerator {
-
-  };
+  class MeshSHGenerator {};
 }
 
 #endif
