@@ -1,10 +1,6 @@
 #include <chrono>
 #include <nash/nash.h>
 
-#ifdef USE_OPEN_MP
-#include <omp.h>
-#endif
-
 using namespace nash;
 
 

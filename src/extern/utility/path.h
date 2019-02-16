@@ -3,7 +3,7 @@
 
 #include <string>
 
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__unix__)
 #include <unistd.h>
 #elif defined(_WIN32)
 #include <windows.h>
