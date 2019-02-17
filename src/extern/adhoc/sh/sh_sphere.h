@@ -2,6 +2,7 @@
 #define SH_SPHERE_H
 
 #include "adhoc/sh/sh.h"
+#include "adhoc/sh/sh_coefs.h"
 #include "object/primitive/sphere.h"
 #include <stdio.h>
 
@@ -9,13 +10,13 @@ namespace nash {
   class SHSphere : public Sphere {
   public:
     SHSphere(int l, int m);
-    int getL();
-    int getM();
+    SHSphere(const SHCoefs &coefs);
     virtual void render();
 
   private:
-    int l, m;
-    MatrixXf coefs;
+    SHCoefs coefs;
+    MatrixXf values;
+    void initShader();
     void updatePositions();
   };
 }
