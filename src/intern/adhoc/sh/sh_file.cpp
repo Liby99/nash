@@ -1,42 +1,42 @@
-#include <stdio.h>
-#include <stdexcept>
 #include <adhoc/sh/sh_file.h>
-#include <utility/path.h>
+#include <iostream>
+#include <stdexcept>
+#include <stdio.h>
 #include <string.h>
+#include <utility/path.h>
 
 using namespace nash;
 
-SHFile::SHFile(int numDegree) : numDegree(numDegree){ }
+SHFile::SHFile(int numDegree) : numDegree(numDegree) {}
 
-SHFile::SHFile(const std::vector<SHCoefs *> samples, int numDegree) :
-  samples(samples),
-  numDegree(numDegree){ }
+SHFile::SHFile(const std::vector<SHCoefs *> coefsList, int numDegree)
+    : coefsList(coefsList), numDegree(numDegree) {}
 
 void SHFile::save(const std::string &filepath) {
   const std::string absPath = Path::getAbsolutePathTo(filepath);
-  FILE * pFile = fopen(absPath.c_str(), "wb");
+  FILE *pFile = fopen(absPath.c_str(), "wb");
   if (pFile == nullptr) {
     throw std::runtime_error("Cannot load file " + absPath);
   }
-  int vertCount = samples.size();
+  int vertCount = coefsList.size();
   int coefsCount = numDegree * numDegree;
 
   // ((1 + 1) (header) + vert * coefs) * 4 bytes
   int bufSize = (2 + vertCount * coefsCount) * 4;
-  char * buf = (char *)malloc(bufSize);
+  char *buf = (char *)malloc(bufSize);
 
   // write header
   memcpy(buf + 0, &vertCount, sizeof(int));
   memcpy(buf + 4, &numDegree, sizeof(int));
 
   // write content
-  for(int i = 0; i < vertCount; i ++){
-    const SHCoefs * currSample = samples[i];
+  for (int i = 0; i < vertCount; i++) {
+    const SHCoefs *currSample = coefsList[i];
 
     int srcSize = currSample->numDegree * currSample->numDegree * sizeof(float);
     int distSize = coefsCount * sizeof(float);
 
-    float * coefs = (float*)malloc(distSize);
+    float *coefs = (float *)malloc(distSize);
     memset(coefs, 0, distSize);
     memcpy(coefs, currSample->coefs, std::min(srcSize, distSize));
 
@@ -52,7 +52,7 @@ void SHFile::save(const std::string &filepath) {
 
 void SHFile::load(const std::string &filepath) {
   const std::string absPath = Path::getAbsolutePathTo(filepath);
-  FILE * pFile = fopen(absPath.c_str(), "rb");
+  FILE *pFile = fopen(absPath.c_str(), "rb");
   if (pFile == nullptr) {
     throw std::runtime_error("Cannot load file " + absPath);
   }
@@ -63,47 +63,53 @@ void SHFile::load(const std::string &filepath) {
   rewind(pFile);
 
   // Create buffer for the whole file.
-  char * buf = (char*)malloc(fileSize);
+  char *buf = (char *)malloc(fileSize);
   fread(buf, 1, fileSize, pFile);
 
   // The file is no longer needed
   fclose(pFile);
 
   // parse header
-  int vertCount = ((int*)buf)[0];
-  if(numDegree <=0) {
-    numDegree = ((int *) buf)[1];
+  int vertCount = ((int *)buf)[0];
+  if (numDegree <= 0) {
+    numDegree = ((int *)buf)[1];
   }
   int coefsSize = numDegree * numDegree * sizeof(float);
-  int actualSize = ((int *) buf)[1] * ((int *) buf)[1] * sizeof(float);
+  int actualSize = ((int *)buf)[1] * ((int *)buf)[1] * sizeof(float);
 
-
-      // ((1 + 1) (header) + vert * coefs) * 4 bytes
-  samples.clear();
-  samples.resize(vertCount);
+  // ((1 + 1) (header) + vert * coefs) * 4 bytes
+  coefsList.clear();
+  coefsList.resize(vertCount);
 
   // parse content
-  for(int i = 0; i < vertCount; i ++){
-    float * coefs = (float*)malloc(coefsSize);
+  for (int i = 0; i < vertCount; i++) {
+    float *coefs = (float *)malloc(coefsSize);
     memset(coefs, 0, coefsSize);
     memcpy(coefs, buf + 8 + i * actualSize, std::min(actualSize, coefsSize));
 
     // Create Object
-    SHCoefs * currCoefs = new SHCoefs;
+    SHCoefs *currCoefs = new SHCoefs;
     currCoefs->numDegree = numDegree;
     currCoefs->coefs = coefs;
 
-    samples[i] = currCoefs;
+    coefsList[i] = currCoefs;
   }
 
   delete buf;
 }
 
-const std::vector<SHCoefs *> &SHFile::getSamples() const {
-  return samples;
-}
+const std::vector<SHCoefs *> &SHFile::getCoefsList() const { return coefsList; }
 
-int SHFile::getNumDegree() const {
-  return numDegree;
-}
+int SHFile::getNumDegree() const { return numDegree; }
 
+void SHFile::print() const {
+  std::cout << coefsList.size() << " " << numDegree << std::endl;
+  for (int i = 0; i < coefsList.size(); i++) {
+    for (int l = 0; l < numDegree; l++) {
+      for (int m = -l; m <= l; m++) {
+        std::cout << coefsList[i]->get(l, m) << " ";
+      }
+    }
+    std::cout << std::endl;
+  }
+}

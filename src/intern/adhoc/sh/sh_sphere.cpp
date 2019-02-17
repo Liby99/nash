@@ -2,36 +2,40 @@
 
 using namespace nash;
 
-SHSphere::SHSphere(int l, int m) : Sphere(), l(l), m(m) {
+SHSphere::SHSphere(int l, int m) : Sphere(), coefs(SHCoefs(l + 1)) {
   if (abs(m) > l) {
     std::string ms = std::to_string(m), ls = std::to_string(l);
     throw std::invalid_argument("expected |m| < l, but found m = " + ms + ", l = " + ls);
   }
+  coefs.set(l, m, 1);
+  initShader();
   updatePositions();
-  setShader(Shader::get("./shader/sh_sphere"));
 }
 
-int SHSphere::getL() { return l; }
-
-int SHSphere::getM() { return m; }
+SHSphere::SHSphere(const SHCoefs &coefs) : Sphere(), coefs(coefs) {
+  initShader();
+  updatePositions();
+}
 
 void SHSphere::render() {
-  shader->uploadAttr("shCoef", coefs);
+  shader->uploadAttr("shValue", values);
   Sphere::render();
 }
+
+void SHSphere::initShader() { setShader(Shader::get("./shader/sh_sphere")); }
 
 void SHSphere::updatePositions() {
 
   // Generate coefficients
-  coefs = MatrixXf(1, positions.cols());
+  values = MatrixXf(1, positions.cols());
 
   // First loop through all positions and set the radius from center to be SH::y
   for (int i = 0; i < positions.cols(); i++) {
     Vector2f thetaPhi = Math::normalCartToPolar(positions.col(i));
     float theta = thetaPhi.x(), phi = thetaPhi.y();
-    float sh = SH::y(l, m, theta, phi);
+    float sh = coefs.eval(theta, phi);
     positions.col(i) *= abs(sh);
-    coefs.col(i) << sh;
+    values.col(i) << sh;
 
     // Temporarily set normal to 0
     normals.col(i) = Vector3f::Zero();

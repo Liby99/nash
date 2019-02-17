@@ -12,5 +12,5 @@ Matrix4f nash::Transform::getTransform() {
   Matrix4f local = Matrix4f::Zero();
   local.col(3) << position.x(), position.y(), position.z(), 1;
   local.topLeftCorner<3, 3>() = rotation.normalized().toRotationMatrix() * Scaling(scale);
-  return local * world;
+  return world * local;
 }

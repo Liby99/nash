@@ -1,5 +1,5 @@
-#include <nash/nash.h>
 #include <limits>
+#include <nash/nash.h>
 
 using namespace nash;
 
@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   std::cerr << "Creating dummy coefs list" << std::endl;
   std::vector<SHCoefs *> coefs(vertCount);
   for (int i = 0; i < 101; i++) {
-    float *coefList = (float *) malloc(coefsSize);
+    float *coefList = (float *)malloc(coefsSize);
     for (int j = 0; j < coefsCount; j++) {
       coefList[j] = 1.001f * j;
     }
@@ -40,11 +40,11 @@ int main(int argc, char *argv[]) {
   int loadCoefsCount = loadDegree * loadDegree;
   std::cerr << "Checking data integrity" << std::endl;
   for (int i = 0; i < 101; i++) {
-    SHCoefs *currCoefs = shFileLoad.getSamples()[i];
-    float * coefList = currCoefs->coefs;
+    SHCoefs *currCoefs = shFileLoad.getCoefsList()[i];
+    float *coefList = currCoefs->coefs;
     for (int j = 0; j < loadCoefsCount; j++) {
-      if(fabsf(coefList[j] - 1.001f * j) > std::numeric_limits<float>::epsilon()) {
-        //assert(fabsf(coefList[j] - 1.001f * j) > std::numeric_limits<float>::epsilon());
+      if (fabsf(coefList[j] - 1.001f * j) > std::numeric_limits<float>::epsilon()) {
+        // assert(fabsf(coefList[j] - 1.001f * j) > std::numeric_limits<float>::epsilon());
         std::cerr << "Expected:" << 1.001 * j << "; Actual:" << coefList[j] << std::endl;
       }
     }

@@ -35,7 +35,18 @@ Vector3f Sampler::sampleSphere() {
 }
 
 void Sampler::sampleHemiSphere(std::vector<Vector3f> &samples, Vector3f normal) {
-  // TODO
+  sampleSphere(samples);
+  for (int i = 0; i < samples.size(); i++) {
+    if (normal.dot(samples[i])) {
+      samples[i] = -samples[i];
+    }
+  }
 }
 
-Vector3f Sampler::sampleHemiSphere(Vector3f normal) { return Vector3f(0, 0, 0); }
+Vector3f Sampler::sampleHemiSphere(Vector3f normal) {
+  Vector3f sample = sampleSphere();
+  if (normal.dot(sample)) {
+    sample = -sample;
+  }
+  return sample;
+}

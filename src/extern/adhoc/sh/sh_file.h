@@ -1,31 +1,24 @@
 #ifndef SH_FILE_H
 #define SH_FILE_H
 
-#include <utility/file.h>
+#include "adhoc/sh/sh_coefs.h"
+#include "utility/file.h"
 #include <vector>
 
-namespace nash{
-
-  class SHCoefs{
-  public:
-    int numDegree;
-    float * coefs;
-  };
-
-  class SHFile : public File{
+namespace nash {
+  class SHFile : public File {
   public:
     SHFile(int numDegree);
-    SHFile(const std::vector<SHCoefs *> samples, int numDegree);
+    SHFile(const std::vector<SHCoefs *> coefsList, int numDegree);
 
     void save(const std::string &filepath) override;
-
     void load(const std::string &filepath) override;
-
-    const std::vector<SHCoefs *> &getSamples() const;
-
+    const std::vector<SHCoefs *> &getCoefsList() const;
     int getNumDegree() const;
+    void print() const;
+
   private:
-    std::vector<SHCoefs *> samples;
+    std::vector<SHCoefs *> coefsList;
     int numDegree;
   };
 }

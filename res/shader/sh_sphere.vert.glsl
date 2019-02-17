@@ -3,12 +3,12 @@
 layout(location=0) in vec3 position;
 layout(location=1) in vec3 normal;
 layout(location=2) in vec2 texCoord;
-layout(location=3) in float shCoef;
+layout(location=3) in float shValue;
 
 out vec3 fragPosition;
 out vec3 fragNormal;
 out vec2 fragTexCoord;
-out float fragShCoef;
+out float fragShValue;
 
 uniform mat4 model = mat4(1);
 uniform mat4 viewPersp = mat4(1);
@@ -19,5 +19,5 @@ void main() {
   fragPosition = vec3(model * vec4(position, 1));
   fragNormal = vec3(transpose(inverse(model)) * vec4(normal, 0));
   fragTexCoord = texCoord;
-  fragShCoef = shCoef;
+  fragShValue = shValue;
 }

@@ -16,5 +16,6 @@ pdf/
 cmake-build-debug/
 .idea/
 
-# VS related
+# VS/VS-Code related
 .vs/
+.vscode
