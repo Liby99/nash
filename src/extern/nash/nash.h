@@ -1,4 +1,5 @@
 // clang-format off
+#include "image/cube_map.h"
 #include "image/texture.h"
 #include "image/texture_2d.h"
 #include "image/image.h"
