@@ -12,12 +12,10 @@ namespace nash {
     SHFile(const std::vector<SHCoefs *> coefsList, int numDegree);
 
     void save(const std::string &filepath) override;
-
     void load(const std::string &filepath) override;
-
     const std::vector<SHCoefs *> &getCoefsList() const;
-
     int getNumDegree() const;
+    void print() const;
 
   private:
     std::vector<SHCoefs *> coefsList;

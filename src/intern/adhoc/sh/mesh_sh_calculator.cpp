@@ -15,7 +15,7 @@ MeshSHCalculator::MeshSHCalculator(const Mesh &mesh, int numDegree)
   // Then generate box tree out from mesh
   BoxTreeMesh boxTree(mesh);
 
-  // Do raytracing on the box tree
+// Do raytracing on the box tree
 #pragma omp parallel for
   for (int i = 0; i < mesh.getPositions().cols(); i++) {
 
@@ -42,6 +42,7 @@ MeshSHCalculator::MeshSHCalculator(const Mesh &mesh, int numDegree)
       Intersection itsct(ray);
       bool hit = boxTree.intersect(ray, itsct);
 
+      // If not occluded by self, then add up the corresponding sh coefs
       if (!hit) {
         for (int l = 0; l < numDegree; l++) {
           for (int m = -l; m <= l; m++) {

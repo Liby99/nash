@@ -1,4 +1,5 @@
 #include <adhoc/sh/sh_file.h>
+#include <iostream>
 #include <stdexcept>
 #include <stdio.h>
 #include <string.h>
@@ -100,3 +101,15 @@ void SHFile::load(const std::string &filepath) {
 const std::vector<SHCoefs *> &SHFile::getCoefsList() const { return coefsList; }
 
 int SHFile::getNumDegree() const { return numDegree; }
+
+void SHFile::print() const {
+  std::cout << coefsList.size() << " " << numDegree << std::endl;
+  for (int i = 0; i < coefsList.size(); i++) {
+    for (int l = 0; l < numDegree; l++) {
+      for (int m = -l; m <= l; m++) {
+        std::cout << coefsList[i]->get(l, m) << " ";
+      }
+    }
+    std::cout << std::endl;
+  }
+}
