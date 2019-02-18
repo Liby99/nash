@@ -5,47 +5,47 @@
 
 using namespace nash;
 
+const std::string Shader::DEFAULT_VERT_SHADER =
+    "#version 400\n"
+    "layout(location=0) in vec3 position;\n"
+    "layout(location=1) in vec3 normal;\n"
+    "layout(location=2) in vec2 texCoord;\n"
+    "out vec3 fragPosition;\n"
+    "out vec3 fragNormal;\n"
+    "out vec2 fragTexCoord;\n"
+    "uniform mat4 model = mat4(1);\n"
+    "uniform mat4 viewPersp = mat4(1);\n"
+    "void main() {\n"
+    "    mat4 mvp = viewPersp * model;\n"
+    "    gl_Position = mvp * vec4(position, 1);\n"
+    "    fragPosition = vec3(model * vec4(position, 1));\n"
+    "    fragNormal = vec3(transpose(inverse(model)) * vec4(normal, 0));\n"
+    "    fragTexCoord = texCoord;\n"
+    "}";
+
+const std::string Shader::DEFAULT_FRAG_SHADER =
+    "#version 400\n"
+    "in vec3 fragPosition;\n"
+    "in vec3 fragNormal;\n"
+    "in vec2 fragTexCoord;\n"
+    "uniform vec3 AmbientColor = vec3(0.3);\n"
+    "uniform vec3 LightDirection = normalize(vec3(1, 5, 2));\n"
+    "uniform vec3 LightColor = vec3(0.8);\n"
+    "uniform vec3 DiffuseColor = vec3(0.3);\n"
+    "out vec4 finalColor;\n"
+    "void main() {\n"
+    "    vec3 irradiance = AmbientColor + LightColor * max(0, "
+    "dot(LightDirection, fragNormal));\n"
+    "    vec3 reflectance = irradiance * DiffuseColor;\n"
+    "    finalColor = vec4(sqrt(reflectance), 1);\n"
+    "}";
+
 void Shader::init() {
   if (simple) {
-    initDefault();
+    shader->init("default", DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
   } else {
     shader->initFromFiles(name, path + ".vert.glsl", path + ".frag.glsl");
   }
-}
-
-void Shader::initDefault() {
-  shader->init("",
-               "#version 400\n"
-               "layout(location=0) in vec3 position;\n"
-               "layout(location=1) in vec3 normal;\n"
-               "layout(location=2) in vec2 texCoord;\n"
-               "out vec3 fragPosition;\n"
-               "out vec3 fragNormal;\n"
-               "out vec2 fragTexCoord;\n"
-               "uniform mat4 model = mat4(1);\n"
-               "uniform mat4 viewPersp = mat4(1);\n"
-               "void main() {\n"
-               "    mat4 mvp = viewPersp * model;\n"
-               "    gl_Position = mvp * vec4(position, 1);\n"
-               "    fragPosition = vec3(model * vec4(position, 1));\n"
-               "    fragNormal = vec3(transpose(inverse(model)) * vec4(normal, 0));\n"
-               "    fragTexCoord = texCoord;\n"
-               "}",
-               "#version 400\n"
-               "in vec3 fragPosition;\n"
-               "in vec3 fragNormal;\n"
-               "in vec2 fragTexCoord;\n"
-               "uniform vec3 AmbientColor = vec3(0.3);\n"
-               "uniform vec3 LightDirection = normalize(vec3(1, 5, 2));\n"
-               "uniform vec3 LightColor = vec3(0.8);\n"
-               "uniform vec3 DiffuseColor = vec3(0.3);\n"
-               "out vec4 finalColor;\n"
-               "void main() {\n"
-               "    vec3 irradiance = AmbientColor + LightColor * max(0, "
-               "dot(LightDirection, fragNormal));\n"
-               "    vec3 reflectance = irradiance * DiffuseColor;\n"
-               "    finalColor = vec4(sqrt(reflectance), 1);\n"
-               "}");
 }
 
 void Shader::bind() { shader->bind(); }
@@ -53,29 +53,35 @@ void Shader::bind() { shader->bind(); }
 void Shader::free() { shader->free(); }
 
 void Shader::setUniform(const std::string &name, const Matrix4f &mat) {
-  shader->setUniform(name, mat);
+  shader->setUniform(name, mat, false);
 }
 
 void Shader::setUniform(const std::string &name, const Matrix3f &mat) {
-  shader->setUniform(name, mat);
+  shader->setUniform(name, mat, false);
 }
 
 void Shader::setUniform(const std::string &name, const Vector4f &vec) {
-  shader->setUniform(name, vec);
+  shader->setUniform(name, vec, false);
 }
 
 void Shader::setUniform(const std::string &name, const Vector3f &vec) {
-  shader->setUniform(name, vec);
+  shader->setUniform(name, vec, false);
 }
 
-void Shader::setUniform(const std::string &name, bool value) { shader->setUniform(name, value); }
+void Shader::setUniform(const std::string &name, bool value) {
+  shader->setUniform(name, value, false);
+}
 
-void Shader::setUniform(const std::string &name, int value) { shader->setUniform(name, value); }
+void Shader::setUniform(const std::string &name, int value) {
+  shader->setUniform(name, value, false);
+}
 
-void Shader::setUniform(const std::string &name, float value) { shader->setUniform(name, value); }
+void Shader::setUniform(const std::string &name, float value) {
+  shader->setUniform(name, value, false);
+}
 
 void Shader::uploadAttr(const std::string &name, const MatrixXf &m) {
-  shader->uploadAttrib(name, m);
+  shader->uploadAttrib(name, m, false);
 }
 
 void Shader::freeAttr(const std::string &name) { shader->freeAttrib(name); }

@@ -10,8 +10,10 @@
 namespace nash {
   class Shader {
   public:
+    static const std::string DEFAULT_VERT_SHADER;
+    static const std::string DEFAULT_FRAG_SHADER;
+
     void init();
-    void initDefault();
     void bind();
     void free();
     void setUniform(const std::string &name, const Matrix4f &mat);
