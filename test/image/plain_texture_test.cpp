@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
   Scene scene;
   ThirdPersonCamera camCtrl;
   camCtrl.incline = PI / 4;
-  scene.camera.setController(camCtrl);
+  scene.getCamera().setController(camCtrl);
 
   TexturedPlane plane1("./image/posx.jpg", 1);
   plane1.transform.position << -1, 0, 0;

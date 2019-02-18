@@ -48,7 +48,7 @@ int main() {
 
   Scene scene;
   ThirdPersonCamera camCtrl;
-  scene.camera.setController(camCtrl);
+  scene.getCamera().setController(camCtrl);
 
   Cube cube;
   cube.transform.scale << 1.2, 1, 0.8;
@@ -74,7 +74,7 @@ int main() {
 
   Sphere followingSphere;
   followingSphere.transform.scale << 0.2, 0.2, 0.2;
-  FollowCamera followCameraScript("follow-camera", scene.camera);
+  FollowCamera followCameraScript("follow-camera", scene.getCamera());
   followingSphere.attachScript(followCameraScript);
   scene.addObject(followingSphere);
 

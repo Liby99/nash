@@ -1,4 +1,5 @@
 #include "object/adhoc/sky_box.h"
+#include "viewer/camera.h"
 
 using namespace nash;
 

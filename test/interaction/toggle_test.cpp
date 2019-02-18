@@ -13,7 +13,7 @@ int main() {
   Nash::init();
 
   Scene scene;
-  scene.camera.position << 3, 3, 3;
+  scene.getCamera().position << 3, 3, 3;
 
   Toggle::ToggleFunction func = [](Context &context) {
     return context.getKey('a') || context.getKey('b');

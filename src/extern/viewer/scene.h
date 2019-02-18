@@ -1,20 +1,20 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "object/object.h"
-#include "viewer/camera.h"
-#include "viewer/context.h"
-
 namespace nash {
+  class Context;
+  class Camera;
+  class Object;
+
   class Scene {
   public:
-    Camera camera;
-    Object root;
-
     Scene();
+    ~Scene();
 
     void setSize(int width, int height);
 
+    Camera &getCamera();
+    Object &getRoot();
     void addObject(Object &object);
 
     void start(Context &context);
@@ -22,6 +22,8 @@ namespace nash {
     void render(Context &context);
 
   private:
+    Camera *camera;
+    Object *root;
   };
 }
 

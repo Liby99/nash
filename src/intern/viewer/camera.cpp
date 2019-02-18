@@ -4,7 +4,7 @@ using namespace nash;
 
 Camera::Camera()
     : position(0, 0, -1), target(0, 0, 0), up(0, 1, 0), width(1280), height(720), zNear(0.1),
-      zFar(20), aspect(1.7777778), fovy(45), control(nullptr) {
+      zFar(100), aspect(1.7777778), fovy(45), control(nullptr) {
   // Do nothing
 }
 

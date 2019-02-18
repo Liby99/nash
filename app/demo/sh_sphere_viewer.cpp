@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
 
   Scene scene;
   ThirdPersonCamera ctrl;
-  scene.camera.setController(ctrl);
+  scene.getCamera().setController(ctrl);
 
   std::vector<SHSphere *> spheres;
   std::vector<Rotator *> rotators;

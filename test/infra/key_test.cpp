@@ -17,7 +17,7 @@ int main() {
   Nash::init();
 
   Scene scene;
-  scene.camera.position << 3, 3, 3;
+  scene.getCamera().position << 3, 3, 3;
 
   Cube cube;
   Toggle cubeToggle("toggle",

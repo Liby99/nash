@@ -5,6 +5,7 @@
 #include "utility/shader.h"
 #include "utility/transform.h"
 #include "viewer/context.h"
+#include "viewer/scene.h"
 #include <stdexcept>
 #include <vector>
 

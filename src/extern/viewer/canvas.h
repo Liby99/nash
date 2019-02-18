@@ -1,7 +1,9 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
+#include "utility/math.h"
 #include "viewer/scene.h"
+#include <nanogui/nanogui.h>
 
 namespace nash {
   class Canvas : public nanogui::GLCanvas {
@@ -24,7 +26,7 @@ namespace nash {
 
   private:
     Scene *scene;
-    Context context;
+    Context *context;
   };
 }
 

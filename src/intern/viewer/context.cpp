@@ -39,6 +39,10 @@ void Context::endOfFrameCycle() {
   scrollPosition = newScrollPosition;
 }
 
+void Context::setScene(Scene &scene) { this->scene = &scene; }
+
+Scene &Context::getScene() { return *(this->scene); }
+
 GLFWwindow *Context::getGLFWWindow() { return window; }
 
 int Context::getWindowWidth() { return windowWidth; }

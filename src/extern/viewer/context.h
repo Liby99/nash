@@ -7,6 +7,8 @@
 #include <vector>
 
 namespace nash {
+  class Scene;
+
   enum Direction { Up, Down, Left, Right };
 
   class Context {
@@ -17,6 +19,10 @@ namespace nash {
     void init();
     void bindGLFWWindow(GLFWwindow *window);
     void endOfFrameCycle();
+
+    // Scene related
+    void setScene(Scene &scene);
+    Scene &getScene();
 
     // Window properties
     GLFWwindow *getGLFWWindow();
@@ -47,6 +53,8 @@ namespace nash {
     bool scrollEvent(const Vector2i &p, const Vector2f &rel);
 
   private:
+    Scene *scene;
+
     GLFWwindow *window;
     int windowWidth, windowHeight;
 

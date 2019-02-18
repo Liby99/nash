@@ -11,9 +11,9 @@ int main() {
   Nash::init();
 
   Scene scene;
-  scene.camera.position << 3, 3, 3;
+  scene.getCamera().position << 3, 3, 3;
   Cube cube;
-  cube.setParent(scene.root);
+  scene.addObject(cube);
   Viewer viewer(1280, 720, "Cube test", scene);
   viewer.start();
 

@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
 
   Scene scene;
   ThirdPersonCamera camCtrl;
-  scene.camera.setController(camCtrl);
+  scene.getCamera().setController(camCtrl);
 
   AssimpObject desk("./model/simp_desk.ply");
   desk.transform.rotation = AngleAxisf(-PI / 2, Vector3f(1, 0, 0));

@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
 
   Scene scene;
   ThirdPersonCamera camCtrl;
-  scene.camera.setController(camCtrl);
+  scene.getCamera().setController(camCtrl);
 
   ColoredMesh coloredMesh(*teapot.getMeshes()[0], color);
   scene.addObject(coloredMesh);

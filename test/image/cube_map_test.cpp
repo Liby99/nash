@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
   Scene scene;
   ThirdPersonCamera camCtrl;
   camCtrl.incline = PI / 4;
-  scene.camera.setController(camCtrl);
+  scene.getCamera().setController(camCtrl);
 
   Cube cube;
   scene.addObject(cube);

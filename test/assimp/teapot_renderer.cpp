@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 
   Scene scene;
   ThirdPersonCamera camCtrl;
-  scene.camera.setController(camCtrl);
+  scene.getCamera().setController(camCtrl);
 
   AssimpObject teapot("./res/model/teapot.obj");
   Rotator rotator("rotator");

@@ -24,6 +24,7 @@
 #include "object/primitive/sphere.h"
 #include "object/primitive/plane.h"
 #include "object/primitive/cube.h"
+#include "object/adhoc/sky_box.h"
 #include "adhoc/raytrace/intersection.h"
 #include "adhoc/raytrace/box_tree_mesh.h"
 #include "adhoc/raytrace/box_tree_node.h"

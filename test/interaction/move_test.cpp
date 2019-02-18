@@ -31,7 +31,7 @@ int main() {
   Nash::init();
 
   Scene scene;
-  scene.camera.position << 1, 1, 5;
+  scene.getCamera().position << 1, 1, 5;
 
   Cube cube;
   Mover mover("mover");
