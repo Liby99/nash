@@ -14,7 +14,8 @@ std::string Path::getCurrentWorkingDirectory() {
   char buffer[BUF_SIZE];
   return std::string(getcwd(buffer, BUF_SIZE));
 #else
-  throw std::runtime_error("Not implemented");
+  char buffer[BUF_SIZE];
+  return std::string(_getcwd(buffer, BUF_SIZE));
 #endif
 }
 
