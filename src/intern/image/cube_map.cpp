@@ -32,3 +32,38 @@ void CubeMap::bind(GLuint pos) const {
   Texture::bind(pos);
   glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
 }
+
+Vector4u CubeMap::getColor(Vector3f dir) const {
+  Vector3f d = dir.normalized();
+  float sqrt2 = std::sqrt(2.0);
+  float ax = std::abs(d.x()), ay = std::abs(d.y()), az = std::abs(d.z());
+  float horf, verf;
+  const Image * img;
+  if (ax > ay && ax > az) {
+    if (d.x() > 0) {
+      float horf = d.z() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;
+      img = right;
+    } else {
+      float horf = -d.z() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;
+      img = left;
+    }
+  } else if (ay > ax && ay > az) {
+    if (d.y() > 0) {
+      float horf = d.x() / sqrt2 + 0.5f, verf = -d.z() / sqrt2 + 0.5f;
+      img = top;
+    } else {
+      float horf = d.x() / sqrt2 + 0.5f, verf = d.z() / sqrt2 + 0.5f;
+      img = down;
+    }
+  } else {
+    if (d.z() > 0) {
+      float horf = -d.x() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;
+      img = front;
+    } else {
+      float horf = d.x() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;
+      img = back;
+    }
+  }
+  int i = horf * img->width, j = verf * img->height;
+  return img->getColor(i, j);
+}

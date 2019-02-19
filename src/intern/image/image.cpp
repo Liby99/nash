@@ -13,3 +13,8 @@ Image::Image(const std::string &filename) : width(0), height(0), numChannels(0) 
 }
 
 Image::~Image() { stbi_image_free(data); }
+
+Vector4u Image::getColor(int i, int j) const {
+  int start = (j * width + i) * 4;
+  return Vector4u(data[start], data[start + 1], data[start + 2], data[start + 3]);
+}
