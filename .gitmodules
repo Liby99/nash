@@ -7,3 +7,6 @@
 [submodule "lib/stb"]
 	path = lib/stb
 	url = https://github.com/nothings/stb
+[submodule "lib/spherical-harmonics"]
+	path = lib/spherical-harmonics
+	url = https://github.com/Liby99/spherical-harmonics

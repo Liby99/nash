@@ -19,7 +19,7 @@ namespace nash {
     void set(int index, float v);
     void accumulate(int l, int m, float v);
     void accumulate(int index, float v);
-    void normalize(int count);
+    void normalize(float factor);
     float eval(float theta, float phi);
   };
 }

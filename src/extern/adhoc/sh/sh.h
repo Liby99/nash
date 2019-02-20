@@ -13,7 +13,7 @@ namespace nash {
     static int getNumCoefs(int numDegree);
 
   private:
-    static int factorial(int i);
+    static int factorial(unsigned int i);
   };
 }
 

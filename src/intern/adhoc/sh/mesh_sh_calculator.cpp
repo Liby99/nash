@@ -15,6 +15,8 @@ MeshSHCalculator::MeshSHCalculator(const Mesh &mesh, int numDegree)
   // Then generate box tree out from mesh
   BoxTreeMesh boxTree(mesh);
 
+  float factor = 4 * PI / SAMPLE_COUNT;
+
 // Do raytracing on the box tree
 #pragma omp parallel for
   for (int i = 0; i < mesh.getPositions().cols(); i++) {
@@ -51,7 +53,7 @@ MeshSHCalculator::MeshSHCalculator(const Mesh &mesh, int numDegree)
         }
       }
     }
-    coefs->normalize(samples.size()); // Normalize the coefs by number of samples
+    coefs->normalize(factor); // Normalize the coefs by number of samples
 
     // Put the coefs of this point back into the list
     coefsList[i] = coefs;
