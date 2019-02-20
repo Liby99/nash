@@ -38,7 +38,7 @@ Vector4u CubeMap::getColor(Vector3f dir) const {
   float sqrt2 = std::sqrt(2.0);
   float ax = std::abs(d.x()), ay = std::abs(d.y()), az = std::abs(d.z());
   float horf, verf;
-  const Image * img;
+  const Image *img;
   if (ax > ay && ax > az) {
     if (d.x() > 0) {
       float horf = d.z() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;

@@ -7,7 +7,6 @@
 namespace nash {
   class Nash {
   public:
-    static void init();
     static void init(int argc, char *argv[]);
     static void shutdown();
   };

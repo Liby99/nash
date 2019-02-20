@@ -2,10 +2,8 @@
 
 using namespace nash;
 
-void Nash::init() { nanogui::init(); }
-
 void Nash::init(int argc, char *argv[]) {
-  init();
+  nanogui::init();
   Path::init(argv[0]);
 }
 

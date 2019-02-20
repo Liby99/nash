@@ -9,5 +9,12 @@ copy_image("cubemaps/room/negy.jpg" DESTINATION "room")
 copy_image("cubemaps/room/posz.jpg" DESTINATION "room")
 copy_image("cubemaps/room/negz.jpg" DESTINATION "room")
 
+copy_image("cubemaps/colors/posx.jpg" DESTINATION "colors")
+copy_image("cubemaps/colors/negx.jpg" DESTINATION "colors")
+copy_image("cubemaps/colors/posy.jpg" DESTINATION "colors")
+copy_image("cubemaps/colors/negy.jpg" DESTINATION "colors")
+copy_image("cubemaps/colors/posz.jpg" DESTINATION "colors")
+copy_image("cubemaps/colors/negz.jpg" DESTINATION "colors")
+
 copy_shader("plain_texture")
-copy_shader("env_map")
+copy_shader("sky_box")
