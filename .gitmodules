@@ -10,3 +10,6 @@
 [submodule "lib/spherical-harmonics"]
 	path = lib/spherical-harmonics
 	url = https://github.com/Liby99/spherical-harmonics
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json
