@@ -8,17 +8,22 @@ const int DEFAULT_NUM_DEGREE = 5;
 const int MILLI_PER_SECOND = 1000;
 
 std::string filename;
+std::string ext = "jpg";
 int numDegree = DEFAULT_NUM_DEGREE;
 bool printOnly = false;
 bool doTiming = false;
 bool silent = false;
 
 void printHelp() {
-  std::cout << "Usage: ./obj_coef_calculator [-d|--degree <num_degree>] [-p|--print] [-t|--time] "
-               "[-s|--silent] [-h|--help] <filename>"
+  std::cout << "Usage: ./obj_coef_calculator [-d|--degree <num_degree>] [-p|--print] <filename>"
             << std::endl;
-  std::cout << "This program will take in an object file, and output one or several files each "
-               "representing the spherical harmonics coefficients of a mesh"
+  std::cout << "This program will take in a directory containing a set of environment map images, "
+               "which will be named as `posx.jpg`, `negx.jpg`, `posy.jpg`, `negy.jpg`, `posz.jpg`, "
+               "and `negz.jpg`, and output a single coefficient file containing 3 set of "
+               "coefficients, each representing channel RED, GREEN and BLUE."
+            << std::endl;
+  std::cout << "If you don't want the file extension to be .jpg, you can use -e flag to set the "
+               "file extension."
             << std::endl;
   std::cout << "Flags:" << std::endl;
   std::cout << "\t-h | --help\t\t\tPrint the Help message and terminate the program" << std::endl;
@@ -31,6 +36,9 @@ void printHelp() {
             << std::endl;
   std::cout << "\t-d | --degree <num_degree>\tWill contain the top <num_degree> of coefficients. "
                "The value is set to be 5 if not specified"
+            << std::endl;
+  std::cout << "\t-e | --ext <extension>\t\tWill set the auto image extension to <extension>. "
+               "Default value is `jpg`. Some other example would be `png`, `bmp` and so on."
             << std::endl;
 }
 
@@ -48,6 +56,9 @@ int main(int argc, char *argv[]) {
 
   // Parse the command line arguments
   bool hasFilename = false;
+  std::string filename;
+  int numDegree = DEFAULT_NUM_DEGREE;
+  bool printOnly = false, time = false, silent = false;
   for (int i = 1; i < argc; i++) {
     std::string str = std::string(argv[i]);
     if (str[0] == '-') {
@@ -63,6 +74,8 @@ int main(int argc, char *argv[]) {
           std::cout << "Cannot parse <num_degree>: invalid input " << degreeStr << std::endl;
           return -1;
         }
+      } else if (str == "-e" || str == "--ext") {
+        ext = std::string(argv[++i]);
       } else if (str == "-p" || str == "--print") {
         printOnly = true;
       } else if (str == "-h" || str == "--help") {
@@ -91,34 +104,38 @@ int main(int argc, char *argv[]) {
 
   // Check if there's filename specified
   if (!hasFilename) {
-    std::cout << "Please specify the file name" << std::endl;
+    std::cout << "Please specify the env map directory" << std::endl;
     printHelp();
     return -1;
   }
 
   // Load the file and get the meshes
-  print("Loading obj file " + filename + "...");
-  AssimpObject obj(filename);
-  auto meshes = obj.getMeshes();
+  print("Loading env map files in directory " + filename + "...");
+  Image right(filename + "/posx." + ext);
+  Image left(filename + "/negx." + ext);
+  Image top(filename + "/posy." + ext);
+  Image down(filename + "/negy." + ext);
+  Image front(filename + "/posz." + ext);
+  Image back(filename + "/negz." + ext);
+  CubeMap cubeMap(top, down, left, right, front, back);
 
   // Save a coef file for each meshes
-  print("Start calculating sh coefs for Object " + filename + "...");
+  print("Start calculating sh coefs for sky box " + filename + "...");
   auto start = std::chrono::system_clock::now();
-  for (int i = 0; i < meshes.size(); i++) {
-    AssimpMesh &mesh = *(meshes[i]);
-    print("- Calculating Mesh: " + mesh.getName() + "...");
-    MeshSHCalculator calc(mesh, numDegree);
-    SHFile file(calc.getCoefsList(), numDegree);
-    if (printOnly) {
-      file.print();
-    } else {
-      std::string objName = Path::getFileName(filename), meshName = mesh.getName();
-      std::string name = meshName.length() == 0 ? objName : objName + "." + meshName;
-      std::string saveFilename = "./" + name + ".coef";
-      print("- Saving coef file " + saveFilename + "...");
-      file.save(saveFilename);
-    }
+
+  // Start calculating
+  SkyBoxSHCalculator calc(cubeMap, numDegree);
+  auto list = calc.getCoefsList();
+  SHFile file(calc.getCoefsList(), numDegree);
+  if (printOnly) {
+    file.print();
+  } else {
+    std::string name = Path::getFileName(filename);
+    std::string saveFilename = "./" + name + ".env.coef";
+    print("- Saving coef file " + saveFilename + "...");
+    file.save(saveFilename);
   }
+
   auto end = std::chrono::system_clock::now();
   auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
   if (doTiming) {

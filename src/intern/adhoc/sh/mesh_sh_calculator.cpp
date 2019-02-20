@@ -60,4 +60,10 @@ MeshSHCalculator::MeshSHCalculator(const Mesh &mesh, int numDegree)
   }
 }
 
+MeshSHCalculator::~MeshSHCalculator() {
+  for (int i = 0; i < coefsList.size(); i++) {
+    delete coefsList[i];
+  }
+}
+
 const std::vector<SHCoefs *> &MeshSHCalculator::getCoefsList() { return coefsList; }

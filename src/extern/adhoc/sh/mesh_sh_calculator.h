@@ -10,6 +10,7 @@ namespace nash {
     static const int SAMPLE_COUNT;
     int numDegree;
     MeshSHCalculator(const Mesh &mesh, int numDegree);
+    ~MeshSHCalculator();
     const std::vector<SHCoefs *> &getCoefsList();
 
   private:

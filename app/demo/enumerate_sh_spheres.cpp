@@ -2,6 +2,8 @@
 
 using namespace nash;
 
+const int NUM_DEGREE = 5;
+
 int main(int argc, char *argv[]) {
   Nash::init(argc, argv);
 
@@ -12,8 +14,7 @@ int main(int argc, char *argv[]) {
   std::vector<SHSphere *> spheres;
   std::vector<Rotator *> rotators;
 
-  int n = 10;
-  for (int l = 0; l < n; l++) {
+  for (int l = 0; l < NUM_DEGREE; l++) {
     for (int m = -l; m <= l; m++) {
       SHSphere *sphere = new SHSphere(l, m);
       sphere->transform.position = Vector3f(m * 0.8, 2 - l * 0.8, 0);

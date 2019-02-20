@@ -1,5 +1,5 @@
-#include <nash/nash.h>
 #include <chrono>
+#include <nash/nash.h>
 
 using namespace nash;
 
