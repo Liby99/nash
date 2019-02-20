@@ -56,9 +56,6 @@ int main(int argc, char *argv[]) {
 
   // Parse the command line arguments
   bool hasFilename = false;
-  std::string filename;
-  int numDegree = DEFAULT_NUM_DEGREE;
-  bool printOnly = false, time = false, silent = false;
   for (int i = 1; i < argc; i++) {
     std::string str = std::string(argv[i]);
     if (str[0] == '-') {
@@ -109,8 +106,13 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
+  // Preprocess the path
+  bool endWithSlash = filename[filename.length() - 1] == '/';
+  filename = endWithSlash ? filename.substr(0, filename.length() - 1) : filename;
+  std::string name = Path::getFileName(filename);
+
   // Load the file and get the meshes
-  print("Loading env map files in directory " + filename + "...");
+  print("Loading env map files in directory " + filename + "/ ...");
   Image right(filename + "/posx." + ext);
   Image left(filename + "/negx." + ext);
   Image top(filename + "/posy." + ext);
@@ -120,7 +122,7 @@ int main(int argc, char *argv[]) {
   CubeMap cubeMap(top, down, left, right, front, back);
 
   // Save a coef file for each meshes
-  print("Start calculating sh coefs for sky box " + filename + "...");
+  print("Start calculating sh coefs for sky box " + name + "...");
   auto start = std::chrono::system_clock::now();
 
   // Start calculating
@@ -130,9 +132,8 @@ int main(int argc, char *argv[]) {
   if (printOnly) {
     file.print();
   } else {
-    std::string name = Path::getFileName(filename);
     std::string saveFilename = "./" + name + ".env.coef";
-    print("- Saving coef file " + saveFilename + "...");
+    print("Saving coef file " + saveFilename + "...");
     file.save(saveFilename);
   }
 
