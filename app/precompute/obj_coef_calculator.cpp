@@ -1,5 +1,5 @@
-#include <nash/nash.h>
 #include <chrono>
+#include <nash/nash.h>
 
 using namespace nash;
 
@@ -8,14 +8,23 @@ const int DEFAULT_NUM_DEGREE = 5;
 const int MILLI_PER_SECOND = 1000;
 
 void printHelp() {
-  std::cout << "Usage: ./obj_coef_calculator [-d|--degree <num_degree>] [-p|--print] <filename>" << std::endl;
-  std::cout << "This program will take in an object file, and output one or several files each representing the spherical harmonics coefficients of a mesh" << std::endl;
+  std::cout << "Usage: ./obj_coef_calculator [-d|--degree <num_degree>] [-p|--print] <filename>"
+            << std::endl;
+  std::cout << "This program will take in an object file, and output one or several files each "
+               "representing the spherical harmonics coefficients of a mesh"
+            << std::endl;
   std::cout << "Flags:" << std::endl;
   std::cout << "\t-h | --help\t\t\tPrint the Help message and terminate the program" << std::endl;
-  std::cout << "\t-p | --print\t\t\tPrint out the file content instead of exporting to file" << std::endl;
-  std::cout << "\t-t | --time\t\t\tPrint out the time elapsed when computation finished" << std::endl;
-  std::cout << "\t-s | --silent\t\t\tDon't print anything while computing. Will override option -t (time) but will not override option -p (print)" << std::endl;
-  std::cout << "\t-d | --degree <num_degree>\tWill contain the top <num_degree> of coefficients. The value is set to be 5 if not specified" << std::endl;
+  std::cout << "\t-p | --print\t\t\tPrint out the file content instead of exporting to file"
+            << std::endl;
+  std::cout << "\t-t | --time\t\t\tPrint out the time elapsed when computation finished"
+            << std::endl;
+  std::cout << "\t-s | --silent\t\t\tDon't print anything while computing. Will override option -t "
+               "(time) but will not override option -p (print)"
+            << std::endl;
+  std::cout << "\t-d | --degree <num_degree>\tWill contain the top <num_degree> of coefficients. "
+               "The value is set to be 5 if not specified"
+            << std::endl;
 }
 
 int main(int argc, char *argv[]) {

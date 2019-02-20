@@ -67,10 +67,9 @@ int SH::getNumCoefs(int numDegree) { return numDegree * numDegree; }
  * Calculate the factorial of i. (e.g. i!)
  */
 int SH::factorial(unsigned int i) {
-  const double factorial_cache[16] = {1, 1, 2, 6, 24, 120, 720, 5040,
-                                      40320, 362880, 3628800, 39916800,
-                                      479001600, 6227020800,
-                                      87178291200, 1307674368000};
+  const double factorial_cache[16] = {
+      1,     1,      2,       6,        24,        120,        720,         5040,
+      40320, 362880, 3628800, 39916800, 479001600, 6227020800, 87178291200, 1307674368000};
 
   if (i < 16) {
     return factorial_cache[i];
