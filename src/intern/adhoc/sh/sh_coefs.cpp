@@ -18,9 +18,9 @@ SHCoefs::~SHCoefs() {
   }
 }
 
-float SHCoefs::get(int l, int m) { return get(SH::getCoefIndex(l, m)); }
+float SHCoefs::get(int l, int m) const { return get(SH::getCoefIndex(l, m)); }
 
-float SHCoefs::get(int index) { return coefs[index]; }
+float SHCoefs::get(int index) const { return coefs[index]; }
 
 void SHCoefs::set(int l, int m, float v) { set(SH::getCoefIndex(l, m), v); }
 
@@ -37,7 +37,7 @@ void SHCoefs::normalize(float factor) {
   }
 }
 
-float SHCoefs::eval(float theta, float phi) {
+float SHCoefs::eval(float theta, float phi) const {
   float sum = 0;
   for (int l = 0; l < numDegree; l++) {
     for (int m = -l; m <= l; m++) {

@@ -11,7 +11,7 @@ namespace nash {
     static const int SAMPLE_COUNT;
     int numDegree;
     SkyBoxSHCalculator(const CubeMap &cubeMap, int numDegree);
-    // ~SkyBoxSHCalculator();
+    ~SkyBoxSHCalculator();
     const std::vector<SHCoefs *> &getCoefsList();
 
   private:

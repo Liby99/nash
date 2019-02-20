@@ -10,7 +10,7 @@ void printResult(bool expected, bool get) {
   std::cout << (expected == get ? "Pass. " : "Failed. ") << std::endl;
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 
   // simple triangle
   std::cout << "Testing triangle intersection..." << std::endl;

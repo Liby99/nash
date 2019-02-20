@@ -14,7 +14,7 @@ namespace nash {
     virtual void render();
 
   private:
-    SHCoefs coefs;
+    const SHCoefs *coefs;
     MatrixXf values;
     void initShader();
     void updatePositions();

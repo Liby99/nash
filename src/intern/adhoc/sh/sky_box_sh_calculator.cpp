@@ -37,10 +37,10 @@ SkyBoxSHCalculator::SkyBoxSHCalculator(const CubeMap &cubeMap, int numDegree)
   coefsList[2]->normalize(factor);
 }
 
-// SkyBoxSHCalculator::~SkyBoxSHCalculator() {
-//   for (int i = 0; i < NUM_CHANNEL; i++) {
-//     delete coefsList[i];
-//   }
-// }
+SkyBoxSHCalculator::~SkyBoxSHCalculator() {
+  for (int i = 0; i < NUM_CHANNEL; i++) {
+    delete coefsList[i];
+  }
+}
 
 const std::vector<SHCoefs *> &SkyBoxSHCalculator::getCoefsList() { return coefsList; }

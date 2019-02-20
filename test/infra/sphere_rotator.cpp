@@ -6,8 +6,8 @@
 
 using namespace nash;
 
-int main() {
-  Nash::init();
+int main(int argc, char *argv[]) {
+  Nash::init(argc, argv);
 
   Scene scene;
   scene.getCamera().position << 3, 3, 3;

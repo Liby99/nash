@@ -13,14 +13,14 @@ namespace nash {
     SHCoefs(int numDegree);
     ~SHCoefs();
 
-    float get(int l, int m);
-    float get(int index);
+    float get(int l, int m) const;
+    float get(int index) const;
     void set(int l, int m, float v);
     void set(int index, float v);
     void accumulate(int l, int m, float v);
     void accumulate(int index, float v);
     void normalize(float factor);
-    float eval(float theta, float phi);
+    float eval(float theta, float phi) const;
   };
 }
 

@@ -43,8 +43,8 @@ private:
   Vector3f color;
 };
 
-int main() {
-  Nash::init();
+int main(int argc, char *argv[]) {
+  Nash::init(argc, argv);
 
   Scene scene;
   ThirdPersonCamera camCtrl;

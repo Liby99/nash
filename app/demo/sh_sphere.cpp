@@ -7,7 +7,7 @@ public:
   constexpr static int SIDEBAR_WIDTH = 300;
   constexpr static int MAX_L = 16;
 
-  SHSphereViewer(int width, int height, Scene & scene)
+  SHSphereViewer(int width, int height, Scene &scene)
       : l(0), m(0), sphere(0, 0), Viewer(width, height, "Spherical Harmonics Sphere", scene) {
     scene.addObject(sphere);
 
@@ -15,25 +15,25 @@ public:
     using namespace nanogui;
 
     // First tweak the existing window and canvas.
-    sceneWindow->setPosition({ SIDEBAR_WIDTH, 0 });
+    sceneWindow->setPosition({SIDEBAR_WIDTH, 0});
     sceneWindow->setTitle("Sphere Viewer");
     sceneCanvas->setSize(width - 2 * PADDING - SIDEBAR_WIDTH, height - HEADER_HEIGHT - 2 * PADDING);
 
     // Then add a sidebar containing two sliders
     sidebarWindow = new Window(this, "Parameters");
-    sidebarWindow->setSize({ SIDEBAR_WIDTH, height - 2 * PADDING });
+    sidebarWindow->setSize({SIDEBAR_WIDTH, height - 2 * PADDING});
     sidebarWindow->setLayout(new GroupLayout(0));
     sidebarScrollPanel = new VScrollPanel(sidebarWindow);
-    sidebarScrollPanel->setFixedSize({ SIDEBAR_WIDTH, height - HEADER_HEIGHT });
+    sidebarScrollPanel->setFixedSize({SIDEBAR_WIDTH, height - HEADER_HEIGHT});
     sliderHolder = new Widget(sidebarScrollPanel);
     sliderHolder->setLayout(new GroupLayout());
     lLabel = new Label(sliderHolder, getLLabel());
     lSlider = new Slider(sliderHolder);
-    lSlider->setRange({ 0, MAX_L });
+    lSlider->setRange({0, MAX_L});
     lSlider->setValue(0);
     mLabel = new Label(sliderHolder, getMLabel());
     mSlider = new Slider(sliderHolder);
-    mSlider->setRange({ -l, l });
+    mSlider->setRange({-l, l});
     mSlider->setValue(0);
 
     // Set slider callbacks
@@ -47,7 +47,7 @@ public:
     if (tl != l) {
       l = tl;
       lLabel->setCaption(getLLabel());
-      mSlider->setRange({ -l, l });
+      mSlider->setRange({-l, l});
       if (std::abs(m) > l) {
         m = m > 0 ? l : -l;
         mSlider->setValue(m);
@@ -67,13 +67,10 @@ public:
     }
   }
 
-  std::string getLLabel() {
-    return "L: (" + std::to_string(l) + ")";
-  }
+  std::string getLLabel() { return "L: (" + std::to_string(l) + ")"; }
 
-  std::string getMLabel() {
-    return "M: (" + std::to_string(m) + ")";
-  }
+  std::string getMLabel() { return "M: (" + std::to_string(m) + ")"; }
+
 private:
   nanogui::Window *sidebarWindow;
   nanogui::VScrollPanel *sidebarScrollPanel;
@@ -84,7 +81,7 @@ private:
   SHSphere sphere;
 };
 
-int main(int argc, char * argv[]) {
+int main(int argc, char *argv[]) {
   Nash::init(argc, argv);
 
   Scene scene;

@@ -6,8 +6,8 @@
 
 using namespace nash;
 
-int main() {
-  Nash::init();
+int main(int argc, char *argv[]) {
+  Nash::init(argc, argv);
 
   Scene scene;
   Viewer viewer(1280, 720, "Viewer test", scene);

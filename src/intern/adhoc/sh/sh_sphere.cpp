@@ -2,17 +2,19 @@
 
 using namespace nash;
 
-SHSphere::SHSphere(int l, int m) : Sphere(), coefs(SHCoefs(l + 1)) {
+SHSphere::SHSphere(int l, int m) : Sphere() {
   if (abs(m) > l) {
     std::string ms = std::to_string(m), ls = std::to_string(l);
     throw std::invalid_argument("expected |m| < l, but found m = " + ms + ", l = " + ls);
   }
-  coefs.set(l, m, 1);
+  SHCoefs *tempCoefs = new SHCoefs(l + 1);
+  tempCoefs->set(l, m, 1);
+  coefs = tempCoefs;
   initShader();
   updatePositions();
 }
 
-SHSphere::SHSphere(const SHCoefs &coefs) : Sphere(), coefs(coefs) {
+SHSphere::SHSphere(const SHCoefs &coefs) : Sphere(), coefs(&coefs) {
   initShader();
   updatePositions();
 }
@@ -33,7 +35,7 @@ void SHSphere::updatePositions() {
   for (int i = 0; i < positions.cols(); i++) {
     Vector2f thetaPhi = Math::normalCartToPolar(positions.col(i));
     float theta = thetaPhi.x(), phi = thetaPhi.y();
-    float sh = coefs.eval(theta, phi);
+    float sh = coefs->eval(theta, phi);
     positions.col(i) *= abs(sh);
     values.col(i) << sh;
 
