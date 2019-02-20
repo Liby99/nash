@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < coefsList.size(); i++) {
     SHSphere *coefSphere = new SHSphere(*coefsList[i]);
     coefSphere->transform.position = mesh.getPositions().col(i);
-    coefSphere->transform.scale << 0.3, 0.3, 0.3;
+    coefSphere->transform.scale << 0.01, 0.01, 0.01;
     coefSphere->setParent(desk);
     shSpheres[i] = coefSphere;
   }
