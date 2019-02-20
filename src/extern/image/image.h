@@ -1,8 +1,8 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include "utility/path.h"
 #include "utility/math.h"
+#include "utility/path.h"
 #include <string>
 
 namespace nash {

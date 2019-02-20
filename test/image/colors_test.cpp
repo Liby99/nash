@@ -25,15 +25,15 @@ int main(int argc, char *argv[]) {
   Image back("./image/colors/negz.jpg");
 
   std::cout << "Testing right image. Expecting Green. ";
-  assertColor(0, 1, 0, 1, right.getColor(0, 0));
+  assertColor(0, 1, 0, 1, right.getColor(48, 26));
   std::cout << "Testing left image. Expecting Red. ";
-  assertColor(1, 0, 0, 1, left.getColor(0, 0));
+  assertColor(1, 0, 0, 1, left.getColor(74, 4));
   std::cout << "Testing top image. Expecting Blue. ";
   assertColor(0, 0, 1, 1, top.getColor(0, 0));
   std::cout << "Testing down image. Expecting Yellow. ";
-  assertColor(1, 1, 0, 1, down.getColor(0, 0));
+  assertColor(1, 1, 0, 1, down.getColor(20, 60));
   std::cout << "Testing front image. Expecting Cyan. ";
-  assertColor(0, 1, 1, 1, front.getColor(0, 0));
+  assertColor(0, 1, 1, 1, front.getColor(48, 48));
   std::cout << "Testing back image. Expecting Magenta. ";
-  assertColor(1, 0, 1, 1, back.getColor(0, 0));
+  assertColor(1, 0, 1, 1, back.getColor(60, 60));
 }

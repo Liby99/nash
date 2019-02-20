@@ -37,33 +37,24 @@ Vector4u CubeMap::getColor(Vector3f dir) const {
   Vector3f d = dir.normalized();
   float sqrt2 = std::sqrt(2.0);
   float ax = std::abs(d.x()), ay = std::abs(d.y()), az = std::abs(d.z());
-  float horf, verf;
+  float u, v, ma;
   const Image *img;
-  if (ax > ay && ax > az) {
-    if (d.x() > 0) {
-      float horf = d.z() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;
-      img = right;
-    } else {
-      float horf = -d.z() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;
-      img = left;
-    }
-  } else if (ay > ax && ay > az) {
-    if (d.y() > 0) {
-      float horf = d.x() / sqrt2 + 0.5f, verf = -d.z() / sqrt2 + 0.5f;
-      img = top;
-    } else {
-      float horf = d.x() / sqrt2 + 0.5f, verf = d.z() / sqrt2 + 0.5f;
-      img = down;
-    }
+  if (az >= ax && az >= ay) {
+    img = d.z() > 0 ? front : back;
+    ma = 0.5f / az;
+    u = d.z() > 0 ? d.x() : -d.x();
+    v = -d.y();
+  } else if (ay >= ax) {
+    img = d.y() > 0 ? top : down;
+    ma = 0.5f / ay;
+    u = d.x();
+    v = d.y() > 0 ? d.z() : d.x();
   } else {
-    if (d.z() > 0) {
-      float horf = -d.x() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;
-      img = front;
-    } else {
-      float horf = d.x() / sqrt2 + 0.5f, verf = d.y() / sqrt2 + 0.5f;
-      img = back;
-    }
+    img = d.x() > 0 ? right : left;
+    ma = 0.5f / ax;
+    u = d.x() > 0 ? -d.z() : d.z();
+    v = -d.y();
   }
-  int i = horf * img->width, j = verf * img->height;
+  int i = (u * ma + 0.5) * img->width, j = (v * ma + 0.5) * img->height;
   return img->getColor(i, j);
 }
