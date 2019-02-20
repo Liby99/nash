@@ -1,7 +1,3 @@
-/**
- * In this example we demonstrated how do we use assimp object to
- */
-
 #include <nash/nash.h>
 
 using namespace nash;
@@ -11,14 +7,17 @@ int main(int argc, char *argv[]) {
 
   Scene scene;
   ThirdPersonCamera camCtrl;
+  camCtrl.incline = PI / 6;
   scene.getCamera().setController(camCtrl);
 
   AssimpObject teapot("./model/teapot.obj");
-  Rotator rotator("rotator");
-  teapot.attachScript(rotator);
   scene.addObject(teapot);
 
-  Viewer viewer(1280, 720, "Teapot Viewer test", scene);
+  Plane plane;
+  plane.transform.scale << 5, 5, 5;
+  scene.addObject(plane);
+
+  Viewer viewer(1280, 720, "Teapot Scene test", scene);
   viewer.start();
 
   Nash::shutdown();
