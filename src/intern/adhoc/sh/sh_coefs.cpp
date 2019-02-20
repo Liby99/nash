@@ -30,10 +30,10 @@ void SHCoefs::accumulate(int l, int m, float v) { accumulate(SH::getCoefIndex(l,
 
 void SHCoefs::accumulate(int index, float v) { coefs[index] += v; }
 
-void SHCoefs::normalize(int count) {
+void SHCoefs::normalize(float factor) {
   int numCoefs = SH::getNumCoefs(numDegree);
   for (int i = 0; i < numCoefs; i++) {
-    coefs[i] /= count;
+    coefs[i] *= factor;
   }
 }
 
