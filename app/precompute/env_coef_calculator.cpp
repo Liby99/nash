@@ -15,7 +15,8 @@ bool doTiming = false;
 bool silent = false;
 
 void printHelp() {
-  std::cout << "Usage: ./obj_coef_calculator [-d|--degree <num_degree>] [-p|--print] <filename>"
+  std::cout << "Usage: ./env_coef_calculator [-d|--degree <num_degree>] [-p|--print] [-t|--time] "
+               "[-s|--silent] [-h|--help] [-e|--ext <extension>] <directory>"
             << std::endl;
   std::cout << "This program will take in a directory containing a set of environment map images, "
                "which will be named as `posx.jpg`, `negx.jpg`, `posy.jpg`, `negy.jpg`, `posz.jpg`, "

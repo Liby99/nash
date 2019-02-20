@@ -1,10 +1,10 @@
 {
   "name": "teapot_scene",
   "root": {
-    "type": "object",
+    "type": "empty",
     "children": [
       {
-        "type": "assimp_mesh",
+        "type": "assimp_object",
         "file": "model/teapot.obj"
       },
       {
