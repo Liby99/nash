@@ -64,6 +64,10 @@ endforeach()
 add_subdirectory(lib/assimp EXCLUDE_FROM_ALL)
 include_directories(lib/assimp/include)
 
+# Include json
+add_subdirectory(lib/json EXCLUDE_FROM_ALL)
+include_directories(lib/json/include)
+
 # Include stb
 # e.g. #include <stb_image.h>
 include_directories(lib/stb/)
@@ -87,7 +91,7 @@ include_directories(src/extern)
 file(GLOB_RECURSE nash_sources ${intern_dir}/*.cpp ${extern_dir}/*.h)
 set(nash ${nash_sources})
 add_library(nash STATIC ${nash})
-target_link_libraries(nash nanogui assimp sh ${NANOGUI_EXTRA_LIBS})
+target_link_libraries(nash nanogui assimp nlohmann_json::nlohmann_json sh ${NANOGUI_EXTRA_LIBS})
 
 include("script/copy_res.cmake")
 
