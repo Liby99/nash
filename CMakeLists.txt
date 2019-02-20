@@ -68,6 +68,12 @@ include_directories(lib/assimp/include)
 # e.g. #include <stb_image.h>
 include_directories(lib/stb/)
 
+# Include spherical-harmonics
+# e.g. #include <sh/spherical_harmonics.h>
+set(EIGEN3_INCLUDE "${curr_dir}/lib/nanogui/ext/eigen/")
+add_subdirectory(lib/spherical-harmonics/ EXCLUDE_FROM_ALL)
+include_directories(lib/spherical-harmonics/)
+
 # Generate single header file using the script
 set(generate_header ${script_dir}/generate_header.py)
 execute_process(COMMAND python3 ${generate_header} nash ${extern_dir})
@@ -81,7 +87,7 @@ include_directories(src/extern)
 file(GLOB_RECURSE nash_sources ${intern_dir}/*.cpp ${extern_dir}/*.h)
 set(nash ${nash_sources})
 add_library(nash STATIC ${nash})
-target_link_libraries(nash nanogui assimp ${NANOGUI_EXTRA_LIBS})
+target_link_libraries(nash nanogui assimp sh ${NANOGUI_EXTRA_LIBS})
 
 include("script/copy_res.cmake")
 

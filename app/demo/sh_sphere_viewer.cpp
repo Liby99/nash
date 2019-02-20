@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   std::vector<SHSphere *> spheres;
   std::vector<Rotator *> rotators;
 
-  int n = 5;
+  int n = 10;
   for (int l = 0; l < n; l++) {
     for (int m = -l; m <= l; m++) {
       SHSphere *sphere = new SHSphere(l, m);
