@@ -1,4 +1,5 @@
 #include <nash/nash.h>
+#include <chrono>
 
 using namespace nash;
 
@@ -14,6 +15,7 @@ int main(int argc, char *argv[]) {
   scene.addObject(desk);
 
   AssimpMesh &mesh = *(desk.getMeshes()[0]);
+  auto start = std::chrono::system_clock::now();
   MeshSHCalculator calc(mesh, 8);
   auto coefsList = calc.getCoefsList();
   SHSphere *shSpheres[coefsList.size()];
@@ -24,6 +26,10 @@ int main(int argc, char *argv[]) {
     coefSphere->setParent(desk);
     shSpheres[i] = coefSphere;
   }
+
+  auto end = std::chrono::system_clock::now();
+  auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+  std::cerr << elapsed.count() << '\n';
 
   Viewer viewer(1280, 720, "Simple Desk SH", scene);
   viewer.start();
