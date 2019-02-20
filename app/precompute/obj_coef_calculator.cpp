@@ -5,58 +5,111 @@ using namespace nash;
 
 const int DEFAULT_NUM_DEGREE = 5;
 
+const int MILLI_PER_SECOND = 1000;
+
+void printHelp() {
+  std::cout << "Usage: ./obj_coef_calculator [-d|--degree <num_degree>] [-p|--print] <filename>" << std::endl;
+  std::cout << "This program will take in an object file, and output one or several files each representing the spherical harmonics coefficients of a mesh" << std::endl;
+  std::cout << "Flags:" << std::endl;
+  std::cout << "\t-h | --help\t\t\tPrint the Help message and terminate the program" << std::endl;
+  std::cout << "\t-p | --print\t\t\tPrint out the file content instead of exporting to file" << std::endl;
+  std::cout << "\t-t | --time\t\t\tPrint out the time elapsed when computation finished" << std::endl;
+  std::cout << "\t-s | --silent\t\t\tDon't print anything while computing. Will override option -t (time) but will not override option -p (print)" << std::endl;
+  std::cout << "\t-d | --degree <num_degree>\tWill contain the top <num_degree> of coefficients. The value is set to be 5 if not specified" << std::endl;
+}
+
 int main(int argc, char *argv[]) {
   Nash::init(argc, argv);
 
-  // Check if there's filename specified
-  if (argc < 2) {
-    std::cout << "Please specify the file name" << std::endl;
-    std::cout << "Usage: ./obj_coef_calculator [-d <num_degree>] [-p] <filename>.obj" << std::endl;
-    return -1;
-  }
-
   // Parse the command line arguments
-  std::string filename = std::string(argv[argc - 1]);
+  bool hasFilename = false;
+  std::string filename;
   int numDegree = DEFAULT_NUM_DEGREE;
-  bool printOnly = false;
-  for (int i = 1; i < argc - 1; i++) {
+  bool printOnly = false, time = false, silent = false;
+  for (int i = 1; i < argc; i++) {
     std::string str = std::string(argv[i]);
-    if (str == "-d") {
-      std::string degreeStr = std::string(argv[++i]);
-      numDegree = std::stoi(degreeStr);
-      if (numDegree <= 0) {
-        std::cout << "The option <num_degree> must be greater than 0" << std::endl;
+    if (str[0] == '-') {
+      if (str == "-d" || str == "--degree") {
+        std::string degreeStr = std::string(argv[++i]);
+        try {
+          numDegree = std::stoi(degreeStr);
+          if (numDegree <= 0) {
+            std::cout << "The option <num_degree> must be greater than 0" << std::endl;
+            return -1;
+          }
+        } catch (...) {
+          std::cout << "Cannot parse <num_degree>: invalid input " << degreeStr << std::endl;
+          return -1;
+        }
+      } else if (str == "-p" || str == "--print") {
+        printOnly = true;
+      } else if (str == "-h" || str == "--help") {
+        printHelp();
+        return 0;
+      } else if (str == "-t" || str == "--time") {
+        time = true;
+      } else if (str == "-s" || str == "--silent") {
+        silent = true;
+      } else {
+        std::cout << "Unknown flag " << str << std::endl;
+        printHelp();
         return -1;
       }
-    } else if (str == "-p") {
-      printOnly = true;
+    } else {
+      if (!hasFilename) {
+        filename = str;
+        hasFilename = true;
+      } else {
+        std::cout << "Unknown argument " << str << std::endl;
+        printHelp();
+        return -1;
+      }
     }
   }
 
+  // Check if there's filename specified
+  if (!hasFilename) {
+    std::cout << "Please specify the file name" << std::endl;
+    printHelp();
+    return -1;
+  }
+
   // Load the file and get the meshes
-  std::cout << "Loading obj file " << filename << std::endl;
+  if (!silent) {
+    std::cout << "Loading obj file " << filename << std::endl;
+  }
   AssimpObject obj(filename);
   auto meshes = obj.getMeshes();
 
   // Save a coef file for each meshes
-  std::cout << "Start calculating sh coefs for Object " << filename << std::endl;
+  if (!silent) {
+    std::cout << "Start calculating sh coefs for Object " << filename << std::endl;
+  }
   auto start = std::chrono::system_clock::now();
   for (int i = 0; i < meshes.size(); i++) {
     AssimpMesh &mesh = *(meshes[i]);
-    std::cout << "- Calculating Mesh: " << mesh.getName() << "..." << std::endl;
+    if (!silent) {
+      std::cout << "- Calculating Mesh: " << mesh.getName() << "..." << std::endl;
+    }
     MeshSHCalculator calc(mesh, numDegree);
     SHFile file(calc.getCoefsList(), numDegree);
     if (printOnly) {
       file.print();
     } else {
-      std::string saveFilename = "./" + mesh.getName() + ".obj.coef";
-      std::cout << "- Saving coef file " << saveFilename << std::endl;
+      std::string objName = Path::getFileName(filename), meshName = mesh.getName();
+      std::string name = meshName.length() == 0 ? objName : objName + "." + meshName;
+      std::string saveFilename = "./" + name + ".coef";
+      if (!silent) {
+        std::cout << "- Saving coef file " << saveFilename << std::endl;
+      }
       file.save(saveFilename);
     }
   }
   auto end = std::chrono::system_clock::now();
   auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-  std::cout << "Total time elapsed: " << elapsed.count() / 1000 << "s" << std::endl;
+  if (time && !silent) {
+    std::cout << "Total time elapsed: " << elapsed.count() / MILLI_PER_SECOND << "s" << std::endl;
+  }
 
   Nash::shutdown();
 }
