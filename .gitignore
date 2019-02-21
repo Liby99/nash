@@ -5,12 +5,12 @@ pdf/
 .DS_Store
 
 # Latex related files
-*.aux
-*.fdb_latexmk
-*.fls
-*.log
-*.pdf
-*.gz
+doc/paper/*.aux
+doc/paper/*.fdb_latexmk
+doc/paper/*.fls
+doc/paper/*.log
+doc/paper/*.pdf
+doc/paper/*.gz
 
 # Clion related
 cmake-build-debug/
