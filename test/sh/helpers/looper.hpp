@@ -20,7 +20,7 @@ public:
 
   virtual void update() {
     if (!pressing) {
-      if (context->getKey('e')) {
+      if (context->getKey('t')) {
         pressing = true;
         curr = (curr + 1) % total;
         if (curr == id) {
@@ -31,7 +31,7 @@ public:
         }
       }
     } else {
-      if (!context->getKey('e')) {
+      if (!context->getKey('t')) {
         pressing = false;
       }
     }

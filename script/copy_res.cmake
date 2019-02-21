@@ -1,4 +1,8 @@
 # Functions to copy resource easily
+function(copy_res file)
+  cmake_parse_arguments(COPY_SHADER "" "DESTINATION FROM" "" ${ARGN})
+endfunction(copy_res)
+
 function(copy_shader shader)
   cmake_parse_arguments(COPY_SHADER "" "DESTINATION" "" ${ARGN})
   if(NOT COPY_SHADER_DESTINATION)
