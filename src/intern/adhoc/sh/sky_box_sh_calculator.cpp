@@ -5,7 +5,7 @@ using namespace nash;
 
 const int SkyBoxSHCalculator::NUM_CHANNEL = 3;
 
-const int SkyBoxSHCalculator::SAMPLE_COUNT = 10000;
+const int SkyBoxSHCalculator::SAMPLE_COUNT = 25000;
 
 SkyBoxSHCalculator::SkyBoxSHCalculator(const CubeMap &cubeMap, int numDegree)
     : cubeMap(cubeMap), numDegree(numDegree) {

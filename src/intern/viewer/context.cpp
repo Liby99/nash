@@ -27,6 +27,11 @@ void Context::init() {
   // Scroll
   scrollPosition = Vector2f(0, 0);
   newScrollPosition = Vector2f(0, 0);
+
+  // Time
+  using namespace std::chrono;
+  start = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+  curr = start;
 }
 
 void Context::bindGLFWWindow(GLFWwindow *win) {
@@ -37,6 +42,13 @@ void Context::bindGLFWWindow(GLFWwindow *win) {
 void Context::endOfFrameCycle() {
   cursorPosition = newCursorPosition;
   scrollPosition = newScrollPosition;
+
+  // Update the time related
+  using namespace std::chrono;
+  auto temp = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+  elapsedTime = temp - start;
+  deltaTime = temp - curr;
+  curr = temp;
 }
 
 void Context::setScene(Scene &scene) { this->scene = &scene; }
@@ -144,6 +156,12 @@ bool Context::scrollEvent(const Vector2i &p, const Vector2f &rel) {
   newScrollPosition = scrollPosition + rel;
   return true;
 }
+
+double Context::getDeltaTime() { return deltaTime.count() / 1000.0; }
+
+double Context::getElapsedTime() { return elapsedTime.count() / 1000.0; }
+
+std::chrono::milliseconds Context::getAbsTime() { return curr; }
 
 void Context::extractModifiers(int modifiers) {
   shiftStatus = GLFW_MOD_SHIFT & modifiers;

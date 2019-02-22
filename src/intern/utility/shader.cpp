@@ -81,7 +81,7 @@ void Shader::setUniform(const std::string &name, float value) {
 }
 
 void Shader::uploadAttr(const std::string &name, const MatrixXf &m) {
-  shader->uploadAttrib(name, m, false);
+  shader->uploadAttrib(name, m);
 }
 
 void Shader::freeAttr(const std::string &name) { shader->freeAttrib(name); }

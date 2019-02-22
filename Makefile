@@ -3,30 +3,40 @@ TEX_SOURCE_DIR = doc/paper
 TEX_OUTPUT_DIR = pdf
 TEX_PDF = $(patsubst %, $(TEX_OUTPUT_DIR)/%.pdf, $(TEX_TARGET))
 
-SRC_FILES = src/**/*.cpp src/**/*.h app/*.cpp app/**/*.cpp test/*.cpp test/**/*.cpp
+auto: help
 
-all: build
+help: FORCE
+	@ echo "This is a Makefile for NASH project. You have the following options:"
+	@ echo "- make setup: \tSetup the basic infrastructure of the project;"
+	@ echo "- make format: \tFormat all the files;"
+	@ echo "- make doc: \tCompile all the documents in \`doc/\`;"
+	@ echo "- make clean: \tClean up the compiled files;"
+	@ echo "- make help: \tPrint this help message."
 
-build: FORCE
-	sh ./script/build
+setup: setup-pre-commit
 
 format: format-lib format-app format-test
 
 format-lib:
-	find ./src/intern -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
-	find ./src/extern -name '*.h' | xargs -I '{}' clang-format -i '{}'
+	@ echo "Formatting nash library files"
+	@ find ./src/intern -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
+	@ find ./src/extern -name '*.h' | xargs -I '{}' clang-format -i '{}'
 	
 format-app:
-	find ./app -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
+	@ echo "Formatting nash application sources"
+	@ find ./app -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
 	
 format-test:
-	find ./test -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
+	@ echo "Formatting nash test sources"
+	@ find ./test -name '*.cpp' | xargs -I '{}' clang-format -i '{}'
 
 setup-pre-commit:
-	cp ./script/pre-commit .git/hooks/pre-commit
+	@ echo "Copying pre-commit hook to \`.git/hooks/\`."
+	@ cp ./script/hooks/pre-commit .git/hooks/pre-commit
 
 remove-pre-commit:
-	rm .git/hooks/pre-commit
+	@ echo "Removing pre-commit hook from \`.git/hooks/\`."
+	@ rm -f .git/hooks/pre-commit
 
 doc: $(TEX_PDF)
 
@@ -35,13 +45,15 @@ $(TEX_OUTPUT_DIR)/%.pdf: $(TEX_SOURCE_DIR)/%.tex
 	@ mkdir -p $(TEX_OUTPUT_DIR)/
 	@ mv $(*F).pdf $(TEX_OUTPUT_DIR)/$(*F).pdf
 
+clean: clean-build clean-doc
+
 clean-build:
+	@ echo "Cleaning \`build/\` directory"
 	@ rm -rf build/
 
 clean-doc:
-	@ rm *.aux *.log
+	@ echo "Cleaning compiled docs in \`doc/\` directory"
+	@ rm -f *.aux *.log
 	@ rm -rf $(TEX_OUTPUT_DIR)
-
-clean: clean-build clean-doc
 
 FORCE:

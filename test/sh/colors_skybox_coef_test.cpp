@@ -10,12 +10,12 @@ int main(int argc, char *argv[]) {
   ThirdPersonCamera camCtrl;
   scene.getCamera().setController(camCtrl);
 
-  Image right("./image/colors/posx.jpg");
-  Image left("./image/colors/negx.jpg");
-  Image top("./image/colors/posy.jpg");
-  Image down("./image/colors/negy.jpg");
-  Image front("./image/colors/posz.jpg");
-  Image back("./image/colors/negz.jpg");
+  Image right("./image/cubemap/colors/posx.jpg");
+  Image left("./image/cubemap/colors/negx.jpg");
+  Image top("./image/cubemap/colors/posy.jpg");
+  Image down("./image/cubemap/colors/negy.jpg");
+  Image front("./image/cubemap/colors/posz.jpg");
+  Image back("./image/cubemap/colors/negz.jpg");
   CubeMap cubeMap(top, down, left, right, front, back);
 
   SkyBox skybox(cubeMap);
