@@ -2,6 +2,7 @@
 #define CONTEXT_H
 
 #include "utility/math.h"
+#include <chrono>
 #include <ctype.h>
 #include <nanogui/nanogui.h>
 #include <vector>
@@ -52,6 +53,11 @@ namespace nash {
     bool mouseEnterEvent(const Vector2i &p, bool enter);
     bool scrollEvent(const Vector2i &p, const Vector2f &rel);
 
+    // Time related
+    double getDeltaTime();
+    double getElapsedTime();
+    std::chrono::milliseconds getAbsTime();
+
   private:
     Scene *scene;
 
@@ -63,6 +69,8 @@ namespace nash {
     bool leftButtonDown, rightButtonDown, cursorInside;
     Vector2i exactCursorPosition, cursorPosition, newCursorPosition;
     Vector2f scrollPosition, newScrollPosition;
+
+    std::chrono::milliseconds start, curr, elapsedTime, deltaTime;
 
     void extractModifiers(int modifiers);
   };

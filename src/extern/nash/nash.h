@@ -35,6 +35,7 @@
 #include "adhoc/script/rotator.h"
 #include "adhoc/script/toggle.h"
 #include "adhoc/script/third_person_camera.h"
+#include "adhoc/script/first_person_camera.h"
 #include "adhoc/sh/sh_coefs.h"
 #include "adhoc/sh/sh.h"
 #include "adhoc/sh/sky_box_sh_calculator.h"

@@ -7,7 +7,6 @@
 namespace nash {
   class Rotator : public Script<Object> {
   public:
-    int counter;
     float speed;
     Vector3f axis;
     Rotator(const std::string &name);
