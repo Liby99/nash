@@ -15,7 +15,6 @@ void main() {
   mat4 mvp = viewPersp * model;
   gl_Position = mvp * vec4(position, 1);
   fragPosition = vec3(model * vec4(position, 1));
-  fragNormal = normal;
   fragNormal = vec3(transpose(inverse(model)) * vec4(normal, 0));
   fragTexCoord = texCoord;
 }

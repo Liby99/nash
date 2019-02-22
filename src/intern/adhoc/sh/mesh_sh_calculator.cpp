@@ -15,7 +15,7 @@ MeshSHCalculator::MeshSHCalculator(const Mesh &mesh, int numDegree)
   // Then generate box tree out from mesh
   BoxTreeMesh boxTree(mesh);
 
-  float factor = 4 * PI / SAMPLE_COUNT;
+  float factor = 2 * PI / SAMPLE_COUNT; // Area = 2 * PI, since sampling hemisphere
 
 // Do raytracing on the box tree
 #pragma omp parallel for
