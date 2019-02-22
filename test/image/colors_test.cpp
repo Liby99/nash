@@ -17,12 +17,12 @@ void assertColor(float r, float g, float b, float a, const Vector4u &actual) {
 int main(int argc, char *argv[]) {
   Path::init(argv[0]);
 
-  Image right("./image/colors/posx.jpg");
-  Image left("./image/colors/negx.jpg");
-  Image top("./image/colors/posy.jpg");
-  Image down("./image/colors/negy.jpg");
-  Image front("./image/colors/posz.jpg");
-  Image back("./image/colors/negz.jpg");
+  Image right("./image/cubemap/colors/posx.jpg");
+  Image left("./image/cubemap/colors/negx.jpg");
+  Image top("./image/cubemap/colors/posy.jpg");
+  Image down("./image/cubemap/colors/negy.jpg");
+  Image front("./image/cubemap/colors/posz.jpg");
+  Image back("./image/cubemap/colors/negz.jpg");
 
   std::cout << "Testing right image. Expecting Green. ";
   assertColor(0, 1, 0, 1, right.getColor(48, 26));

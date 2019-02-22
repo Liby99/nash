@@ -7,7 +7,7 @@
 
 using namespace nash;
 
-const std::string directory = "./image/colors/";
+const std::string directory = "./image/cubemap/colors/";
 const std::string modelFile = "./model/teapot.obj";
 
 const float c1 = 0.429043;

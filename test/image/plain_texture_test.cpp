@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   camCtrl.incline = PI / 4;
   scene.getCamera().setController(camCtrl);
 
-  TexturedPlane plane1("./image/posx.jpg", 1);
+  TexturedPlane plane1("./image/bridge3_posx.jpg", 1);
   plane1.transform.position << -1, 0, 0;
   scene.addObject(plane1);
 

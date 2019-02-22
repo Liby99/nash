@@ -10,11 +10,16 @@ option(USE_OPEN_MP "Build use open mp" OFF)
 # Global setup
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MACOSX_RPATH 1)
+set(build_dir ${CMAKE_BINARY_DIR})
 set(curr_dir ${CMAKE_CURRENT_LIST_DIR})
 set(script_dir ${curr_dir}/script)
 set(extern_dir ${curr_dir}/src/extern)
 set(intern_dir ${curr_dir}/src/intern)
 add_definitions(-DGL_SILENCE_DEPRECATION)
+
+# Extra CMake Scripts
+include("script/cmake/copy_res.cmake")
+include("script/cmake/check_library.cmake")
 
 # MinGW Support
 if(MINGW)
@@ -24,13 +29,6 @@ if(MINGW)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter -frtti -O1 -g \
     -Wno-int-in-bool-context -Wno-tautological-compare -Wno-class-memaccess \
     -Wno-maybe-uninitialized -Wno-return-type -Wno-cast-function-type -Wno-implicit-fallthrough")
-endif()
-
-# Dependency checks
-if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/nanogui")
-  message(FATAL_ERROR "The Nash dependency repositories (nanogui) is missing! "
-    "You probably did not clone the project with --recursive. It is possible to recover "
-    "by calling \"git submodule update --init --recursive\"")
 endif()
 
 # Include OpenMP
@@ -44,6 +42,7 @@ if(USE_OPEN_MP)
 endif()
 
 # Include NanoGui
+check_library("nanogui")
 set(NANOGUI_BUILD_EXAMPLE OFF)
 set(NANOGUI_BUILD_PYTHON OFF)
 set(NANOGUI_BUILD_SHARED OFF)
@@ -53,27 +52,32 @@ include_directories(${NANOGUI_EXTRA_INCS})
 add_definitions(${NANOGUI_EXTRA_DEFS})
 
 # Include Assimp
-set(ASSIMP_NO_EXPORT ON)
-set(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
-set(ASSIMP_QT_VIEWER ON)
-set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT FALSE)
-set(ASSIMP_INCLUDE_FORMATS OBJ PLY OFF)
-foreach(include_format ${ASSIMP_INCLUDE_FORMATS})
-  set(ASSIMP_BUILD_${include_format}_IMPORTER TRUE)
-endforeach()
+check_library("assimp")
+set(ASSIMP_BUILD_OBJ_IMPORTER TRUE)
+set(ASSIMP_BUILD_OFF_IMPORTER TRUE)
+set(ASSIMP_BUILD_PLY_IMPORTER TRUE)
+# Not really sure why it is option here. But `set` doesn't work for the first time `cmake ..` runs.
+option(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF)
+option(ASSIMP_NO_EXPORT ON)
+option(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
+option(ASSIMP_QT_VIEWER OFF)
+option(ASSIMP_BUILD_SAMPLES OFF)
 add_subdirectory(lib/assimp EXCLUDE_FROM_ALL)
 include_directories(lib/assimp/include)
 
 # Include json
+check_library("json")
 add_subdirectory(lib/json EXCLUDE_FROM_ALL)
 include_directories(lib/json/include)
 
 # Include stb
 # e.g. #include <stb_image.h>
+check_library("stb")
 include_directories(lib/stb/)
 
 # Include spherical-harmonics
 # e.g. #include <sh/spherical_harmonics.h>
+check_library("spherical-harmonics")
 set(EIGEN3_INCLUDE "${curr_dir}/lib/nanogui/ext/eigen/")
 add_subdirectory(lib/spherical-harmonics/ EXCLUDE_FROM_ALL)
 include_directories(lib/spherical-harmonics/)
@@ -92,8 +96,6 @@ file(GLOB_RECURSE nash_sources ${intern_dir}/*.cpp ${extern_dir}/*.h)
 set(nash ${nash_sources})
 add_library(nash STATIC ${nash})
 target_link_libraries(nash nanogui assimp nlohmann_json::nlohmann_json sh ${NANOGUI_EXTRA_LIBS})
-
-include("script/copy_res.cmake")
 
 # Compile all the executable files
 if(NASH_BUILD_TEST)

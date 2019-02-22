@@ -15,6 +15,6 @@ int main(int argc, char *argv[]) {
 
   // Go to look at CMakeLists.txt for each copied images
   test("./image/head.bmp");
-  test("./image/posx.jpg");
+  test("./image/bridge3_posx.jpg");
   test("./image/gogo.png");
 }

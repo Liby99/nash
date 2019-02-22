@@ -9,7 +9,7 @@ complexity and visual effect.
 
 The software infrastructure based on [nanogui](https://github.com/wjakob/nanogui) framework. We are
 also using [assimp](https://github.com/assimp/assimp) for 3D object file loading. Make sure you have
-[cmake](https://cmake.org) for building this project.
+[cmake](https://cmake.org) (>= 3.10) for building this project.
 
 ## Getting Started
 

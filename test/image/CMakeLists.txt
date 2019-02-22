@@ -1,20 +1,9 @@
-copy_image("head.bmp")
-copy_image("cubemaps/bridge3/posx.jpg")
-copy_image("cse169-proj2/gogo.png")
-
-copy_image("cubemaps/room/posx.jpg" DESTINATION "room")
-copy_image("cubemaps/room/negx.jpg" DESTINATION "room")
-copy_image("cubemaps/room/posy.jpg" DESTINATION "room")
-copy_image("cubemaps/room/negy.jpg" DESTINATION "room")
-copy_image("cubemaps/room/posz.jpg" DESTINATION "room")
-copy_image("cubemaps/room/negz.jpg" DESTINATION "room")
-
-copy_image("cubemaps/colors/posx.jpg" DESTINATION "colors")
-copy_image("cubemaps/colors/negx.jpg" DESTINATION "colors")
-copy_image("cubemaps/colors/posy.jpg" DESTINATION "colors")
-copy_image("cubemaps/colors/negy.jpg" DESTINATION "colors")
-copy_image("cubemaps/colors/posz.jpg" DESTINATION "colors")
-copy_image("cubemaps/colors/negz.jpg" DESTINATION "colors")
-
 copy_shader("plain_texture")
 copy_shader("sky_box")
+
+copy_image("head.bmp")
+copy_image("cubemap/bridge3/posx.jpg" AS "bridge3_posx.jpg")
+copy_image("cse169-proj2/gogo.png")
+
+copy_cubemap("room" TO "room")
+copy_cubemap("colors" TO "colors")
