@@ -40,15 +40,14 @@ void loadCoefsMatrix(const SHCoefs &l, Matrix4f &mat) {
   // mat.row(2) << c1 * l.get(2, 1), c1 * l.get(2, -1), c3 * l.get(2, 0), c2 * l.get(1, 0);
   // mat.row(3) << c2 * l.get(1, 1), c2 * l.get(1, -1), c2 * l.get(1, 0),
   //     c4 * l.get(0, 0) - c5 * l.get(2, 0);
-  // mat << l.get(0, 0), l.get(1, 1), l.get(2, 2), l.get(3, 3),
-  //        l.get(1, -1), l.get(1, 0), l.get(2, 1), l.get(3, 2),
-  //        l.get(2, -2), l.get(2, -1), l.get(2, 0), l.get(3, 1),
-  //        l.get(3, -3), l.get(3, -2), l.get(3, -1), l.get(3, 0);
-  mat.row(0) << c1 * l.get(2, 2), c1 * l.get(2, -2), c1 * l.get(2, 1), c2 * l.get(1, 1);
-  mat.row(1) << c1 * l.get(2, -2), -c1 * l.get(2, 2), c1 * l.get(2, -1), c2 * l.get(1, -1);
-  mat.row(2) << c1 * l.get(2, 1), c1 * l.get(2, -1), c3 * l.get(2, 0), c2 * l.get(1, 0);
-  mat.row(3) << c2 * l.get(1, 1), c2 * l.get(1, -1), c2 * l.get(1, 0),
-      c4 * l.get(0, 0) - c5 * l.get(2, 0);
+  mat << l.get(0, 0), l.get(1, 1), l.get(2, 2), l.get(3, 3), l.get(1, -1), l.get(1, 0), l.get(2, 1),
+      l.get(3, 2), l.get(2, -2), l.get(2, -1), l.get(2, 0), l.get(3, 1), l.get(3, -3), l.get(3, -2),
+      l.get(3, -1), l.get(3, 0);
+  // mat.row(0) << c1 * l.get(2, 2), c1 * l.get(2, -2), c1 * l.get(2, 1), c2 * l.get(1, 1);
+  // mat.row(1) << c1 * l.get(2, -2), -c1 * l.get(2, 2), c1 * l.get(2, -1), c2 * l.get(1, -1);
+  // mat.row(2) << c1 * l.get(2, 1), c1 * l.get(2, -1), c3 * l.get(2, 0), c2 * l.get(1, 0);
+  // mat.row(3) << c2 * l.get(1, 1), c2 * l.get(1, -1), c2 * l.get(1, 0),
+  //     c4 * l.get(0, 0) - c5 * l.get(2, 0);
 }
 
 int main(int argc, char *argv[]) {
@@ -72,6 +71,7 @@ int main(int argc, char *argv[]) {
   SkyBoxSHCalculator calc(cubeMap, 3);
   const std::vector<SHCoefs *> &list = calc.getCoefsList();
   SHCoefs &red = *list[0], &green = *list[1], &blue = *list[2];
+  SHCoefs redp = red, greenp = green, bluep = blue;
 
   // BEGIN TEMP
   red.set(0, 0, 0.79);
@@ -103,10 +103,13 @@ int main(int argc, char *argv[]) {
   blue.set(2, 2, -.30);
   // END TEMP
 
-  Matrix4f redCoefs, greenCoefs, blueCoefs;
+  Matrix4f redCoefs, greenCoefs, blueCoefs, redpCoefs, greenpCoefs, bluepCoefs;
   loadCoefsMatrix(red, redCoefs);
   loadCoefsMatrix(green, greenCoefs);
   loadCoefsMatrix(blue, blueCoefs);
+  loadCoefsMatrix(redp, redpCoefs);
+  loadCoefsMatrix(greenp, greenpCoefs);
+  loadCoefsMatrix(bluep, bluepCoefs);
 
   EnvShading setEnv("set-env", redCoefs, greenCoefs, blueCoefs);
 
@@ -114,31 +117,56 @@ int main(int argc, char *argv[]) {
   AssimpMesh &mesh = *model.getMeshes()[0];
   mesh.setShader(Shader::get("./shader/env_shading"));
   mesh.attachScript(setEnv);
-  Looper loopMesh("looper", 0, 5);
+  Looper loopMesh("looper", 0, 2);
   mesh.attachScript(loopMesh);
   scene.addObject(model);
 
-  Sphere sphere;
-  sphere.setShader(Shader::get("./shader/env_shading"));
-  sphere.attachScript(setEnv);
-  Looper loopSphere("looper", 1, 5);
-  sphere.attachScript(loopSphere);
-  scene.addObject(sphere);
+  EnvShading setEnvp("set-env-p", redpCoefs, greenpCoefs, bluepCoefs);
 
-  SHSphere redSphere(red);
-  Looper loopRed("looper", 2, 5);
-  redSphere.attachScript(loopRed);
-  scene.addObject(redSphere);
+  AssimpObject model2(modelFile);
+  AssimpMesh &mesh2 = *model2.getMeshes()[0];
+  mesh2.setShader(Shader::get("./shader/env_shading"));
+  mesh2.attachScript(setEnvp);
+  Looper loopMesh2("looper", 1, 2);
+  mesh2.attachScript(loopMesh2);
+  scene.addObject(model2);
 
-  SHSphere greenSphere(green);
-  Looper loopGreen("looper", 3, 5);
-  greenSphere.attachScript(loopGreen);
-  scene.addObject(greenSphere);
+  // Sphere sphere;
+  // sphere.setShader(Shader::get("./shader/env_shading"));
+  // sphere.attachScript(setEnv);
+  // Looper loopSphere("looper", 1, 8);
+  // sphere.attachScript(loopSphere);
+  // scene.addObject(sphere);
 
-  SHSphere blueSphere(blue);
-  Looper loopBlue("looper", 4, 5);
-  blueSphere.attachScript(loopBlue);
-  scene.addObject(blueSphere);
+  // SHSphere redSphere(red);
+  // Looper loopRed("looper", 2, 8);
+  // redSphere.attachScript(loopRed);
+  // scene.addObject(redSphere);
+
+  // SHSphere greenSphere(green);
+  // Looper loopGreen("looper", 4, 8);
+  // greenSphere.attachScript(loopGreen);
+  // scene.addObject(greenSphere);
+
+  // SHSphere blueSphere(blue);
+  // Looper loopBlue("looper", 6, 8);
+  // blueSphere.attachScript(loopBlue);
+  // scene.addObject(blueSphere);
+
+  // SHSphere redpSphere(redp);
+  // Looper loopRedp("looper", 3, 8);
+  // redpSphere.attachScript(loopRedp);
+  // scene.addObject(redpSphere);
+
+  // SHSphere greenpSphere(greenp);
+  // Looper loopGreenp("looper", 5, 8);
+  // greenpSphere.attachScript(loopGreenp);
+  // scene.addObject(greenpSphere);
+
+  // SHSphere bluepSphere(bluep);
+  // Looper loopBluep("looper", 7, 8);
+  // bluepSphere.attachScript(loopBluep);
+  // scene.addObject(bluepSphere);
 
   Viewer viewer(1280, 720, "Environment Shading Test", scene);
   viewer.start();
