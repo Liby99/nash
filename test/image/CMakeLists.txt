@@ -1,5 +1,6 @@
 copy_shader("plain_texture")
 copy_shader("sky_box")
+copy_shader("colored_point_cloud")
 
 copy_image("head.bmp")
 copy_image("cubemap/bridge3/posx.jpg" AS "bridge3_posx.jpg")

@@ -2,6 +2,10 @@
 
 using namespace nash;
 
+const CubeMap::Face CubeMap::FACES[6] = {CubeMap::Face::Top,   CubeMap::Face::Down,
+                                         CubeMap::Face::Left,  CubeMap::Face::Right,
+                                         CubeMap::Face::Front, CubeMap::Face::Back};
+
 CubeMap::CubeMap(const Image &top, const Image &down, const Image &left, const Image &right,
                  const Image &front, const Image &back)
     : top(&top), down(&down), left(&left), right(&right), front(&front), back(&back), Texture() {}

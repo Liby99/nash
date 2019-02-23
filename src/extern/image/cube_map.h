@@ -9,6 +9,8 @@ namespace nash {
   public:
     enum Face { Top, Down, Left, Right, Front, Back };
 
+    static const Face FACES[6];
+
     CubeMap(const Image &top, const Image &down, const Image &left, const Image &right,
             const Image &front, const Image &back);
 
