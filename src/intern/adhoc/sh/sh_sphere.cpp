@@ -55,6 +55,6 @@ void SHSphere::updatePositions() {
 
   // Finally normalize all the normals
   for (int i = 0; i < normals.cols(); i++) {
-    normals.col(i) = normals.col(i).normalized();
+    normals.col(i).normalize();
   }
 }
