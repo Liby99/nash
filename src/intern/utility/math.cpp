@@ -3,7 +3,7 @@
 using namespace nash;
 
 Vector2f Math::normalCartToPolar(const Vector3f &pos) {
-  return Vector2f(acos(pos.y()), atan2(pos.z(), pos.x()));
+  return Vector2f(acos(pos.z()), atan2(pos.y(), pos.x()));
 }
 
 Vector3f Math::polarToCart(const Vector2f &pol) { return polarToCart(pol.x(), pol.y()); }

@@ -11,6 +11,7 @@ namespace nash {
 
     SHCoefs();
     SHCoefs(int numDegree);
+    SHCoefs(const SHCoefs &other);
     ~SHCoefs();
 
     float get(int l, int m) const;
