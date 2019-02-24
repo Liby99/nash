@@ -2,6 +2,10 @@
 
 using namespace nash;
 
+const CubeMap::Face CubeMap::FACES[6] = {CubeMap::Face::Top,   CubeMap::Face::Down,
+                                         CubeMap::Face::Left,  CubeMap::Face::Right,
+                                         CubeMap::Face::Front, CubeMap::Face::Back};
+
 CubeMap::CubeMap(const Image &top, const Image &down, const Image &left, const Image &right,
                  const Image &front, const Image &back)
     : top(&top), down(&down), left(&left), right(&right), front(&front), back(&back), Texture() {}
@@ -57,4 +61,21 @@ Vector4u CubeMap::getColor(Vector3f dir) const {
   }
   int i = (u * ma + 0.5) * img->width, j = (v * ma + 0.5) * img->height;
   return img->getColor(i, j);
+}
+
+const Image &CubeMap::getImage(CubeMap::Face face) const {
+  switch (face) {
+  case CubeMap::Face::Top:
+    return *top;
+  case CubeMap::Face::Down:
+    return *down;
+  case CubeMap::Face::Left:
+    return *left;
+  case CubeMap::Face::Right:
+    return *right;
+  case CubeMap::Face::Front:
+    return *front;
+  case CubeMap::Face::Back:
+    return *back;
+  }
 }

@@ -1,4 +1,3 @@
-#include "helpers/colored_point_cloud.hpp"
 #include <nash/nash.h>
 
 using namespace nash;

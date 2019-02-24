@@ -12,6 +12,14 @@ SHCoefs::SHCoefs(int numDegree) : numDegree(numDegree) {
   }
 }
 
+SHCoefs::SHCoefs(const SHCoefs &other) : numDegree(other.numDegree) {
+  int numCoefs = SH::getNumCoefs(numDegree);
+  coefs = new float[numCoefs];
+  for (int i = 0; i < numCoefs; i++) {
+    coefs[i] = other.get(i);
+  }
+}
+
 SHCoefs::~SHCoefs() {
   if (coefs != nullptr) {
     delete coefs;
