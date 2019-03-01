@@ -63,19 +63,38 @@ Vector4u CubeMap::getColor(Vector3f dir) const {
   return img->getColor(i, j);
 }
 
-const Image &CubeMap::getImage(CubeMap::Face face) const {
+const Image &CubeMap::getImage(Face face) const {
   switch (face) {
-  case CubeMap::Face::Top:
-    return *top;
-  case CubeMap::Face::Down:
-    return *down;
-  case CubeMap::Face::Left:
-    return *left;
-  case CubeMap::Face::Right:
-    return *right;
-  case CubeMap::Face::Front:
-    return *front;
-  case CubeMap::Face::Back:
-    return *back;
+    case CubeMap::Face::Top: return *top;
+    case CubeMap::Face::Down: return *down;
+    case CubeMap::Face::Left: return *left;
+    case CubeMap::Face::Right: return *right;
+    case CubeMap::Face::Front: return *front;
+    case CubeMap::Face::Back: return *back;
+  }
+}
+
+Vector3f CubeMap::getCentralDirection(Face face) const {
+  switch (face) {
+    case CubeMap::Face::Top: return Vector3f(0, 1, 0);
+    case CubeMap::Face::Down: return Vector3f(0, -1, 0);
+    case CubeMap::Face::Right: return Vector3f(1, 0, 0);
+    case CubeMap::Face::Left: return Vector3f(-1, 0, 0);
+    case CubeMap::Face::Front: return Vector3f(0, 0, 1);
+    case CubeMap::Face::Back: return Vector3f(0, 0, -1);
+  }
+}
+
+Vector3f CubeMap::getDirectionTo(Face face, unsigned int i, unsigned int j) const {
+  const Image &img = getImage(face);
+  float fi = (float)i / img.width - 0.5;
+  float fj = -(float)j / img.height + 0.5;
+  switch (face) {
+    case CubeMap::Face::Top: return Vector3f(fi, 0.5, -fj).normalized();
+    case CubeMap::Face::Down: return Vector3f(fi, -0.5, fj).normalized();
+    case CubeMap::Face::Right: return Vector3f(0.5, fj, -fi).normalized();
+    case CubeMap::Face::Left: return Vector3f(-0.5, fj, fi).normalized();
+    case CubeMap::Face::Front: return Vector3f(fi, fj, 0.5).normalized();
+    case CubeMap::Face::Back: return Vector3f(-fi, fj, -0.5).normalized();
   }
 }

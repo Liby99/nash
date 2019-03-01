@@ -73,25 +73,18 @@ void Context::centerCursorPos() { setCursorPos(windowWidth / 2, windowHeight / 2
 
 bool Context::getKey(char key) {
   switch (key) {
-  case '\t':
-    return keyStatus[GLFW_KEY_TAB];
-  case '\n':
-    return keyStatus[GLFW_KEY_ENTER];
-  default:
-    return keyStatus[toupper(key)];
+    case '\t': return keyStatus[GLFW_KEY_TAB];
+    case '\n': return keyStatus[GLFW_KEY_ENTER];
+    default: return keyStatus[toupper(key)];
   }
 }
 
 bool Context::getDirectionKey(Direction dir) {
   switch (dir) {
-  case Direction::Up:
-    return keyStatus[GLFW_KEY_UP];
-  case Direction::Down:
-    return keyStatus[GLFW_KEY_DOWN];
-  case Direction::Left:
-    return keyStatus[GLFW_KEY_LEFT];
-  case Direction::Right:
-    return keyStatus[GLFW_KEY_RIGHT];
+    case Direction::Up: return keyStatus[GLFW_KEY_UP];
+    case Direction::Down: return keyStatus[GLFW_KEY_DOWN];
+    case Direction::Left: return keyStatus[GLFW_KEY_LEFT];
+    case Direction::Right: return keyStatus[GLFW_KEY_RIGHT];
   }
 }
 

@@ -3,6 +3,8 @@
 
 using namespace nash;
 
+const std::string directory = "./image/cubemap/gracecathedral/";
+
 int main(int argc, char *argv[]) {
   Nash::init(argc, argv);
 
@@ -10,19 +12,24 @@ int main(int argc, char *argv[]) {
   ThirdPersonCamera camCtrl;
   scene.getCamera().setController(camCtrl);
 
-  Image right("./image/cubemap/room/posx.jpg");
-  Image left("./image/cubemap/room/negx.jpg");
-  Image top("./image/cubemap/room/posy.jpg");
-  Image down("./image/cubemap/room/negy.jpg");
-  Image front("./image/cubemap/room/posz.jpg");
-  Image back("./image/cubemap/room/negz.jpg");
+  Image right(directory + "posx.jpg");
+  Image left(directory + "negx.jpg");
+  Image top(directory + "posy.jpg");
+  Image down(directory + "negy.jpg");
+  Image front(directory + "posz.jpg");
+  Image back(directory + "negz.jpg");
   CubeMap cubeMap(top, down, left, right, front, back);
-
   SkyBox skybox(cubeMap);
+
   scene.addObject(skybox);
 
-  SkyBoxSHCalculator calc(cubeMap, 8, 10);
-  auto list = calc.getCoefsList();
+  SkyBoxSHCalculator calc(cubeMap, 8);
+  const std::vector<SHCoefs *> &list = calc.getCoefsList();
+
+  std::cout << "Red: " << list[0]->toString() << std::endl;
+  std::cout << "Green: " << list[1]->toString() << std::endl;
+  std::cout << "Blue: " << list[2]->toString() << std::endl;
+
   SHSphere redSphere(*list[0]);
   SHSphere greenSphere(*list[1]);
   SHSphere blueSphere(*list[2]);

@@ -1,7 +1,5 @@
 #version 410
 
-#define PI 3.1415926535897932384626433832795f
-
 in vec3 fragPosition;
 in vec3 fragNormal;
 in vec2 fragTexCoord;
@@ -12,8 +10,7 @@ uniform mat4 redCoefs;
 uniform mat4 greenCoefs;
 uniform mat4 blueCoefs;
 
-float a0h = 3.141593, a1h = 2.094395, a2h = 0.785398,
-      a3h = 0, a4h = -0.130900, a5h = 0, a6h = 0.049087;
+#define M_PI 3.1415926535897932384626433832795
 
 float sh00(vec3 n) {
   return 0.282095;
@@ -40,7 +37,7 @@ float sh2n1(vec3 n) {
 }
 
 float sh20(vec3 n) {
-  return 0.315392 * (3 * n.z * n.z - 1);
+  return 0.315392 * (-n.x * n.x - n.y * n.y + 2 * n.z * n.z);
 }
 
 float sh2p1(vec3 n) {
@@ -95,3 +92,9 @@ void main() {
   float b = getChannel(blueCoefs, n);
   finalColor = vec4(r, g, b, 1);
 }
+
+// HardcodedSH(\d)([np]?)(\d)
+// sh$1$2$3
+
+// d.([xyz])\(\)
+// n.$1

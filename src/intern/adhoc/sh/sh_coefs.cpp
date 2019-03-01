@@ -55,3 +55,12 @@ float SHCoefs::eval(float theta, float phi) const {
   }
   return sum;
 }
+
+std::string SHCoefs::toString() const {
+  std::string str = "coef{" + std::to_string(numDegree) + "}: [";
+  int numCoefs = SH::getNumCoefs(numDegree);
+  for (int i = 0; i < numCoefs; i++) {
+    str += std::to_string(coefs[i]) + (i < numCoefs - 1 ? ", " : "]");
+  }
+  return str;
+}
