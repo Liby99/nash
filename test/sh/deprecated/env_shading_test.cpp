@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
   AssimpObject model2(modelFile);
   // model2.transform.rotation = AngleAxisf(PI, Vector3f(0, 1, 0));
   AssimpMesh &mesh2 = *model2.getMeshes()[0];
-  mesh2.setShader(Shader::get("./shader/env_shading"));
+  mesh2.setShader(Shader::get(Path::getAbsolutePathTo("./shader/env_shading")));
   mesh2.attachScript(setEnvp);
   Looper loopMesh2("looper", 0, 2);
   mesh2.attachScript(loopMesh2);
@@ -126,14 +126,14 @@ int main(int argc, char *argv[]) {
 
   AssimpObject model(modelFile);
   AssimpMesh &mesh = *model.getMeshes()[0];
-  mesh.setShader(Shader::get("./shader/env_shading"));
+  mesh.setShader(Shader::get(Path::getAbsolutePathTo("./shader/env_shading")));
   mesh.attachScript(setEnv);
   Looper loopMesh("looper", 1, 2);
   mesh.attachScript(loopMesh);
   scene.addObject(model);
 
   // Sphere sphere;
-  // sphere.setShader(Shader::get("./shader/env_shading"));
+  // sphere.setShader(Shader::get(Path::getAbsolutePathTo("./shader/env_shading")));
   // sphere.attachScript(setEnv);
   // Looper loopSphere("looper", 1, 8);
   // sphere.attachScript(loopSphere);

@@ -5,13 +5,12 @@ using namespace nash;
 AssimpObject::AssimpObject(const std::string &filename) : Object() {
 
   // Setup importer and load
-  std::string absPath = Path::getAbsolutePathTo(filename); // Note the absolute path
   Assimp::Importer importer;
-  const aiScene *assimpScene = importer.ReadFile(absPath, aiProcess_Triangulate);
+  const aiScene *assimpScene = importer.ReadFile(filename, aiProcess_Triangulate);
 
   // If the import fail, throw error
   if (assimpScene == nullptr) {
-    throw std::runtime_error("Cannot load file " + absPath);
+    throw std::runtime_error("Cannot load file " + filename);
   }
 
   // Process the scene

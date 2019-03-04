@@ -24,7 +24,10 @@ void SHSphere::render() {
   Sphere::render();
 }
 
-void SHSphere::initShader() { setShader(Shader::get("./shader/sh_sphere")); }
+void SHSphere::initShader() {
+  auto path = Path::getAbsolutePathTo("./shader/sh_sphere");
+  setShader(Shader::get(path));
+}
 
 void SHSphere::updatePositions() {
 

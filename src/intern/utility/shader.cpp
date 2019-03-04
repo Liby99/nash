@@ -140,13 +140,7 @@ Shader::Shader() : name(""), path(""), simple(true), shader(new nanogui::GLShade
 }
 
 Shader::Shader(const std::string &name)
-    : name(name),
-#ifdef WIN32
-      path(name),
-#else
-      path(Path::getAbsolutePathTo(name)),
-#endif
-      simple(false), shader(new nanogui::GLShader()) {
+    : name(Path::getFileName(name)), path(name), simple(false), shader(new nanogui::GLShader()) {
   // Do nothing
 }
 

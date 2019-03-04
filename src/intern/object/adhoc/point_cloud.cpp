@@ -5,7 +5,7 @@ using namespace nash;
 const int PointCloud::POINT_SIZE = 3;
 
 PointCloud::PointCloud(const std::vector<Vector3f> &ps) : Object() {
-  setShader(Shader::get("./shader/point_cloud"));
+  setShader(Shader::get(Path::getAbsolutePathTo("./shader/point_cloud")));
 
   points = MatrixXf(3, ps.size());
   indices = MatrixXu(1, ps.size());

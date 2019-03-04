@@ -100,6 +100,7 @@ target_link_libraries(nash nanogui assimp nlohmann_json::nlohmann_json sh ${NANO
 # Compile all the executable files
 if(NASH_BUILD_TEST)
   file(GLOB_RECURSE tests test/*.cpp)
+  list(FILTER tests EXCLUDE REGEX "deprecated") # Ignore tests containing path `deprecated`
 endif(NASH_BUILD_TEST)
 if(NASH_BUILD_APP)
   file(GLOB_RECURSE apps app/*.cpp)

@@ -31,7 +31,7 @@ std::string Path::getProgramDirectory() {
   GetModuleFileName(NULL, buffer, 256);
   return getDirectory(std::string(buffer));
 #else
-  throw std::runtime_error("Not implemented");
+  throw std::runtime_error("Not implemented for platform");
 #endif
 }
 
@@ -43,25 +43,25 @@ std::string Path::getProgramFileName() {
   GetModuleFileName(NULL, buffer, 256);
   return getFileName(std::string(buffer));
 #else
-  throw std::runtime_error("Not implemented");
+  throw std::runtime_error("Not implemented for platform");
 #endif
 }
 
-std::string Path::getAbsolutePathTo(const std::string &relativePath) {
+std::string Path::getAbsolutePathTo(const std::string &relativePath, bool fromCWD) {
 #if defined(__APPLE__) || defined(__unix__)
   if (relativePath[0] == '/') {
     return relativePath;
   } else {
-    return getProgramDirectory() + "/" + relativePath;
+    return (fromCWD ? getCurrentWorkingDirectory() : getProgramDirectory()) + "/" + relativePath;
   }
 #elif defined(_WIN32)
   if (relativePath.length() > 3 && relativePath[1] == ':' && relativePath[2] == '/') {
     return relativePath;
   } else {
-    return getProgramDirectory() + "/" + relativePath;
+    return (fromCWD ? getCurrentWorkingDirectory() : getProgramDirectory()) + "/" + relativePath;
   }
 #else
-  throw std::runtime_error("Not implemented");
+  throw std::runtime_error("Not implemented for platform");
 #endif
 }
 

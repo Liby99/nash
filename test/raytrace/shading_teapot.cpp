@@ -9,7 +9,7 @@ public:
     positions = assimpMesh.getPositions();
     normals = assimpMesh.getNormals();
     indices = assimpMesh.getIndices();
-    setShader(Shader::get("./shader/plain_color"));
+    setShader(Shader::get(Path::getAbsolutePathTo("./shader/plain_color")));
   }
 
   virtual void render() {
@@ -24,7 +24,7 @@ private:
 int main(int argc, char *argv[]) {
   Nash::init(argc, argv);
 
-  AssimpObject teapot("./model/teapot.obj");
+  AssimpObject teapot(Path::getAbsolutePathTo("./model/teapot.obj"));
   const AssimpMesh &mesh = *(teapot.getMeshes()[0]);
   std::cerr << "Start" << std::endl;
   auto start = std::chrono::system_clock::now();
