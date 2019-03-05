@@ -1,31 +1,8 @@
+#include "helper/coefs_updator.hpp"
+#include "helper/globals.hpp"
 #include "helper/object_looper.hpp"
-#include "helper/sh_color_spheres.hpp"
+#include "helper/set_sh_coefs.hpp"
 #include "helper/sky_box_looper.hpp"
-
-std::vector<std::string> skyBoxPaths = {"./image/cubemap/room/", "./image/cubemap/gracecathedral/",
-                                        "./image/cubemap/colors/", "./image/cubemap/bridge3/"};
-
-std::vector<int> skyBoxSampleGaps = {10, 1, 1, 10};
-
-std::vector<std::string> modelPaths = {"./model/teapot.obj", "./model/dog.obj",
-                                       "./model/simp_desk.ply", "sphere", "cube"};
-
-std::vector<std::string> skyBoxSides = {"posy.jpg", "negy.jpg", "negx.jpg",
-                                        "posx.jpg", "posz.jpg", "negz.jpg"};
-
-std::vector<Image *> images;
-
-std::vector<CubeMap *> cubeMaps;
-
-std::vector<SkyBox *> skyBoxes;
-
-std::vector<SkyBoxSHCalculator *> calculators;
-
-std::vector<SHColorSpheres *> shColors;
-
-std::vector<Script<Object> *> scripts;
-
-std::vector<Object *> objects;
 
 void loadImages() {
   for (int i = 0; i < skyBoxPaths.size(); i++) {
@@ -133,9 +110,28 @@ int main(int argc, char *argv[]) {
   }
 
   // Add the objects into the scene
+  Shader &shEnvShader = Shader::get(Path::getAbsolutePathTo("./shader/sh_env"));
   for (int i = 0; i < objects.size(); i++) {
-    scripts.push_back(new ObjectLooper("looper", i, objects.size()));
-    objects[i]->attachScript(*scripts[scripts.size() - 1]);
+
+    // Add looper script
+    ObjectLooper *looper = new ObjectLooper("looper", i, objects.size());
+    objects[i]->attachScript(*looper);
+
+    // Add sh setter script
+    CoefsUpdator *updator = new CoefsUpdator("updator");
+    objects[i]->attachScript(*updator);
+
+    // Add sh coefs setter
+    SetSHCoefs *setter = new SetSHCoefs("setter", 4);
+    objects[i]->attachScript(*setter);
+
+    // Add the above scripts to the `scripts` vector
+    scripts.push_back(looper);
+    scripts.push_back(updator);
+    scripts.push_back(setter);
+
+    // Finally add the object to the scene
+    objects[i]->setShader(shEnvShader);
     scene.addObject(*objects[i]);
   }
 

@@ -16,6 +16,8 @@ namespace nash {
     ~AssimpObject();
     AssimpNode &getRootNode();
 
+    virtual void setShader(Shader &shader);
+
     const std::vector<AssimpMesh *> &getMeshes() const;
 
   private:

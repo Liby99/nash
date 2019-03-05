@@ -1,5 +1,5 @@
 copy_shader("sky_box")
-# copy_shader("sh_env_obj")
+copy_shader("sh_env" FROM_CURRENT_RES)
 
 copy_model("dog.obj")
 copy_model("teapot.obj")

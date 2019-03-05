@@ -24,6 +24,13 @@ AssimpObject::~AssimpObject() { delete root; }
 
 AssimpNode &AssimpObject::getRootNode() { return *root; }
 
+void AssimpObject::setShader(Shader &shader) {
+  Object::setShader(shader);
+  for (int i = 0; i < meshes.size(); i++) {
+    meshes[i]->setShader(shader);
+  }
+}
+
 void AssimpObject::processScene(const aiScene *scene) {
 
   // First generate `AssimpMesh`es

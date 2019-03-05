@@ -27,7 +27,7 @@ namespace nash {
     // Shader spec
     bool hasShader();
     Shader &getShader();
-    void setShader(Shader &shader);
+    virtual void setShader(Shader &shader);
 
     // Activation
     void activate();
@@ -41,8 +41,8 @@ namespace nash {
 
     // Scripting
     void attachScript(Script<Object> &script);
-    Script<Object> &getScript(std::string &name);
-    void removeScript(std::string &name);
+    Script<Object> &getScript(const std::string &name);
+    void removeScript(const std::string &name);
 
     // Object Life Cycle pipeline.
     virtual void start();

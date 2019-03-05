@@ -15,6 +15,28 @@ SkyBoxSHCalculator::SkyBoxSHCalculator(const CubeMap &cubeMap, int numDegree, in
   coefsList[1] = new SHCoefs(numDegree);
   coefsList[2] = new SHCoefs(numDegree);
 
+  // std::vector<Vector3f> samples(SAMPLE_COUNT);
+  // Sampler::sampleSphere(samples);
+  // float factor = 4.0f * PI / SAMPLE_COUNT;
+
+  // for (int i = 0; i < samples.size(); i++) {
+  //   Vector4u color = cubeMap.getColor(samples[i]);
+  //   Vector2f thetaPhi = Math::normalCartToPolar(samples[i]);
+  //   float theta = thetaPhi.x(), phi = thetaPhi.y();
+  //   for (int l = 0; l < numDegree; l++) {
+  //     for (int m = -l; m <= l; m++) {
+  //       float y = SH::y(l, m, theta, phi);
+  //       coefsList[0]->accumulate(l, m, color[0] / 255.0f * y);
+  //       coefsList[1]->accumulate(l, m, color[1] / 255.0f * y);
+  //       coefsList[2]->accumulate(l, m, color[2] / 255.0f * y);
+  //     }
+  //   }
+  // }
+
+  // coefsList[0]->normalize(factor);
+  // coefsList[1]->normalize(factor);
+  // coefsList[2]->normalize(factor);
+
   for (CubeMap::Face face : CubeMap::FACES) {
     const Image &img = cubeMap.getImage(face);
     float area = PI * 4 * (numGap * numGap) / (img.width * img.height * 6.0f);
