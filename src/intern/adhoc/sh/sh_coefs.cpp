@@ -60,9 +60,11 @@ float *SHCoefs::data() const { return coefs; }
 
 int SHCoefs::size() const { return SH::getNumCoefs(numDegree); }
 
-std::string SHCoefs::toString() const {
-  std::string str = "coef{" + std::to_string(numDegree) + "}: [";
-  int numCoefs = SH::getNumCoefs(numDegree);
+std::string SHCoefs::toString() const { return toString(numDegree); }
+
+std::string SHCoefs::toString(int d) const {
+  std::string str = "coef{" + std::to_string(d) + "}: [";
+  int numCoefs = SH::getNumCoefs(d);
   for (int i = 0; i < numCoefs; i++) {
     str += std::to_string(coefs[i]) + (i < numCoefs - 1 ? ", " : "]");
   }

@@ -26,6 +26,7 @@ namespace nash {
     int size() const;
 
     std::string toString() const;
+    std::string toString(int d) const;
   };
 }
 

@@ -1,11 +1,27 @@
+#include "helper/coefs_printer.hpp"
 #include "helper/coefs_updator.hpp"
 #include "helper/globals.hpp"
 #include "helper/object_looper.hpp"
 #include "helper/set_sh_coefs.hpp"
 #include "helper/sky_box_looper.hpp"
+#include "helper/sphere_looper.hpp"
+
+void printHelp() {
+  std::cout << std::endl;
+  std::cout << "SH Environment Coefficients Demo" << std::endl;
+  std::cout << "- W/A/S/D:\tCamera Movement" << std::endl;
+  std::cout << "- Space:\tCamera goes up" << std::endl;
+  std::cout << "- X:\t\tCamera goes down" << std::endl;
+  std::cout << "- Mouse Drag:\tCamera Rotation" << std::endl;
+  std::cout << "- Left/Right:\tGo through different sky boxes" << std::endl;
+  std::cout << "- Up/Down:\tGo through different models" << std::endl;
+  std::cout << "- T:\t\tToggle the sh coefficient spheres" << std::endl;
+  std::cout << "- P:\t\tPrint out the coefficients of the currently showing sky box" << std::endl;
+}
 
 void loadImages() {
   for (int i = 0; i < skyBoxPaths.size(); i++) {
+    std::cout << "Loading skybox #" << i << "... " << std::flush;
 
     // First load the images
     for (int j = 0; j < skyBoxSides.size(); j++) {
@@ -16,11 +32,14 @@ void loadImages() {
     int off = i * 6;
     cubeMaps.push_back(new CubeMap(*images[off], *images[off + 1], *images[off + 2],
                                    *images[off + 3], *images[off + 4], *images[off + 5]));
+
+    std::cout << "Done" << std::endl;
   }
 }
 
 void loadObjects() {
   for (int i = 0; i < modelPaths.size(); i++) {
+    std::cout << "Loading object #" << i << "... " << std::flush;
     if (modelPaths[i] == "sphere") {
       objects.push_back(new Sphere());
     } else if (modelPaths[i] == "cube") {
@@ -28,6 +47,7 @@ void loadObjects() {
     } else {
       objects.push_back(new AssimpObject(Path::getAbsolutePathTo(modelPaths[i])));
     }
+    std::cout << "Done" << std::endl;
   }
 }
 
@@ -38,7 +58,9 @@ void load() {
 
 void computeEnvCoefs() {
   for (int i = 0; i < cubeMaps.size(); i++) {
+    std::cout << "Calculating cubemap #" << i << "... " << std::flush;
     calculators.push_back(new SkyBoxSHCalculator(*cubeMaps[i], 10, skyBoxSampleGaps[i]));
+    std::cout << "Done" << std::endl;
   }
 }
 
@@ -103,10 +125,14 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < cubeMaps.size(); i++) {
     std::vector<SHCoefs *> list = calculators[i]->getCoefsList();
     shColors.push_back(new SHColorSpheres(*list[0], *list[1], *list[2]));
-    scripts.push_back(new SkyBoxLooper("looper", i, cubeMaps.size()));
-    shColors[i]->attachScript(*scripts[scripts.size() - 1]);
+
+    // Add scripts to the color sh spheres
+    SphereLooper *looper = new SphereLooper("looper", i, cubeMaps.size());
+    shColors[i]->attachScript(*looper);
     shColors[i]->transform.position.z() += 1;
     scene.addObject(*shColors[i]);
+
+    scripts.push_back(looper);
   }
 
   // Add the objects into the scene
@@ -122,7 +148,7 @@ int main(int argc, char *argv[]) {
     objects[i]->attachScript(*updator);
 
     // Add sh coefs setter
-    SetSHCoefs *setter = new SetSHCoefs("setter", 4);
+    SetSHCoefs *setter = new SetSHCoefs("setter", 5); // Pass coefs up to degree 4
     objects[i]->attachScript(*setter);
 
     // Add the above scripts to the `scripts` vector
@@ -135,6 +161,14 @@ int main(int argc, char *argv[]) {
     scene.addObject(*objects[i]);
   }
 
+  // Add a dummy object and printer
+  Object obj;
+  CoefsPrinter printer("printer", 3);
+  obj.attachScript(printer);
+  scene.addObject(obj);
+
+  // Initialize and start the viewer
+  printHelp();
   Viewer viewer(1280, 720, "SH Environment Lighting", scene);
   viewer.start();
 
