@@ -145,9 +145,11 @@ void Object::renderWrapper(Context &context, Matrix4f &viewPersp) {
       }
     }
 
-    // Render all the children
-    for (int i = 0; i < children.size(); i++) {
-      children[i]->renderWrapper(context, viewPersp);
+    // Render all the children if not hidden
+    if (!hidden) {
+      for (int i = 0; i < children.size(); i++) {
+        children[i]->renderWrapper(context, viewPersp);
+      }
     }
   }
 }
