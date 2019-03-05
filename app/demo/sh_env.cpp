@@ -1,9 +1,11 @@
-#include <nash/nash.h>
-
-using namespace nash;
+#include "helper/object_looper.hpp"
+#include "helper/sh_color_spheres.hpp"
+#include "helper/sky_box_looper.hpp"
 
 std::vector<std::string> skyBoxPaths = {"./image/cubemap/room/", "./image/cubemap/gracecathedral/",
-                                        "./image/cubemap/colors/"};
+                                        "./image/cubemap/colors/", "./image/cubemap/bridge3/"};
+
+std::vector<int> skyBoxSampleGaps = {10, 1, 1, 10};
 
 std::vector<std::string> modelPaths = {"./model/teapot.obj", "./model/dog.obj",
                                        "./model/simp_desk.ply", "sphere", "cube"};
@@ -11,81 +13,36 @@ std::vector<std::string> modelPaths = {"./model/teapot.obj", "./model/dog.obj",
 std::vector<std::string> skyBoxSides = {"posy.jpg", "negy.jpg", "negx.jpg",
                                         "posx.jpg", "posz.jpg", "negz.jpg"};
 
-class Looper : public Script<Object> {
-public:
-  std::map<Direction, bool> pressing;
-  int curr, id, total;
+std::vector<Image *> images;
 
-  Looper(const std::string &name, int id, int total)
-      : Script<Object>(name), id(id), total(total), curr(0) {
-    // Do nothing
-  }
+std::vector<CubeMap *> cubeMaps;
 
-  int mod(int a, int b) { return (a % b + b) % b; }
+std::vector<SkyBox *> skyBoxes;
 
-  void updateFromKey(Direction key, int diff) {
-    if (!pressing[key]) {
-      if (context->getDirectionKey(key)) {
-        pressing[key] = true;
-        curr = mod(curr + diff, total);
-        target->setHidden(curr != id);
-      }
-    } else {
-      if (!context->getDirectionKey(key)) {
-        pressing[key] = false;
-      }
-    }
-  }
+std::vector<SkyBoxSHCalculator *> calculators;
 
-  virtual void start() { target->setHidden(curr != id); }
-};
+std::vector<SHColorSpheres *> shColors;
 
-class SkyBoxLooper : public Looper {
-public:
-  SkyBoxLooper(const std::string &name, int id, int total) : Looper(name, id, total) {}
+std::vector<Script<Object> *> scripts;
 
-  virtual void update() {
-    updateFromKey(Direction::Left, 1);
-    updateFromKey(Direction::Right, -1);
-  }
-};
+std::vector<Object *> objects;
 
-class ObjectLooper : public Looper {
-public:
-  ObjectLooper(const std::string &name, int id, int total) : Looper(name, id, total) {}
-
-  virtual void update() {
-    updateFromKey(Direction::Up, -1);
-    updateFromKey(Direction::Down, 1);
-  }
-};
-
-int main(int argc, char *argv[]) {
-  Nash::init(argc, argv);
-
-  Scene scene;
-  FirstPersonCamera camCtrl;
-  scene.getCamera().setController(camCtrl);
-
-  std::vector<Image *> images;
-  std::vector<CubeMap *> cubeMaps;
-  std::vector<SkyBox *> skyBoxes;
-  std::vector<Script<Object> *> scripts;
-  std::vector<Object *> objects;
-
+void loadImages() {
   for (int i = 0; i < skyBoxPaths.size(); i++) {
-    int off = i * 6;
+
+    // First load the images
     for (int j = 0; j < skyBoxSides.size(); j++) {
       images.push_back(new Image(Path::getAbsolutePathTo(skyBoxPaths[i] + skyBoxSides[j])));
     }
+
+    // Generate cubemap from the images
+    int off = i * 6;
     cubeMaps.push_back(new CubeMap(*images[off], *images[off + 1], *images[off + 2],
                                    *images[off + 3], *images[off + 4], *images[off + 5]));
-    skyBoxes.push_back(new SkyBox(*cubeMaps[i]));
-    scripts.push_back(new SkyBoxLooper("looper", i, skyBoxPaths.size()));
-    skyBoxes[i]->attachScript(*scripts[scripts.size() - 1]);
-    scene.addObject(*skyBoxes[i]);
   }
+}
 
+void loadObjects() {
   for (int i = 0; i < modelPaths.size(); i++) {
     if (modelPaths[i] == "sphere") {
       objects.push_back(new Sphere());
@@ -94,14 +51,21 @@ int main(int argc, char *argv[]) {
     } else {
       objects.push_back(new AssimpObject(Path::getAbsolutePathTo(modelPaths[i])));
     }
-    scripts.push_back(new ObjectLooper("looper", i, modelPaths.size()));
-    objects[i]->attachScript(*scripts[scripts.size() - 1]);
-    scene.addObject(*objects[i]);
   }
+}
 
-  Viewer viewer(1280, 720, "SH Environment Lighting", scene);
-  viewer.start();
+void load() {
+  loadImages();
+  loadObjects();
+}
 
+void computeEnvCoefs() {
+  for (int i = 0; i < cubeMaps.size(); i++) {
+    calculators.push_back(new SkyBoxSHCalculator(*cubeMaps[i], 10, skyBoxSampleGaps[i]));
+  }
+}
+
+void cleanImages() {
   for (int i = 0; i < skyBoxPaths.size(); i++) {
     for (int j = 0; j < skyBoxSides.size(); j++) {
       delete images[6 * i + j];
@@ -109,10 +73,76 @@ int main(int argc, char *argv[]) {
     delete cubeMaps[i];
     delete skyBoxes[i];
   }
+}
 
+void cleanCalculators() {
+  for (int i = 0; i < calculators.size(); i++) {
+    delete calculators[i];
+  }
+}
+
+void cleanObjects() {
+  for (int i = 0; i < objects.size(); i++) {
+    delete objects[i];
+  }
+  for (int i = 0; i < shColors.size(); i++) {
+    delete shColors[i];
+  }
+}
+
+void cleanScripts() {
   for (int i = 0; i < scripts.size(); i++) {
     delete scripts[i];
   }
+}
+
+void clean() {
+  cleanImages();
+  cleanCalculators();
+  cleanObjects();
+  cleanScripts();
+}
+
+int main(int argc, char *argv[]) {
+  Nash::init(argc, argv);
+
+  Scene scene;
+  ThirdPersonCamera camCtrl;
+  scene.getCamera().setController(camCtrl);
+
+  load(); // Skyboxes will be filled with sky boxes, objects will be filled with objects
+
+  // Add the environment maps into the scene
+  for (int i = 0; i < cubeMaps.size(); i++) {
+    skyBoxes.push_back(new SkyBox(*cubeMaps[i]));
+    scripts.push_back(new SkyBoxLooper("looper", i, cubeMaps.size()));
+    skyBoxes[i]->attachScript(*scripts[scripts.size() - 1]);
+    scene.addObject(*skyBoxes[i]);
+  }
+
+  computeEnvCoefs(); // Start to compute the coefficients from environment maps
+
+  // Add the coefficient spheres into the scene
+  for (int i = 0; i < cubeMaps.size(); i++) {
+    std::vector<SHCoefs *> list = calculators[i]->getCoefsList();
+    shColors.push_back(new SHColorSpheres(*list[0], *list[1], *list[2]));
+    scripts.push_back(new SkyBoxLooper("looper", i, cubeMaps.size()));
+    shColors[i]->attachScript(*scripts[scripts.size() - 1]);
+    shColors[i]->transform.position.z() += 1;
+    scene.addObject(*shColors[i]);
+  }
+
+  // Add the objects into the scene
+  for (int i = 0; i < objects.size(); i++) {
+    scripts.push_back(new ObjectLooper("looper", i, objects.size()));
+    objects[i]->attachScript(*scripts[scripts.size() - 1]);
+    scene.addObject(*objects[i]);
+  }
+
+  Viewer viewer(1280, 720, "SH Environment Lighting", scene);
+  viewer.start();
+
+  clean(); // All loaded images, objects, and scripts will be freed
 
   Nash::shutdown();
 }
