@@ -30,6 +30,10 @@ namespace nash {
     void setUniform(const std::string &name, bool value);
     void setUniform(const std::string &name, int value);
     void setUniform(const std::string &name, float value);
+    void setUniform(const std::string &name, const std::vector<float> &arr);
+    void setUniform(const std::string &name, const float *arr, unsigned int amount);
+    void setUniform(const std::string &name, const std::vector<int> &arr);
+    void setUniform(const std::string &name, const int *arr, unsigned int amount);
     void uploadAttr(const std::string &name, const MatrixXf &m);
     void freeAttr(const std::string &name);
     bool hasAttr(const std::string &name);

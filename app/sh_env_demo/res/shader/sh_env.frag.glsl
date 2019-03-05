@@ -132,7 +132,7 @@ float getChannel(float m[25], vec3 n) {
   s += a0h * m[0] * sh00(n);
   s += a1h * (m[1] * sh1n1(n) + m[2] * sh10(n) + m[3] * sh1p1(n));
   s += a2h * (m[4] * sh2n2(n) + m[5] * sh2n1(n) + m[6] * sh20(n) + m[7] * sh2p1(n) + m[8] * sh2p2(n));
-  s += a3h * (m[9] * sh3n3(n) + m[10] * sh3n2(n) + m[11] * sh3n1(n) + m[12] * sh30(n) + m[13] * sh3p1(n) + m[14] * sh3p2(n) + m[15] * sh3p3(n));
+  // s += a3h * (m[9] * sh3n3(n) + m[10] * sh3n2(n) + m[11] * sh3n1(n) + m[12] * sh30(n) + m[13] * sh3p1(n) + m[14] * sh3p2(n) + m[15] * sh3p3(n)); // Ignoring this line since a3h is just 0
   s += a4h * (m[16] * sh4n4(n) + m[17] * sh4n3(n) + m[18] * sh4n2(n) + m[19] * sh4n1(n) + m[20] * sh40(n) + m[21] * sh4p1(n) + m[22] * sh4p2(n) + m[23] * sh4p3(n) + m[24] * sh4p4(n));
   return s;
 }

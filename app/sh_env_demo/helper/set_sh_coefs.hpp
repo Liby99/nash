@@ -29,10 +29,7 @@ public:
 
 private:
   void setShaderCoefs(const SHCoefs *coefs, const std::string &name) {
-
-    // Step into realm of pure opengl...
-    GLuint loc = glGetUniformLocation(target->getShader().getProgramId(), name.c_str());
-    glUniform1fv(loc, SH::getNumCoefs(numDegree), coefs->data());
+    target->getShader().setUniform(name, coefs->data(), SH::getNumCoefs(numDegree));
   }
 };
 

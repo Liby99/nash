@@ -90,6 +90,26 @@ void Shader::uploadAttr(const std::string &name, const MatrixXf &m) {
   shader->uploadAttrib(name, m);
 }
 
+void Shader::setUniform(const std::string &name, const std::vector<float> &arr) {
+  GLuint loc = glGetUniformLocation(getProgramId(), name.c_str());
+  glUniform1fv(loc, arr.size(), arr.data());
+}
+
+void Shader::setUniform(const std::string &name, const float *arr, unsigned int amount) {
+  GLuint loc = glGetUniformLocation(getProgramId(), name.c_str());
+  glUniform1fv(loc, amount, arr);
+}
+
+void Shader::setUniform(const std::string &name, const std::vector<int> &arr) {
+  GLuint loc = glGetUniformLocation(getProgramId(), name.c_str());
+  glUniform1iv(loc, arr.size(), arr.data());
+}
+
+void Shader::setUniform(const std::string &name, const int *arr, unsigned int amount) {
+  GLuint loc = glGetUniformLocation(getProgramId(), name.c_str());
+  glUniform1iv(loc, amount, arr);
+}
+
 void Shader::freeAttr(const std::string &name) { shader->freeAttrib(name); }
 
 bool Shader::hasAttr(const std::string &name) { return shader->hasAttrib(name); }

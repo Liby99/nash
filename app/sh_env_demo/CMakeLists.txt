@@ -1,4 +1,5 @@
 copy_shader("sky_box")
+copy_shader("sh_sphere")
 copy_shader("sh_env" FROM_CURRENT_RES)
 
 copy_model("dog.obj")
