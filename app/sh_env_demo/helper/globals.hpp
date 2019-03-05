@@ -23,9 +23,9 @@ std::vector<CubeMap *> cubeMaps;
 
 std::vector<SkyBox *> skyBoxes;
 
-std::vector<SkyBoxSHCalculator *> calculators;
+std::vector<SHColor *> shColors;
 
-std::vector<SHColorSpheres *> shColors;
+std::vector<SHColorSpheres *> shSpheres;
 
 std::vector<Script<Object> *> scripts;
 

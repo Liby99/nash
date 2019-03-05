@@ -5,11 +5,14 @@ using namespace nash;
 
 const int DEFAULT_NUM_DEGREE = 5;
 
+const int DEFAULT_NUM_GAP = 1;
+
 const int MILLI_PER_SECOND = 1000;
 
 std::string filename;
 std::string ext = "jpg";
 int numDegree = DEFAULT_NUM_DEGREE;
+int numGap = DEFAULT_NUM_GAP;
 bool printOnly = false;
 bool doTiming = false;
 bool silent = false;
@@ -37,6 +40,9 @@ void printHelp() {
             << std::endl;
   std::cout << "\t-d | --degree <num_degree>\tWill contain the top <num_degree> of coefficients. "
                "The value is set to be 5 if not specified"
+            << std::endl;
+  std::cout << "\t-g | --gap <num_gap>\tWill jump this amount of pixels when sampling. The value "
+               "is set to 1 if not specified"
             << std::endl;
   std::cout << "\t-e | --ext <extension>\t\tWill set the auto image extension to <extension>. "
                "Default value is `jpg`. Some other example would be `png`, `bmp` and so on."
@@ -70,6 +76,18 @@ int main(int argc, char *argv[]) {
           }
         } catch (...) {
           std::cout << "Cannot parse <num_degree>: invalid input " << degreeStr << std::endl;
+          return -1;
+        }
+      } else if (str == "-g" || str == "--gap") {
+        std::string gapStr = std::string(argv[++i]);
+        try {
+          numGap = std::stoi(gapStr);
+          if (numDegree <= 1) {
+            std::cout << "The option <num_gap> must be greater than 1" << std::endl;
+            return -1;
+          }
+        } catch (...) {
+          std::cout << "Cannot parse <num_gap>: invalid input " << gapStr << std::endl;
           return -1;
         }
       } else if (str == "-e" || str == "--ext") {
@@ -127,7 +145,7 @@ int main(int argc, char *argv[]) {
   auto start = std::chrono::system_clock::now();
 
   // Start calculating
-  SkyBoxSHCalculator calc(cubeMap, numDegree);
+  SkyBoxSHCalculator calc(cubeMap, numDegree, numGap);
   auto list = calc.getCoefsList();
   SHFile file(calc.getCoefsList(), numDegree);
   if (printOnly) {

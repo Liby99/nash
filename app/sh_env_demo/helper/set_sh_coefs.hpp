@@ -2,6 +2,7 @@
 #define SET_SH_COEFS_HPP
 
 #include <nash/nash.h>
+#include "globals.hpp"
 
 using namespace nash;
 
@@ -13,16 +14,11 @@ public:
   SetSHCoefs(const std::string &name, int numDegree)
       : Script<Object>(name), numDegree(numDegree), red(nullptr), green(nullptr), blue(nullptr) {}
 
-  void setRed(const SHCoefs &red) {
-    this->red = &red;
-  }
-
-  void setGreen(const SHCoefs &green) {
-    this->green = &green;
-  }
-
-  void setBlue(const SHCoefs &blue) {
-    this->blue = &blue;
+  virtual void update() {
+    SHColor &color = *shColors[activatedSkyBox];
+    red = &color.red;
+    green = &color.green;
+    blue = &color.blue;
   }
 
   virtual void preRender() {

@@ -30,7 +30,7 @@ void printHelp() {
                "(time) but will not override option -p (print)"
             << std::endl;
   std::cout << "\t-d | --degree <num_degree>\tWill contain the top <num_degree> of coefficients. "
-               "The value is set to be 5 if not specified"
+               "The value is set to 5 if not specified"
             << std::endl;
 }
 

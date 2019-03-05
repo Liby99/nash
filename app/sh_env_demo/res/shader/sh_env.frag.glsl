@@ -48,7 +48,7 @@ float sh2p1(vec3 n) {
 }
 
 float sh2p2(vec3 n) {
-  return 0.546274 * n.x * n.z;
+  return 0.546274 * (n.x * n.x - n.y * n.y);
 }
 
 float sh3n3(vec3 n) {

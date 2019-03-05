@@ -14,11 +14,10 @@ public:
   CoefsPrinter(const std::string &name, int numDegree) : Script<Object>(name), pressing(false), numDegree(numDegree) {}
 
   void print() {
-    auto calc = calculators[activatedSkyBox];
-    auto list = calc->getCoefsList();
-    std::cout << "Red:   " << list[0]->toString(numDegree) << std::endl;
-    std::cout << "Green: " << list[1]->toString(numDegree) << std::endl;
-    std::cout << "Blue:  " << list[2]->toString(numDegree) << std::endl;
+    SHColor *color = shColors[activatedSkyBox];
+    std::cout << "Red:   " << color->red.toString(numDegree) << std::endl;
+    std::cout << "Green: " << color->green.toString(numDegree) << std::endl;
+    std::cout << "Blue:  " << color->blue.toString(numDegree) << std::endl;
   }
 
   virtual void update() {

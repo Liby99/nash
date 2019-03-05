@@ -7,14 +7,14 @@ using namespace nash;
 
 class SHColorSpheres : public Object {
 public:
-  SHColorSpheres(const SHCoefs &red, const SHCoefs &green, const SHCoefs &blue) : Object() {
+  SHColorSpheres(const SHColor &color) : Object(), color(color) {
 
     // First construct three spheres
-    redSphere = new SHSphere(red);
+    redSphere = new SHSphere(color.red);
     redSphere->transform.position.x() -= 1; // Red sphere shift to the left
-    greenSphere = new SHSphere(green);
+    greenSphere = new SHSphere(color.green);
     // Green sphere in the center
-    blueSphere = new SHSphere(blue);
+    blueSphere = new SHSphere(color.blue);
     blueSphere->transform.position.x() += 1; // Blue sphere shift to the right
 
     // Then we set this as the parent object
@@ -30,6 +30,7 @@ public:
   }
 
 private:
+  SHColor color;
   SHSphere *redSphere, *greenSphere, *blueSphere;
 };
 

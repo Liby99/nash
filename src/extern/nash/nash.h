@@ -42,4 +42,5 @@
 #include "adhoc/sh/sky_box_sh_calculator.h"
 #include "adhoc/sh/mesh_sh_calculator.h"
 #include "adhoc/sh/sh_sphere.h"
+#include "adhoc/sh/sh_color.h"
 #include "adhoc/sh/sh_file.h"

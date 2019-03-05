@@ -1,5 +1,4 @@
 #include "helper/coefs_printer.hpp"
-#include "helper/coefs_updator.hpp"
 #include "helper/globals.hpp"
 #include "helper/object_looper.hpp"
 #include "helper/set_sh_coefs.hpp"
@@ -59,7 +58,9 @@ void load() {
 void computeEnvCoefs() {
   for (int i = 0; i < cubeMaps.size(); i++) {
     std::cout << "Calculating cubemap #" << i << "... " << std::flush;
-    calculators.push_back(new SkyBoxSHCalculator(*cubeMaps[i], 10, skyBoxSampleGaps[i]));
+    SkyBoxSHCalculator calc(*cubeMaps[i], 10, skyBoxSampleGaps[i]);
+    std::vector<SHCoefs *> list = calc.getCoefsList();
+    shColors.push_back(new SHColor(*list[0], *list[1], *list[2]));
     std::cout << "Done" << std::endl;
   }
 }
@@ -74,9 +75,9 @@ void cleanImages() {
   }
 }
 
-void cleanCalculators() {
-  for (int i = 0; i < calculators.size(); i++) {
-    delete calculators[i];
+void cleanCoefs() {
+  for (int i = 0; i < shColors.size(); i++) {
+    delete shColors[i];
   }
 }
 
@@ -85,7 +86,7 @@ void cleanObjects() {
     delete objects[i];
   }
   for (int i = 0; i < shColors.size(); i++) {
-    delete shColors[i];
+    delete shSpheres[i];
   }
 }
 
@@ -97,7 +98,7 @@ void cleanScripts() {
 
 void clean() {
   cleanImages();
-  cleanCalculators();
+  cleanCoefs();
   cleanObjects();
   cleanScripts();
 }
@@ -123,14 +124,13 @@ int main(int argc, char *argv[]) {
 
   // Add the coefficient spheres into the scene
   for (int i = 0; i < cubeMaps.size(); i++) {
-    std::vector<SHCoefs *> list = calculators[i]->getCoefsList();
-    shColors.push_back(new SHColorSpheres(*list[0], *list[1], *list[2]));
+    shSpheres.push_back(new SHColorSpheres(*shColors[i]));
 
     // Add scripts to the color sh spheres
     SphereLooper *looper = new SphereLooper("looper", i, cubeMaps.size());
-    shColors[i]->attachScript(*looper);
-    shColors[i]->transform.position.z() += 1;
-    scene.addObject(*shColors[i]);
+    shSpheres[i]->attachScript(*looper);
+    shSpheres[i]->transform.position.z() += 1;
+    scene.addObject(*shSpheres[i]);
 
     scripts.push_back(looper);
   }
@@ -143,17 +143,12 @@ int main(int argc, char *argv[]) {
     ObjectLooper *looper = new ObjectLooper("looper", i, objects.size());
     objects[i]->attachScript(*looper);
 
-    // Add sh setter script
-    CoefsUpdator *updator = new CoefsUpdator("updator");
-    objects[i]->attachScript(*updator);
-
     // Add sh coefs setter
     SetSHCoefs *setter = new SetSHCoefs("setter", 5); // Pass coefs up to degree 4
     objects[i]->attachScript(*setter);
 
     // Add the above scripts to the `scripts` vector
     scripts.push_back(looper);
-    scripts.push_back(updator);
     scripts.push_back(setter);
 
     // Finally add the object to the scene
