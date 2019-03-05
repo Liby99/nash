@@ -16,13 +16,9 @@ BoxTreeNode::BoxTreeNode(const MatrixXu &indices, const BoxTreeMesh *boxTreeMesh
     vertices.push_back(boxTreeMesh->getMesh().getPositions().col(currTri[2]));
   }
   boundingBox = new BoundingBox(vertices);
-  // TODO: delete this when finalized
-  // int currSize = indices.cols();
-  // fprintf(stderr, "======Current indices size: %d\n", currSize);
   if (indices.cols() > boxTreeMesh->leafSize) {
     partition();
   } else {
-    // TODO
     triangle = new Triangle(vertices[0], vertices[1], vertices[2]);
   }
 }

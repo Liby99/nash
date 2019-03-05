@@ -10,7 +10,7 @@ namespace nash {
     static const int NUM_CHANNEL;
     static const int SAMPLE_COUNT;
     int numDegree;
-    SkyBoxSHCalculator(const CubeMap &cubeMap, int numDegree);
+    SkyBoxSHCalculator(const CubeMap &cubeMap, int numDegree, int numGap = 1);
     ~SkyBoxSHCalculator();
     const std::vector<SHCoefs *> &getCoefsList();
 

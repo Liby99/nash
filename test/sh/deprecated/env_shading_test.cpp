@@ -7,8 +7,8 @@
 
 using namespace nash;
 
-const std::string directory = "./image/cubemap/gracecathedral/";
-const std::string modelFile = "./model/teapot.obj";
+const std::string directory = "./image/cubemap/room/";
+const std::string modelFile = "./model/dog.obj";
 
 const float c1 = 0.429043;
 const float c2 = 0.511664;
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
   SkyBox skybox(cubeMap);
   scene.addObject(skybox);
 
-  SkyBoxSHCalculator calc(cubeMap, 3);
+  SkyBoxSHCalculator calc(cubeMap, 4, 10);
   const std::vector<SHCoefs *> &list = calc.getCoefsList();
   SHCoefs &red = *list[0], &green = *list[1], &blue = *list[2];
   SHCoefs redp = red, greenp = green, bluep = blue;
@@ -111,28 +111,29 @@ int main(int argc, char *argv[]) {
   loadCoefsMatrix(greenp, greenpCoefs);
   loadCoefsMatrix(bluep, bluepCoefs);
 
+  EnvShading setEnvp("set-env-p", redpCoefs, greenpCoefs, bluepCoefs);
+
+  AssimpObject model2(modelFile);
+  // model2.transform.rotation = AngleAxisf(PI, Vector3f(0, 1, 0));
+  AssimpMesh &mesh2 = *model2.getMeshes()[0];
+  mesh2.setShader(Shader::get(Path::getAbsolutePathTo("./shader/env_shading")));
+  mesh2.attachScript(setEnvp);
+  Looper loopMesh2("looper", 0, 2);
+  mesh2.attachScript(loopMesh2);
+  scene.addObject(model2);
+
   EnvShading setEnv("set-env", redCoefs, greenCoefs, blueCoefs);
 
   AssimpObject model(modelFile);
   AssimpMesh &mesh = *model.getMeshes()[0];
-  mesh.setShader(Shader::get("./shader/env_shading"));
+  mesh.setShader(Shader::get(Path::getAbsolutePathTo("./shader/env_shading")));
   mesh.attachScript(setEnv);
-  Looper loopMesh("looper", 0, 2);
+  Looper loopMesh("looper", 1, 2);
   mesh.attachScript(loopMesh);
   scene.addObject(model);
 
-  EnvShading setEnvp("set-env-p", redpCoefs, greenpCoefs, bluepCoefs);
-
-  AssimpObject model2(modelFile);
-  AssimpMesh &mesh2 = *model2.getMeshes()[0];
-  mesh2.setShader(Shader::get("./shader/env_shading"));
-  mesh2.attachScript(setEnvp);
-  Looper loopMesh2("looper", 1, 2);
-  mesh2.attachScript(loopMesh2);
-  scene.addObject(model2);
-
   // Sphere sphere;
-  // sphere.setShader(Shader::get("./shader/env_shading"));
+  // sphere.setShader(Shader::get(Path::getAbsolutePathTo("./shader/env_shading")));
   // sphere.attachScript(setEnv);
   // Looper loopSphere("looper", 1, 8);
   // sphere.attachScript(loopSphere);

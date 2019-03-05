@@ -55,7 +55,7 @@ bool Object::isHidden() { return hidden; }
 
 void Object::attachScript(Script<Object> &script) { scripts.push_back(&script); }
 
-Script<Object> &Object::getScript(std::string &name) {
+Script<Object> &Object::getScript(const std::string &name) {
   auto it = find_if(scripts.begin(), scripts.end(),
                     [&name](const Script<Object> *s) { return s->name == name; });
   if (it != scripts.end()) {
@@ -65,7 +65,7 @@ Script<Object> &Object::getScript(std::string &name) {
   }
 }
 
-void Object::removeScript(std::string &name) {
+void Object::removeScript(const std::string &name) {
   auto it = find_if(scripts.begin(), scripts.end(),
                     [&name](const Script<Object> *s) { return s->name == name; });
   if (it != scripts.end()) {
@@ -145,9 +145,11 @@ void Object::renderWrapper(Context &context, Matrix4f &viewPersp) {
       }
     }
 
-    // Render all the children
-    for (int i = 0; i < children.size(); i++) {
-      children[i]->renderWrapper(context, viewPersp);
+    // Render all the children if not hidden
+    if (!hidden) {
+      for (int i = 0; i < children.size(); i++) {
+        children[i]->renderWrapper(context, viewPersp);
+      }
     }
   }
 }

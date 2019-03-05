@@ -22,6 +22,11 @@ namespace nash {
     void accumulate(int index, float v);
     void normalize(float factor);
     float eval(float theta, float phi) const;
+    float *data() const;
+    int size() const;
+
+    std::string toString() const;
+    std::string toString(int d) const;
   };
 }
 

@@ -1,4 +1,4 @@
-#include "helpers/looper.hpp"
+#include "helper/looper.hpp"
 #include <nash/nash.h>
 
 using namespace nash;
@@ -10,18 +10,18 @@ int main(int argc, char *argv[]) {
   ThirdPersonCamera camCtrl;
   scene.getCamera().setController(camCtrl);
 
-  Image right("./image/cubemap/room/posx.jpg");
-  Image left("./image/cubemap/room/negx.jpg");
-  Image top("./image/cubemap/room/posy.jpg");
-  Image down("./image/cubemap/room/negy.jpg");
-  Image front("./image/cubemap/room/posz.jpg");
-  Image back("./image/cubemap/room/negz.jpg");
+  Image right(Path::getAbsolutePathTo("./image/cubemap/room/posx.jpg"));
+  Image left(Path::getAbsolutePathTo("./image/cubemap/room/negx.jpg"));
+  Image top(Path::getAbsolutePathTo("./image/cubemap/room/posy.jpg"));
+  Image down(Path::getAbsolutePathTo("./image/cubemap/room/negy.jpg"));
+  Image front(Path::getAbsolutePathTo("./image/cubemap/room/posz.jpg"));
+  Image back(Path::getAbsolutePathTo("./image/cubemap/room/negz.jpg"));
   CubeMap cubeMap(top, down, left, right, front, back);
 
   SkyBox skybox(cubeMap);
   scene.addObject(skybox);
 
-  SkyBoxSHCalculator calc(cubeMap, 5);
+  SkyBoxSHCalculator calc(cubeMap, 8, 10);
   auto list = calc.getCoefsList();
   SHSphere redSphere(*list[0]);
   SHSphere greenSphere(*list[1]);

@@ -5,7 +5,6 @@ using namespace nash;
 BoxTreeMesh::BoxTreeMesh(const Mesh &mesh) : mesh(mesh) { partition(); }
 
 bool BoxTreeMesh::intersect(const Ray &ray, Intersection &intersection) {
-  // TODO
   return root->intersect(ray, intersection);
 }
 

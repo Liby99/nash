@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
   ThirdPersonCamera camCtrl;
   scene.getCamera().setController(camCtrl);
 
-  AssimpObject desk("./model/simp_desk.ply");
+  AssimpObject desk(Path::getAbsolutePathTo("./model/simp_desk.ply"));
   desk.transform.rotation = AngleAxisf(-PI / 2, Vector3f(1, 0, 0));
   scene.addObject(desk);
 

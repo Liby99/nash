@@ -4,6 +4,8 @@ using namespace nash;
 
 const int SAMPLE_AMOUNT = 10000;
 
+const std::string directory = "./image/cubemap/room/";
+
 int main(int argc, char *argv[]) {
   Nash::init(argc, argv);
 
@@ -11,12 +13,12 @@ int main(int argc, char *argv[]) {
   ThirdPersonCamera camCtrl;
   scene.getCamera().setController(camCtrl);
 
-  Image right("./image/cubemap/room/posx.jpg");
-  Image left("./image/cubemap/room/negx.jpg");
-  Image top("./image/cubemap/room/posy.jpg");
-  Image down("./image/cubemap/room/negy.jpg");
-  Image front("./image/cubemap/room/posz.jpg");
-  Image back("./image/cubemap/room/negz.jpg");
+  Image right(Path::getAbsolutePathTo(directory + "posx.jpg"));
+  Image left(Path::getAbsolutePathTo(directory + "negx.jpg"));
+  Image top(Path::getAbsolutePathTo(directory + "posy.jpg"));
+  Image down(Path::getAbsolutePathTo(directory + "negy.jpg"));
+  Image front(Path::getAbsolutePathTo(directory + "posz.jpg"));
+  Image back(Path::getAbsolutePathTo(directory + "negz.jpg"));
   CubeMap cubeMap(top, down, left, right, front, back);
 
   SkyBox skybox(cubeMap);

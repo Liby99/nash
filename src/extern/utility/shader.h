@@ -8,6 +8,12 @@
 #include <string>
 
 namespace nash {
+  class GLShaderWrapper : public nanogui::GLShader {
+  public:
+    GLShaderWrapper();
+    GLuint getProgramId() const;
+  };
+
   class Shader {
   public:
     static const std::string DEFAULT_VERT_SHADER;
@@ -16,6 +22,7 @@ namespace nash {
     void init();
     void bind();
     void free();
+    GLuint getProgramId();
     void setUniform(const std::string &name, const Matrix4f &mat);
     void setUniform(const std::string &name, const Matrix3f &mat);
     void setUniform(const std::string &name, const Vector4f &vec);
@@ -40,7 +47,7 @@ namespace nash {
     bool simple;
     std::string name;
     std::string path;
-    nanogui::GLShader *shader;
+    GLShaderWrapper *shader;
     Shader();
     Shader(const std::string &name);
     ~Shader();

@@ -4,7 +4,7 @@
 using namespace nash;
 
 SkyBox::SkyBox(const CubeMap &cubeMap) : cubeMap(&cubeMap), Object() {
-  setShader(Shader::get("./shader/sky_box"));
+  setShader(Shader::get(Path::getAbsolutePathTo("./shader/sky_box")));
 
   indices = nanogui::MatrixXu(3, 12);
   indices.col(0) << 0, 1, 2;

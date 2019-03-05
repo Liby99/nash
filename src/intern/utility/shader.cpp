@@ -5,6 +5,10 @@
 
 using namespace nash;
 
+GLShaderWrapper::GLShaderWrapper() : nanogui::GLShader() {}
+
+GLuint GLShaderWrapper::getProgramId() const { return mProgramShader; }
+
 const std::string Shader::DEFAULT_VERT_SHADER =
     "#version 400\n"
     "layout(location=0) in vec3 position;\n"
@@ -51,6 +55,8 @@ void Shader::init() {
 void Shader::bind() { shader->bind(); }
 
 void Shader::free() { shader->free(); }
+
+GLuint Shader::getProgramId() { return shader->getProgramId(); }
 
 void Shader::setUniform(const std::string &name, const Matrix4f &mat) {
   shader->setUniform(name, mat, false);
@@ -135,18 +141,12 @@ Shader &Shader::get() {
   }
 }
 
-Shader::Shader() : name(""), path(""), simple(true), shader(new nanogui::GLShader()) {
+Shader::Shader() : name(""), path(""), simple(true), shader(new GLShaderWrapper()) {
   // Do nothing
 }
 
 Shader::Shader(const std::string &name)
-    : name(name),
-#ifdef WIN32
-      path(name),
-#else
-      path(Path::getAbsolutePathTo(name)),
-#endif
-      simple(false), shader(new nanogui::GLShader()) {
+    : name(Path::getFileName(name)), path(name), simple(false), shader(new GLShaderWrapper()) {
   // Do nothing
 }
 

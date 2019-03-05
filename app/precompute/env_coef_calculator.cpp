@@ -114,12 +114,12 @@ int main(int argc, char *argv[]) {
 
   // Load the file and get the meshes
   print("Loading env map files in directory " + filename + "/ ...");
-  Image right(filename + "/posx." + ext);
-  Image left(filename + "/negx." + ext);
-  Image top(filename + "/posy." + ext);
-  Image down(filename + "/negy." + ext);
-  Image front(filename + "/posz." + ext);
-  Image back(filename + "/negz." + ext);
+  Image right(Path::getAbsolutePathTo(filename + "/posx." + ext, true));
+  Image left(Path::getAbsolutePathTo(filename + "/negx." + ext, true));
+  Image top(Path::getAbsolutePathTo(filename + "/posy." + ext, true));
+  Image down(Path::getAbsolutePathTo(filename + "/negy." + ext, true));
+  Image front(Path::getAbsolutePathTo(filename + "/posz." + ext, true));
+  Image back(Path::getAbsolutePathTo(filename + "/negz." + ext, true));
   CubeMap cubeMap(top, down, left, right, front, back);
 
   // Save a coef file for each meshes
@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
   } else {
     std::string saveFilename = "./" + name + ".env.coef";
     print("Saving coef file " + saveFilename + "...");
-    file.save(saveFilename);
+    file.save(Path::getAbsolutePathTo(saveFilename, true));
   }
 
   auto end = std::chrono::system_clock::now();

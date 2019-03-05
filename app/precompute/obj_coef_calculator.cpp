@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
 
   // Load the file and get the meshes
   print("Loading obj file " + filename + "...");
-  AssimpObject obj(filename);
+  AssimpObject obj(Path::getAbsolutePathTo(filename, true));
   auto meshes = obj.getMeshes();
 
   // Save a coef file for each meshes
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
       std::string name = meshName.length() == 0 ? objName : objName + "." + meshName;
       std::string saveFilename = "./" + name + ".coef";
       print("- Saving coef file " + saveFilename + "...");
-      file.save(saveFilename);
+      file.save(Path::getAbsolutePathTo(saveFilename, true));
     }
   }
   auto end = std::chrono::system_clock::now();

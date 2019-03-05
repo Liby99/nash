@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
   camCtrl.incline = PI / 6;
   scene.getCamera().setController(camCtrl);
 
-  AssimpObject teapot("./model/teapot.obj");
+  AssimpObject teapot(Path::getAbsolutePathTo("./model/teapot.obj"));
   scene.addObject(teapot);
 
   Plane plane;

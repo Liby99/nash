@@ -5,9 +5,9 @@ using namespace nash;
 class TexturedPlane : public Plane {
 public:
   TexturedPlane(const std::string &imageName, int texPos) : Plane(), texPos(texPos) {
-    texImage = new Image(imageName);
+    texImage = new Image(Path::getAbsolutePathTo(imageName));
     texture = new Texture2D(*texImage);
-    setShader(Shader::get("./shader/plain_texture"));
+    setShader(Shader::get(Path::getAbsolutePathTo("./shader/plain_texture")));
   }
 
   ~TexturedPlane() {

@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
   ThirdPersonCamera camCtrl;
   scene.getCamera().setController(camCtrl);
 
-  AssimpObject teapot("./model/teapot.obj");
+  AssimpObject teapot(Path::getAbsolutePathTo("./model/teapot.obj"));
   Rotator rotator("rotator");
   teapot.attachScript(rotator);
   scene.addObject(teapot);

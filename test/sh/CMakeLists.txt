@@ -6,6 +6,7 @@ copy_shader("env_shading" FROM_CURRENT_RES)
 
 copy_model("simp_desk.ply")
 copy_model("teapot.obj")
+copy_model("dog.obj")
 
 copy_cubemap("gracecathedral" TO "gracecathedral")
 copy_cubemap("colors" TO "colors")

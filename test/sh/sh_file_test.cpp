@@ -30,12 +30,12 @@ int main(int argc, char *argv[]) {
   // save
   std::cerr << "Saving dummy coefs list to test.dat" << std::endl;
   SHFile shFileSav(coefs, numDegree);
-  shFileSav.save("./test.dat");
+  shFileSav.save(Path::getAbsolutePathTo("./test.dat", true));
 
   // load
   std::cerr << "Loading dummy coefs list from test.dat" << std::endl;
   SHFile shFileLoad(loadDegree);
-  shFileLoad.load("./test.dat");
+  shFileLoad.load(Path::getAbsolutePathTo("./test.dat", true));
 
   int loadCoefsCount = loadDegree * loadDegree;
   std::cerr << "Checking data integrity" << std::endl;

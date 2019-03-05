@@ -13,12 +13,12 @@ int main(int argc, char *argv[]) {
   Cube cube;
   scene.addObject(cube);
 
-  Image negx("./image/cubemap/room/negx.jpg");
-  Image posx("./image/cubemap/room/posx.jpg");
-  Image negy("./image/cubemap/room/negy.jpg");
-  Image posy("./image/cubemap/room/posy.jpg");
-  Image negz("./image/cubemap/room/negz.jpg");
-  Image posz("./image/cubemap/room/posz.jpg");
+  Image negx(Path::getAbsolutePathTo("./image/cubemap/room/negx.jpg"));
+  Image posx(Path::getAbsolutePathTo("./image/cubemap/room/posx.jpg"));
+  Image negy(Path::getAbsolutePathTo("./image/cubemap/room/negy.jpg"));
+  Image posy(Path::getAbsolutePathTo("./image/cubemap/room/posy.jpg"));
+  Image negz(Path::getAbsolutePathTo("./image/cubemap/room/negz.jpg"));
+  Image posz(Path::getAbsolutePathTo("./image/cubemap/room/posz.jpg"));
   CubeMap cubeMap(posy, negy, negx, posx, posz, negz);
   SkyBox skybox(cubeMap);
   scene.addObject(skybox);

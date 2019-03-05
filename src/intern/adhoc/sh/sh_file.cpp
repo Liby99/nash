@@ -13,10 +13,9 @@ SHFile::SHFile(const std::vector<SHCoefs *> coefsList, int numDegree)
     : coefsList(coefsList), numDegree(numDegree) {}
 
 void SHFile::save(const std::string &filepath) {
-  const std::string absPath = Path::getAbsolutePathTo(filepath);
-  FILE *pFile = fopen(absPath.c_str(), "wb");
+  FILE *pFile = fopen(filepath.c_str(), "wb");
   if (pFile == nullptr) {
-    throw std::runtime_error("Cannot load file " + absPath);
+    throw std::runtime_error("Cannot load file " + filepath);
   }
   int vertCount = coefsList.size();
   int coefsCount = numDegree * numDegree;
@@ -51,10 +50,9 @@ void SHFile::save(const std::string &filepath) {
 }
 
 void SHFile::load(const std::string &filepath) {
-  const std::string absPath = Path::getAbsolutePathTo(filepath);
-  FILE *pFile = fopen(absPath.c_str(), "rb");
+  FILE *pFile = fopen(filepath.c_str(), "rb");
   if (pFile == nullptr) {
-    throw std::runtime_error("Cannot load file " + absPath);
+    throw std::runtime_error("Cannot load file " + filepath);
   }
 
   // Get the file size

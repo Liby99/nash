@@ -18,7 +18,7 @@ namespace nash {
     static std::string getCurrentWorkingDirectory();
     static std::string getProgramDirectory();
     static std::string getProgramFileName();
-    static std::string getAbsolutePathTo(const std::string &relativePath);
+    static std::string getAbsolutePathTo(const std::string &relativePath, bool fromCWD = false);
     static std::string getFileName(const std::string &path);
     static std::string getDirectory(const std::string &path);
 

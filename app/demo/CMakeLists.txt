@@ -1,1 +1,0 @@
-copy_shader("sh_sphere")

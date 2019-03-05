@@ -1,4 +1,4 @@
-#include "helpers/looper.hpp"
+#include "helper/looper.hpp"
 #include <nash/nash.h>
 
 using namespace nash;
@@ -10,12 +10,12 @@ int main(int argc, char *argv[]) {
   ThirdPersonCamera camCtrl;
   scene.getCamera().setController(camCtrl);
 
-  Image right("./image/cubemap/colors/posx.jpg");
-  Image left("./image/cubemap/colors/negx.jpg");
-  Image top("./image/cubemap/colors/posy.jpg");
-  Image down("./image/cubemap/colors/negy.jpg");
-  Image front("./image/cubemap/colors/posz.jpg");
-  Image back("./image/cubemap/colors/negz.jpg");
+  Image right(Path::getAbsolutePathTo("./image/cubemap/colors/posx.jpg"));
+  Image left(Path::getAbsolutePathTo("./image/cubemap/colors/negx.jpg"));
+  Image top(Path::getAbsolutePathTo("./image/cubemap/colors/posy.jpg"));
+  Image down(Path::getAbsolutePathTo("./image/cubemap/colors/negy.jpg"));
+  Image front(Path::getAbsolutePathTo("./image/cubemap/colors/posz.jpg"));
+  Image back(Path::getAbsolutePathTo("./image/cubemap/colors/negz.jpg"));
   CubeMap cubeMap(top, down, left, right, front, back);
 
   SkyBox skybox(cubeMap);
