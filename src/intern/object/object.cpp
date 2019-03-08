@@ -53,7 +53,10 @@ void Object::setHidden(bool h) { hidden = h; }
 
 bool Object::isHidden() { return hidden; }
 
-void Object::attachScript(Script<Object> &script) { scripts.push_back(&script); }
+void Object::attachScript(Script<Object> &script) {
+  script.onAttach(*this);
+  scripts.push_back(&script);
+}
 
 Script<Object> &Object::getScript(const std::string &name) {
   auto it = find_if(scripts.begin(), scripts.end(),

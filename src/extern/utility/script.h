@@ -18,6 +18,10 @@ namespace nash {
 
     void bind(T &tar) { target = &tar; }
 
+    virtual void onAttach(const T &tar) {
+      // Do nothing
+    }
+
     virtual void start() {
       // Do nothing
     }

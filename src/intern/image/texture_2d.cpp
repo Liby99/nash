@@ -19,5 +19,3 @@ void Texture2D::bind(GLuint pos) const {
   Texture::bind(pos);
   glBindTexture(GL_TEXTURE_2D, textureId);
 }
-
-std::vector<Texture *> Texture::textures = std::vector<Texture *>();

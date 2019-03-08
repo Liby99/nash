@@ -11,9 +11,11 @@ namespace nash {
     int width, height, numChannels;
     unsigned char *data;
 
+    Image(int width, int height);
     Image(const std::string &filename);
     ~Image();
 
+    void setColor(int i, int j, Vector4u color);
     Vector4u getColor(int i, int j) const;
   };
 }

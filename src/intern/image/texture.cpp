@@ -13,3 +13,5 @@ void Texture::initAll() {
 }
 
 Texture::Texture() : textureId(0) { textures.push_back(this); }
+
+std::vector<Texture *> Texture::textures = std::vector<Texture *>();

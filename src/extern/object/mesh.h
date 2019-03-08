@@ -9,10 +9,11 @@ namespace nash {
     Mesh();
     virtual void render();
 
+    int getNumVertices() const;
+    int getNumFaces() const;
+
     const MatrixXu &getIndices() const;
-
     const MatrixXf &getPositions() const;
-
     const MatrixXf &getNormals() const;
 
   protected:

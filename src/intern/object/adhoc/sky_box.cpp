@@ -31,7 +31,7 @@ SkyBox::SkyBox(const CubeMap &cubeMap) : cubeMap(&cubeMap), Object() {
   positions.col(7) << 50, 50, -50;
 }
 
-void SkyBox::update() { this->transform.position = this->context->getScene().getCamera().position; }
+void SkyBox::update() { transform.position = context->getScene().getCamera().position; }
 
 void SkyBox::render() {
   // glDisable(GL_DEPTH_TEST);

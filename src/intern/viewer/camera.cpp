@@ -26,7 +26,10 @@ void Camera::update(Context &context) {
 
 bool Camera::hasController() { return control != nullptr; }
 
-void Camera::setController(Script<Camera> &ctrl) { control = &ctrl; }
+void Camera::setController(Script<Camera> &ctrl) {
+  ctrl.onAttach(*this);
+  control = &ctrl;
+}
 
 Script<Camera> &Camera::getController() { return *control; }
 
