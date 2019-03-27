@@ -35,7 +35,7 @@ macro(add_copy_res_function type prefix)
       # If not contains extension, then directly copy the file with the name
       file(COPY "${from_dir}${name}" DESTINATION "${dest_dir}")
 
-      # If has AS option, then rename the file. 
+      # If has AS option, then rename the file.
       # Note that only when copying one single file one can do the renaming
       if(COPY_RES_AS)
         get_filename_component(temp_name "${name}" NAME)
@@ -54,5 +54,5 @@ add_copy_res_function(cubemap "image/cubemap" "/posx.jpg" "/negx.jpg" "/posy.jpg
 
 # Functions to copy model, coef and scene
 add_copy_res_function(model "model")
-add_copy_res_function(coef "coef")
+add_copy_res_function(coefs "coefs")
 add_copy_res_function(scene "scene")
