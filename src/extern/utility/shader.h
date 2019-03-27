@@ -35,6 +35,7 @@ namespace nash {
     void setUniform(const std::string &name, const std::vector<int> &arr);
     void setUniform(const std::string &name, const int *arr, unsigned int amount);
     void uploadAttr(const std::string &name, const MatrixXf &m);
+    void uploadAttr(const std::string &name, const MatrixXu &m);
     void freeAttr(const std::string &name);
     bool hasAttr(const std::string &name);
     void shareAttr(const Shader &other, const std::string &name, const std::string &as);

@@ -90,6 +90,10 @@ void Shader::uploadAttr(const std::string &name, const MatrixXf &m) {
   shader->uploadAttrib(name, m);
 }
 
+void Shader::uploadAttr(const std::string &name, const MatrixXu &m) {
+  shader->uploadAttrib(name, m);
+}
+
 void Shader::setUniform(const std::string &name, const std::vector<float> &arr) {
   GLuint loc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniform1fv(loc, arr.size(), arr.data());

@@ -16,8 +16,8 @@ namespace nash {
     ~Image();
 
     void setColor(int i, int j, Vector4u color);
+    void setChannel(int i, int j, int channel, unsigned char c);
     Vector4u getColor(int i, int j) const;
-    unsigned char *rawColor(int i, int j) const;
   };
 }
 
