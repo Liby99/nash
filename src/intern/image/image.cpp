@@ -28,3 +28,8 @@ Vector4u Image::getColor(int i, int j) const {
   int start = (j * width + i) * numChannels;
   return Vector4u(data[start], data[start + 1], data[start + 2], data[start + 3]);
 }
+
+unsigned char *Image::rawColor(int i, int j) const {
+  int start = (j * width + i) * numChannels;
+  return &(data[start]);
+}

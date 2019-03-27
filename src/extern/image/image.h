@@ -17,6 +17,7 @@ namespace nash {
 
     void setColor(int i, int j, Vector4u color);
     Vector4u getColor(int i, int j) const;
+    unsigned char *rawColor(int i, int j) const;
   };
 }
 
