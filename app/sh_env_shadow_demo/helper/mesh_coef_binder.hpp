@@ -8,8 +8,18 @@ namespace nash {
   public:
     int numDegree;
 
-    MeshCoefBinder(const std::string &name, int numDegree)
+    MeshCoefBinder(int numDegree, const std::string &name)
         : numDegree(numDegree), Script<Object>(name) {}
+
+    /**
+     * See nash/lab/texture-filling for example and graphics demonstration
+     */
+    int findTextureSideLength(int numVertices, int numPixelsPerVertex) {
+      int baseline = std::ceil(std::sqrt(numVertices * numPixelsPerVertex));
+      while (std::ceil((float) numVertices / baseline) * numPixelsPerVertex > baseline)
+        baseline += 1;
+      return baseline;
+    }
 
     virtual void onAttach(const Object &target) {
       mesh = (Mesh *)&target;
@@ -18,36 +28,29 @@ namespace nash {
       int numCoefs = SH::getNumCoefs(numDegree);
       int numVertices = mesh->getPositions().cols();
       int numPixelsPerVertex = std::ceil(numCoefs / 4.0f);
-      int numPixels = numPixelsPerVertex * numVertices;
-      int textureSideLength = std::ceil(sqrt((float) numPixels)); // Has to be square
+      int textureSideLength = findTextureSideLength(numVertices, numPixelsPerVertex);
+      int totalNumPixels = textureSideLength * textureSideLength;
 
-      std::cout << "Num Coefs: " << numCoefs << std::endl;
-      std::cout << "Num Vertices: " << numVertices << std::endl;
-      std::cout << "Num Pixels Per Vertex: " << numPixelsPerVertex << std::endl;
-      std::cout << "Num Pixels: " << numPixels << std::endl;
-      std::cout << "Texture Side Length: " << textureSideLength << std::endl;
-
-      // Generate textureIndex, which is (int, int).
-      textureIndices = MatrixXu(2, numVertices);
-      for (int i = 0; i < textureIndices.cols(); i++) {
-        int x = i % textureSideLength;
-        int y = i * numPixelsPerVertex / textureSideLength;
-        textureIndices.col(i) << x, y;
-      }
-
-      // Calculate mesh sh coefs
-      MeshSHCalculator calc(*mesh, numDegree);
+      // Pre-filling
+      textureIndices = MatrixXu(2, numVertices); // Setup index
+      MeshSHCalculator calc(*mesh, numDegree); // Calculate mesh sh coefs
 
       // Build the image from coefs
       const std::vector<SHCoefs *> &list = calc.getCoefsList();
       textureImage = new Image(textureSideLength, textureSideLength);
       for (int i = 0; i < numVertices; i++) {
-        Vector2u xy = textureIndices.col(i);
+
+        // Generate textureIndex, which is (int, int).
+        int x = i % textureSideLength;
+        int y = (i / textureSideLength) * numPixelsPerVertex;
+        textureIndices.col(i) << x, y;
+
+        // Fill in the image
         for (int j = 0; j < numCoefs; j++) {
           int coefRow = j / 4;
           int coefSlot = j % 4;
           unsigned char val = (list[i]->get(j) / 4.0f + 0.5f) * 255;
-          textureImage->setChannel(xy[1] + coefRow, xy[0], coefSlot, val);
+          textureImage->setChannel(x, y + coefRow, coefSlot, val);
         }
       }
 

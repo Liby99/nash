@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   scene.getCamera().setController(camCtrl);
 
   AssimpObject model(Path::getAbsolutePathTo(objPath));
-  MeshCoefBinder binder(Path::getAbsolutePathTo(coefPath), 4);
+  MeshCoefBinder binder(4, "mesh-coef-binder");
   model.getMeshes()[0]->attachScript(binder);
 
   Plane plane;
