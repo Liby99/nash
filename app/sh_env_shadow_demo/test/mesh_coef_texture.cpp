@@ -4,7 +4,7 @@
 
 using namespace nash;
 
-const std::string objPath = "../model/simp_desk.ply";
+const std::string objPath = "../model/teapot.obj";
 const std::string coefPath = "../coefs/obj/simp_desk.ply.coef";
 const std::string shaderPath = "../shader/coef_texture";
 

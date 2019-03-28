@@ -32,7 +32,7 @@ namespace nash {
       int totalNumPixels = textureSideLength * textureSideLength;
 
       // Pre-filling
-      textureIndices = MatrixXu(2, numVertices); // Setup index
+      textureIndices = MatrixXf(2, numVertices); // Setup index
       MeshSHCalculator calc(*mesh, numDegree); // Calculate mesh sh coefs
 
       // Build the image from coefs
@@ -81,7 +81,7 @@ namespace nash {
     }
 
   private:
-    MatrixXu textureIndices;
+    MatrixXf textureIndices;
     Mesh *mesh;
     Image *textureImage;
     TextureRect *texture;
