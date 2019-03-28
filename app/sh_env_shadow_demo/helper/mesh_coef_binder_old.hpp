@@ -4,11 +4,11 @@
 #include <nash/nash.h>
 
 namespace nash {
-  class MeshCoefBinder : public Script<Object> {
+  class MeshCoefBinderOld : public Script<Object> {
   public:
     int numDegree;
 
-    MeshCoefBinder(int numDegree, const std::string &name)
+    MeshCoefBinderOld(int numDegree, const std::string &name)
         : numDegree(numDegree), Script<Object>(name) {}
 
     /**

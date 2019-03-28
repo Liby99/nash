@@ -1,5 +1,5 @@
 #include "../helper/coef_texture.hpp"
-#include "../helper/mesh_coef_binder.hpp"
+#include "../helper/mesh_coef_binder_old.hpp"
 #include <nash/nash.h>
 
 using namespace nash;
@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   scene.getCamera().setController(camCtrl);
 
   AssimpObject model(Path::getAbsolutePathTo(objPath));
-  MeshCoefBinder binder(4, "mesh-coef-binder");
+  MeshCoefBinderOld binder(4, "mesh-coef-binder");
   model.getMeshes()[0]->attachScript(binder);
 
   Plane plane;
