@@ -4,7 +4,7 @@
 
 using namespace nash;
 
-const int MeshSHCalculator::SAMPLE_COUNT = 50;
+const int MeshSHCalculator::SAMPLE_COUNT = 1000;
 
 MeshSHCalculator::MeshSHCalculator(const Mesh &mesh, int numDegree)
     : mesh(mesh), numDegree(numDegree) {

@@ -9,8 +9,8 @@
 namespace nash {
   class SHSphere : public Sphere {
   public:
-    SHSphere(int l, int m);
-    SHSphere(const SHCoefs &coefs);
+    SHSphere(int l, int m, int subdivision = 5);
+    SHSphere(const SHCoefs &coefs, int subdivision = 5);
     virtual void render();
 
   private:

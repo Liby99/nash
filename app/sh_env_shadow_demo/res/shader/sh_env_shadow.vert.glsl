@@ -3,7 +3,7 @@
 layout(location=0) in vec3 position;
 layout(location=1) in vec3 normal;
 layout(location=2) in vec2 texCoord;
-layout(location=3) in vec2 objShadowCoefIndex;
+layout(location=3) in float objShadowCoefIndex;
 
 out vec3 fragPosition;
 out vec3 fragNormal;
@@ -22,19 +22,20 @@ uniform float greenEnvCoef[16];
 uniform float blueEnvCoef[16];
 
 // Object Self Shadow Related
-uniform sampler2DRect objShadowCoefSampler;
+uniform samplerBuffer objShadowCoefSampler;
 
-vec4 getShadowCoef(float x, float y) {
-  vec4 raw = texture(objShadowCoefSampler, vec2(x, y));
-  return (raw - vec4(0.5f)) * 4.0f;
-}
+float getChannel(int i, float[16] coefs) {
+  vec4 s0 = texelFetch(objShadowCoefSampler, i) / 8; // TODO: why is this 8
+  vec4 s1 = texelFetch(objShadowCoefSampler, i + 1) / 8;
+  vec4 s2 = texelFetch(objShadowCoefSampler, i + 2) / 8;
+  vec4 s3 = texelFetch(objShadowCoefSampler, i + 3) / 8;
 
-float getChannel(vec4 s1, vec4 s2, vec4 s3, vec4 s4, float[16] coefs) {
-  float c1 = s1.x * coefs[0];
-  float c2 = dot(s1.yzw, vec3(coefs[1], coefs[2], coefs[3]));
-  float c3 = (dot(s2, vec4(coefs[4], coefs[5], coefs[6], coefs[7])) + s3.x * coefs[8]);
-  float c4 = (dot(s3.yzw, vec3(coefs[9], coefs[10], coefs[11])) + dot(s4, vec4(coefs[12], coefs[13], coefs[14], coefs[15])));
-  return min(1, max(0, c1 + c2 + c3 + c4));
+  float c0 = s0.x * coefs[0];
+  float c1 = 0.4886025 * dot(s0.yzw, vec3(coefs[1], coefs[2], coefs[3]));
+  float c2 = 0.6307831 * (dot(s1, vec4(coefs[4], coefs[5], coefs[6], coefs[7])) + s2.x * coefs[8]);
+  float c3 = 0.746353 * (dot(s2.yzw, vec3(coefs[9], coefs[10], coefs[11]) + dot(s3, vec4(coefs[12], coefs[13], coefs[14], coefs[15]))));
+
+  return max(0, c0 + c1 + c2 + c3);
 }
 
 void main() {
@@ -47,14 +48,9 @@ void main() {
   fragTexCoord = texCoord;
 
   // Calculate the dot product color
-  float x = objShadowCoefIndex.x + 0.5f;
-  float y = objShadowCoefIndex.y + 0.5f;
-  vec4 s1 = getShadowCoef(x, y);
-  vec4 s2 = getShadowCoef(x, y + 1);
-  vec4 s3 = getShadowCoef(x, y + 2);
-  vec4 s4 = getShadowCoef(x, y + 3);
-  float r = getChannel(s1, s2, s3, s4, redEnvCoef);
-  float g = getChannel(s1, s2, s3, s4, greenEnvCoef);
-  float b = getChannel(s1, s2, s3, s4, blueEnvCoef);
+  int i = int(objShadowCoefIndex);
+  float r = getChannel(i, redEnvCoef);
+  float g = getChannel(i, greenEnvCoef);
+  float b = getChannel(i, blueEnvCoef);
   color = vec3(r, g, b);
 }

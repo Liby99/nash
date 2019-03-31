@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
   Nash::init(argc, argv);
 
   Scene scene;
-  ThirdPersonCamera camCtrl;
+  FirstPersonCamera camCtrl;
   scene.getCamera().setController(camCtrl);
 
   AssimpObject desk(Path::getAbsolutePathTo("./model/simp_desk.ply"));
@@ -18,13 +18,13 @@ int main(int argc, char *argv[]) {
   auto start = std::chrono::system_clock::now();
 
   AssimpMesh &mesh = *(desk.getMeshes()[0]);
-  MeshSHCalculator calc(mesh, 8);
+  MeshSHCalculator calc(mesh, 4);
   auto coefsList = calc.getCoefsList();
   SHSphere *shSpheres[coefsList.size()];
   for (int i = 0; i < coefsList.size(); i++) {
-    SHSphere *coefSphere = new SHSphere(*coefsList[i]);
+    SHSphere *coefSphere = new SHSphere(*coefsList[i], 3);
     coefSphere->transform.position = mesh.getPositions().col(i);
-    coefSphere->transform.scale << 0.01, 0.01, 0.01;
+    coefSphere->transform.scale << 0.05, 0.05, 0.05;
     coefSphere->setParent(desk);
     shSpheres[i] = coefSphere;
   }

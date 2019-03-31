@@ -14,3 +14,4 @@ copy_model("simp_desk.ply")
 
 copy_coefs("obj/simp_desk.ply.coef")
 copy_coefs("obj/dog.obj.dog.coef")
+copy_coefs("obj/teapot.obj.defaultobject.coef")

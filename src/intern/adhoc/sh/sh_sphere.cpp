@@ -2,7 +2,7 @@
 
 using namespace nash;
 
-SHSphere::SHSphere(int l, int m) : Sphere() {
+SHSphere::SHSphere(int l, int m, int subdivision) : Sphere(subdivision) {
   if (abs(m) > l) {
     std::string ms = std::to_string(m), ls = std::to_string(l);
     throw std::invalid_argument("expected |m| < l, but found m = " + ms + ", l = " + ls);
@@ -14,7 +14,7 @@ SHSphere::SHSphere(int l, int m) : Sphere() {
   updatePositions();
 }
 
-SHSphere::SHSphere(const SHCoefs &coefs) : Sphere(), coefs(&coefs) {
+SHSphere::SHSphere(const SHCoefs &coefs, int subdivision) : Sphere(subdivision), coefs(&coefs) {
   initShader();
   updatePositions();
 }

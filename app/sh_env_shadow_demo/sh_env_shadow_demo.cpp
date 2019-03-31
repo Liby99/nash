@@ -4,12 +4,11 @@
 
 using namespace nash;
 
-// const std::string objPath = "./model/simp_desk.ply";
 const std::string objPath = "./model/teapot.obj";
-// const std::string coefPath = "./coefs/obj/simp_desk.ply.coef";
+const std::string coefPath = "./coefs/teapot.obj.defaultobject.coef";
 const std::string shaderPath = "./shader/sh_env_shadow";
-const std::string envMapPath = "./image/cubemap/colors/";
-const int envMapSampleGap = 1;
+const std::string envMapPath = "./image/cubemap/room/";
+const int envMapSampleGap = 16;
 const int numDegree = 4;
 
 int main(int argc, char *argv[]) {
@@ -32,7 +31,9 @@ int main(int argc, char *argv[]) {
   CubeMap cubeMap(top, down, left, right, front, back);
 
   // Generate binders for model shadow coefs and environment map coefs
-  MeshCoefBinder meshCoefBinder(numDegree, "mesh-coef-binder");
+  std::string coefAbsPath = Path::getAbsolutePathTo(coefPath);
+  std::cout << coefAbsPath << std::endl;
+  MeshCoefBinder meshCoefBinder(coefAbsPath, numDegree, "mesh-coef-binder");
   EnvCoefBinder envCoefBinder(cubeMap, numDegree, envMapSampleGap, "env-coef-binder");
 
   // Get the mesh from model object and attach the binders
@@ -40,9 +41,6 @@ int main(int argc, char *argv[]) {
   mesh.attachScript(meshCoefBinder);
   mesh.attachScript(envCoefBinder);
   mesh.setShader(Shader::get(Path::getAbsolutePathTo(shaderPath)));
-
-  // std::cout << "Side Length of the Mesh Coef Texture: " << meshCoefBinder.getTextureWidth() <<
-  // std::endl;
 
   // Finally add the object to the scene
   scene.addObject(model);
